@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img src="~/images/banner1.jpg" alt="ASP.NET" class="img-responsive" />
+            <div class="carousel-caption" role="option">
+                <p>
+                    Relax at the Molveno Hotel.
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/images/banner2.jpg" alt="Visual Studio" class="img-responsive" />
+            <div class="carousel-caption" role="option">
+                <p>
+                    Use the new Digital ordering system in the restaurant, so you can look at your phone all meal long without shame!
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/images/banner3.jpg" alt="Package Management" class="img-responsive" />
+            <div class="carousel-caption" role="option">
+                <p>
+                    Reserve your table at the restaurant now!
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/images/banner4.jpg" alt="Microsoft Azure" class="img-responsive" />
+            <div class="carousel-caption" role="option">
+                <p>
+                    Buy your own blue hat at the souvenir shop today!
+                </p>
+            </div>
+        </div>
+    </div>
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <h2>Table reservation</h2>
+        <ul>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398939">Click here to start the reservation process</a></li>
+        </ul>
+    </div>
+    <div class="col-md-3">
+        <h2>Order at restaurant</h2>
+        <ul>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398600">Click here once you are assigned a table.</a></li>
+        </ul>
+    </div>
+    <div class="col-md-3">
+        <h2>Feedback</h2>
+        <ul>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Complain about the service.</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Complain about the dishes.</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Complain about ambiance</a></li>
+        </ul>
+    </div>
+</div>
