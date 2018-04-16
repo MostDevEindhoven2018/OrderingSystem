@@ -5,7 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\NewFolder1\**" />
+    <Compile Remove="Controllers\NewFolder\**" />
+    <Content Remove="Controllers\NewFolder1\**" />
+    <Content Remove="Controllers\NewFolder\**" />
+    <EmbeddedResource Remove="Controllers\NewFolder1\**" />
+    <EmbeddedResource Remove="Controllers\NewFolder\**" />
+    <None Remove="Controllers\NewFolder1\**" />
+    <None Remove="Controllers\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
   </ItemGroup>
 
   <ItemGroup>
