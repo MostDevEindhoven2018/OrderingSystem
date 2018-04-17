@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebInterface.Controllers
 {
-    public class MenuController : Controller
+    public class MenuCardController : Controller
     {
         public IActionResult Index()
         {
