@@ -7,5 +7,8 @@ namespace WebInterface.Models
 {
     public class Order
     {
+        public List<Dish> Selected { get; set; }
+        public List<Dish> Finalized { get; set; }
+        public Guest Payer { get; set; }
     }
 }

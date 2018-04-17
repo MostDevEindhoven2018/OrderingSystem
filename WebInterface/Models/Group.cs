@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace WebInterface.Models
 {
-    public class Kitchen
+    public class Group
     {
+        public List<Guest> CurrentGuests { get; set; }
+        public Table Table { get; set; }
     }
 }

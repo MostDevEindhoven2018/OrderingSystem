@@ -7,5 +7,7 @@ namespace WebInterface.Models
 {
     public class Guest
     {
+        public string Name { get; set; }
+        public Group Group { get; set; }
     }
 }
