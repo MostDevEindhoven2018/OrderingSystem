@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebInterface.Models
 {
-    public class Dishcs
+    public class Dish
     {
     }
 }
