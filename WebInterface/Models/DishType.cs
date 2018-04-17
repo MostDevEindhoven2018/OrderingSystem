@@ -10,6 +10,7 @@ namespace WebInterface.Models
         private static List<DishType> allDishes;
         public MainType Type { get; private set; }
         public string Name { get; private set; }
+        public List<Ingredient> DefaultIngredients { get; private set; } = new List<Ingredient>();
 
         /// <summary>
         /// Returns all dishes known to the system
