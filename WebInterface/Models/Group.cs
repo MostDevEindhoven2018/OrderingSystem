@@ -17,5 +17,10 @@ namespace WebInterface.Models
         /// The table at which this group is seated.
         /// </summary>
         public Table Table { get; set; }
+
+        /// <summary>
+        /// Wether to hide the price or not
+        /// </summary>
+        public bool HidePrice { get; set; }
     }
 }
