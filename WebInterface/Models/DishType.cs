@@ -20,33 +20,33 @@ namespace WebInterface.Models
         {
             if(allDishes == null)
             {
-                List<DishType> l = new List<DishType>();
+                List<DishType> list = new List<DishType>();
 
-                l.Add(new DishType() { Type = CourseType.DRINK, Name = "Cola"});
-                l.Add(new DishType() { Type = CourseType.DRINK, Name = "Fanta" });
-                l.Add(new DishType() { Type = CourseType.DRINK, Name = "Wine" });
-                l.Add(new DishType() { Type = CourseType.DRINK, Name = "Beer" });
-                l.Add(new DishType() { Type = CourseType.DRINK, Name = "Coffee" });
-                l.Add(new DishType() { Type = CourseType.DRINK, Name = "Tea" });
+                list.Add(new DishType() { Type = CourseType.DRINK, Name = "Cola"});
+                list.Add(new DishType() { Type = CourseType.DRINK, Name = "Fanta" });
+                list.Add(new DishType() { Type = CourseType.DRINK, Name = "Wine" });
+                list.Add(new DishType() { Type = CourseType.DRINK, Name = "Beer" });
+                list.Add(new DishType() { Type = CourseType.DRINK, Name = "Coffee" });
+                list.Add(new DishType() { Type = CourseType.DRINK, Name = "Tea" });
 
-                l.Add(new DishType() { Type = CourseType.STARTER, Name = "Carpachio" });
-                l.Add(new DishType() { Type = CourseType.STARTER, Name = "Tuna Salad" });
-                l.Add(new DishType() { Type = CourseType.STARTER, Name = "Shrimps" });
-                l.Add(new DishType() { Type = CourseType.STARTER, Name = "Tomato Soup" });
-                l.Add(new DishType() { Type = CourseType.STARTER, Name = "Onion Soup" });
+                list.Add(new DishType() { Type = CourseType.STARTER, Name = "Carpachio" });
+                list.Add(new DishType() { Type = CourseType.STARTER, Name = "Tuna Salad" });
+                list.Add(new DishType() { Type = CourseType.STARTER, Name = "Shrimps" });
+                list.Add(new DishType() { Type = CourseType.STARTER, Name = "Tomato Soup" });
+                list.Add(new DishType() { Type = CourseType.STARTER, Name = "Onion Soup" });
 
-                l.Add(new DishType() { Type = CourseType.MAINCOURSE, Name = "Steak" });
-                l.Add(new DishType() { Type = CourseType.MAINCOURSE, Name = "Salmon" });
-                l.Add(new DishType() { Type = CourseType.MAINCOURSE, Name = "Chicken breast" });
-                l.Add(new DishType() { Type = CourseType.MAINCOURSE, Name = "Duck" });
-                l.Add(new DishType() { Type = CourseType.MAINCOURSE, Name = "Vega burger" });
+                list.Add(new DishType() { Type = CourseType.MAINCOURSE, Name = "Steak" });
+                list.Add(new DishType() { Type = CourseType.MAINCOURSE, Name = "Salmon" });
+                list.Add(new DishType() { Type = CourseType.MAINCOURSE, Name = "Chicken breast" });
+                list.Add(new DishType() { Type = CourseType.MAINCOURSE, Name = "Duck" });
+                list.Add(new DishType() { Type = CourseType.MAINCOURSE, Name = "Vega burger" });
 
-                l.Add(new DishType() { Type = CourseType.DESSERT, Name = "Vanilla icecream" });
-                l.Add(new DishType() { Type = CourseType.DESSERT, Name = "Banana split" });
-                l.Add(new DishType() { Type = CourseType.DESSERT, Name = "Apple pie with wipped cream" });
-                l.Add(new DishType() { Type = CourseType.DESSERT, Name = "Fruit salad" });
+                list.Add(new DishType() { Type = CourseType.DESSERT, Name = "Vanilla icecream" });
+                list.Add(new DishType() { Type = CourseType.DESSERT, Name = "Banana split" });
+                list.Add(new DishType() { Type = CourseType.DESSERT, Name = "Apple pie with wipped cream" });
+                list.Add(new DishType() { Type = CourseType.DESSERT, Name = "Fruit salad" });
 
-                allDishes = l;
+                allDishes = list;
             }
             return allDishes;
         }
