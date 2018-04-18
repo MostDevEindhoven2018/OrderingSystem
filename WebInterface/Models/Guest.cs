@@ -7,5 +7,6 @@ namespace WebInterface.Models
 {
     public class Guest
     {
+        public int GuestID { get; set; }
     }
 }
