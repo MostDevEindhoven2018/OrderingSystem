@@ -19,7 +19,7 @@ namespace WebInterface.Models
         public Table Table { get; set; }
 
         /// <summary>
-        /// Wether to hide the price or not
+        /// Whether to hide the price or not
         /// </summary>
         public bool HidePrice { get; set; }
     }
