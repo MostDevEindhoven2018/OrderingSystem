@@ -1,9 +1,24 @@
 ﻿@{
     ViewData["Title"] = "Login";
 }
-User name: [<input type="text"/>]
 
-<br />
 
-User Password: [<input type="text">]
-<br />
+<h2>Login</h2>
+
+<form asp-action="Login">
+
+    UserName:
+    <input type="text" asp-for="UserName" />
+
+    <br />
+    <br />
+
+    Password:
+    <input type="text" asp-for="Password" />
+
+    <br />
+    <br />
+
+    <input type="submit" value="Save" />
+    
+</form>
