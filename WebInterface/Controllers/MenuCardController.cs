@@ -11,39 +11,46 @@ namespace WebInterface.Controllers
     public class MenuCardController : Controller
     {
         MenuCardDBContext ctx;
+        Task DBCreationTask;
         public MenuCardController(MenuCardDBContext context)
         {
             ctx = context;
+            DBCreationTask = ctx.Database.EnsureCreatedAsync();
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            ctx.Database.EnsureCreated();
+            await DBCreationTask;
             return View();
         }
 
-        public IActionResult Drinks()
+        public async Task<IActionResult> Drinks()
         {
+            await DBCreationTask;
             return View();
         }
 
-        public IActionResult Starters()
+        public async Task<IActionResult> Starters()
         {
+            await DBCreationTask;
             return View();
         }
 
-        public IActionResult Mains()
+        public async Task<IActionResult> Mains()
         {
+            await DBCreationTask;
             return View();
         }
 
-        public IActionResult Desserts()
+        public async Task<IActionResult> Desserts()
         {
+            await DBCreationTask;
             return View();
         }
 
-        public IActionResult OrderOverview()
+        public async Task<IActionResult> OrderOverview()
         {
+            await DBCreationTask;
             return View();
         }
     }
