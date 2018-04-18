@@ -4,5 +4,15 @@
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
 }
 
-<h2>Mains</h2>
+<h2>Main Course</h2>
+
+<p>
+    <input type="button" value="Proceed To Dessert" onclick="location.href='@Url.Action("Desserts", "MenuCard" )'" />
+</p>
+<p>
+    <input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard" )'" />
+</p>
+<p>
+    <input type="button" value="Go Back" onclick="location.href='@Url.Action("Starters", "MenuCard" )'" />
+</p>
 

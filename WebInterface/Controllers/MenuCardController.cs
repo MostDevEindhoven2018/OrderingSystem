@@ -37,5 +37,9 @@ namespace WebInterface.Controllers
         {
             return View();
         }
+        public IActionResult FinalizedOrder()
+        {
+            return View();
+        }
     }
 }
