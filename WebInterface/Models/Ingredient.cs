@@ -7,6 +7,7 @@ namespace WebInterface.Models
 {
     public class Ingredient
     {
+        public int IngredientID { get; set; }
         public IngredientType Type { get; private set; }
 
         /// <summary>

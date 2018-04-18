@@ -7,6 +7,7 @@ namespace WebInterface.Models
 {
     public class Dish
     {
+        public int DishID { get; set; }
         public DishType Type { get; private set; }
         public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
     }

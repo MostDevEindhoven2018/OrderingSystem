@@ -7,15 +7,16 @@ namespace WebInterface.Models
 {
     public class Order
     {
+        public int OrderID { get; set; }
         /// <summary>
         /// Dishes added to the Order, but not send to the kitchen
         /// </summary>
-        public List<Dish> Selected { get; set; }
+        public ICollection<Dish> Selected { get; set; }
 
         /// <summary>
         /// Dishes send to the kitchen. The guest cannot change these anymore.
         /// </summary>
-        public List<Dish> Finalized { get; set; }
+        public ICollection<Dish> Finalized { get; set; }
 
         /// <summary>
         /// The owner of an Order adds items to the Selected list, and then finalizes them.

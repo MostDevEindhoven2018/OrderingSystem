@@ -7,9 +7,8 @@ namespace WebInterface.Models
 {
     public class Table
     {
+        public int TableID { get; set; }
         public Group CurrentGroup { get; set; }
         public int Capacity { get; set; }
-
-
     }
 }
