@@ -20,6 +20,6 @@ namespace WebInterface.Models
         /// the current group, hence a Guest can always 
         /// belongs to a specific group.
         /// </summary>
-        public Group Group { get; set; }
+        public virtual Group Group { get; set; }
     }
 }

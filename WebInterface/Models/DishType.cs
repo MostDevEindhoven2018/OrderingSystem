@@ -10,7 +10,7 @@ namespace WebInterface.Models
         private static List<DishType> allDishes;
 
         public int DishTypeID { get; set; }
-        public CourseType Type { get; set; }
+        public virtual CourseType Type { get; set; }
         public string Name { get; set; }
 
         public ICollection<Ingredient> DefaultIngredients { get; private set; }

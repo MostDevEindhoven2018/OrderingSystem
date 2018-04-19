@@ -17,7 +17,7 @@ namespace WebInterface.Models
         /// <summary>
         /// The table at which this group is seated.
         /// </summary>
-        public Table Table { get; set; }
+        public virtual Table Table { get; set; }
 
         /// <summary>
         /// Whether to hide the price or not
