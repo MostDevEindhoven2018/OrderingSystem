@@ -38,5 +38,12 @@ namespace WebInterface.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult PrintQR(string url, string dir)
+        {
+            var QR = new QRGeneration(url, dir);
+            return View();
+        }
     }
 }
