@@ -10,20 +10,22 @@ namespace WebInterface.Models
     public class QRGeneration
     {
         public string Url { get; set; }
-        public string SaveAddress { get; set; }
+        public string Directory { get; set; }
 
         /// <summary>
-        /// 
+        /// Generate QR JPEG from provided URL
+        /// Saves it to the path provided by the USER
         /// </summary>
         /// <param name="url"></param>
-        public QRGeneration (string url, string saveaddress)
+        /// <param name="dir"></param>
+        public QRGeneration (string url, string directory)
         {
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
             Bitmap qrCodeImage = qrCode.GetGraphic(20);
-            qrCodeImage.Save("C:\\Users\\Paulina\\Pictures\\poop.jpeg");
-            //qrCodeImage.Save(dir);
+            //qrCodeImage.Save("C:\\Users\\Paulina\\Pictures\\poop.jpeg");
+            qrCodeImage.Save(directory);
         }
 
 

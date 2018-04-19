@@ -40,9 +40,9 @@ namespace WebInterface.Controllers
         }
 
         [HttpPost]
-        public IActionResult PrintQR(string url, string dir)
+        public IActionResult PrintQR(string url, string directory)
         {
-            var QR = new QRGeneration(url, dir);
+            var QR = new QRGeneration(url, directory);
             return View();
         }
     }
