@@ -7,6 +7,8 @@ namespace UserCustimizationMenu.Models
 {
     public class User
     {
+        public int UserID { get; set; }
+
         [StringLength(20)]
         [Required(ErrorMessage = "This field is required!")]
         public string UserName { get; set; }

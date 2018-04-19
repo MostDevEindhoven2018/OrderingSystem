@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace UserCustimizationMenu
 {
@@ -21,6 +22,9 @@ namespace UserCustimizationMenu
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<Models.MyDbContext>(option =>
+                                                      option.UseSqlServer(Configuration.GetConnectionString("StudentsDatabase")));
+
             services.AddMvc();
         }
 
@@ -42,7 +46,7 @@ namespace UserCustimizationMenu
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Login}/{id?}");
             });
         }
     }

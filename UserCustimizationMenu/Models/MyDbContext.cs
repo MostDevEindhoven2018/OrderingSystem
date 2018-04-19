@@ -14,6 +14,5 @@ namespace UserCustimizationMenu.Models
         }
 
         public DbSet<User> Users { get; set; }
-
     }
 }

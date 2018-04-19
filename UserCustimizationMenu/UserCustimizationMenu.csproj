@@ -15,4 +15,8 @@
   <ItemGroup>
     <Compile Remove="Models\EmptyStruct.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Views\Home\About.cshtml" />
+    <Content Remove="Views\Home\Contact.cshtml" />
+  </ItemGroup>
 </Project>
