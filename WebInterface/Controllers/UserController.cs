@@ -4,17 +4,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using UserCustimizationMenu.Models;
+using WebInterface.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
 
 
-namespace UserCustimizationMenu.Controllers
+namespace WebInterface.Controllers
 {
-    public class HomeController : Controller
+    public class UserController : Controller
     {
-        public HomeController(MyDbContext _context)
+        public UserController(MyDbContext _context)
         {
             ctx = _context;
         }

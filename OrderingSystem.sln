@@ -5,9 +5,12 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderingSystem", "OrderingSystem\OrderingSystem.csproj", "{238B9A78-7C5D-4C47-BE35-DE025D08C8B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebInterface", "WebInterface\WebInterface.csproj", "{ABDCE7AB-A843-4D92-8E1C-45BE8F10D3C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebInterface", "WebInterface\WebInterface.csproj", "{ABDCE7AB-A843-4D92-8E1C-45BE8F10D3C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserCustimizationMenu", "UserCustimizationMenu\UserCustimizationMenu.csproj", "{BDB06F2B-E52A-4E8C-AEA5-E9D4ADEE5554}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserCustimizationMenu", "UserCustimizationMenu\UserCustimizationMenu.csproj", "{BDB06F2B-E52A-4E8C-AEA5-E9D4ADEE5554}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ABDCE7AB-A843-4D92-8E1C-45BE8F10D3C0} = {ABDCE7AB-A843-4D92-8E1C-45BE8F10D3C0}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
