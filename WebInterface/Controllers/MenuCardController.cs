@@ -64,7 +64,15 @@ namespace WebInterface.Controllers
 
         public IActionResult OrderOverview()
         {
-            return View();
+            var drinks = DishType.getAllDrinks();
+            var starters = DishType.getAllStarters();
+            var mains = DishType.getAllMains();
+            var dessert = DishType.getAllDesserts();
+
+            var result = drinks.Concat(starters).Concat(mains).Concat(dessert);
+
+        
+            return View(result);
         }
         public IActionResult FinalizedOrder()
         {

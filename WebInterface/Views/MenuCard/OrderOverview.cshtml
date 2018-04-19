@@ -10,6 +10,16 @@
 
 <hr />
 
-    <input type="button" value="Go back" onclick="location.href='@Url.Action("Starters", "MenuCard" )'" />
+<ol>
+    @foreach (DishType d in Model)
+    {
+        <li> @d.Name  </li>
+    }
 
-    <input type="button" value="Finalized Order" onclick="location.href='@Url.Action("FinalizedOrder", "MenuCard" )'" />
+</ol>
+
+<hr />
+
+<input type="button" value="Go back" onclick="location.href='@Url.Action("Starters", "MenuCard" )'" />
+
+<input type="button" value="Finalized Order" onclick="location.href='@Url.Action("FinalizedOrder", "MenuCard" )'" />
