@@ -8,9 +8,12 @@ namespace WebInterface.Models
     public class DishType
     {
         private static List<DishType> allDishes;
-        public CourseType Type { get; private set; }
-        public string Name { get; private set; }
-        public List<Ingredient> DefaultIngredients { get; private set; } = new List<Ingredient>();
+
+        public int DishTypeID { get; set; }
+        public virtual CourseType Type { get; set; }
+        public string Name { get; set; }
+
+        public ICollection<Ingredient> DefaultIngredients { get; private set; }
 
         /// <summary>
         /// Returns all dishes known to the system

@@ -7,6 +7,8 @@ namespace WebInterface.Models
 {
     public class IngredientType
     {
+        public int IngredientTypeID { get; set; }
+
         /// <summary>
         /// User readable name of this ingredient type.
         /// </summary>
