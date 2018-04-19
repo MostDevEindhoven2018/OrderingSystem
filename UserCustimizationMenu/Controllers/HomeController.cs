@@ -5,31 +5,47 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using UserCustimizationMenu.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication;
+
 
 namespace UserCustimizationMenu.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public HomeController(MyDbContext _context)
         {
-            return View();
+            ctx = _context;
         }
+
+        MyDbContext ctx = null;
 
         public IActionResult Login()
         {
+            ctx.Database.EnsureCreated();
+
+            var query = from u in ctx.Users
+                        select u;
+
+
+            //List<User> results = query.ToList();
+
             return View();
         }
 
-        //public IActionResult About()
+        //[HttpPost]
+        //public IActionResult Login(User user)
         //{
-        //    ViewData["Message"] = "Your application description page.";
+        //    ctx.Database.EnsureCreated();
 
-        //    return View();
-        //}
+        //    var query = from u in ctx.Users
+        //                select u;
 
-        //public IActionResult Contact()
-        //{
-        //    ViewData["Message"] = "Your contact page.";
+        //    //if (user.Password == "")
+        //    //{
+
+        //    //}
 
         //    return View();
         //}
@@ -38,5 +54,6 @@ namespace UserCustimizationMenu.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }
