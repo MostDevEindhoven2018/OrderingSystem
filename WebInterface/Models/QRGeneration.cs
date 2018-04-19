@@ -23,7 +23,7 @@ namespace WebInterface.Models
             QRCode qrCode = new QRCode(qrCodeData);
             Bitmap qrCodeImage = qrCode.GetGraphic(20);
             qrCodeImage.Save("C:\\Users\\Paulina\\Pictures\\poop.jpeg");
-
+            //qrCodeImage.Save(dir);
         }
 
 
