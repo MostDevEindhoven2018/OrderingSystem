@@ -1,14 +1,80 @@
-﻿
+﻿@model List<DishType>
+
 @{
     ViewData["Title"] = "Desserts";
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
 }
 
+<hr />
+
 <h2>Desserts</h2>
+
+<hr />
+
+
+@*<ol>
+
+    @foreach (DishType d in Model)
+    {
+        <li>  @d.Name </li>
+
+
+    }
+
+</ol>*@
+
+
+<h3>Ice Creams</h3>
+
+<ol>
+
+    @foreach (DishType d in Model)
+    {
+        @if (d.SubType == "IceCreams")
+        {
+            <li>  @d.Name </li>
+        }
+
+    }
+
+</ol>
+
+
+<h3>Sweet Salads</h3>
+
+<ol>
+
+    @foreach (DishType d in Model)
+    {
+
+        @if (d.SubType == "Salads")
+        {
+            <li>  @d.Name </li>
+        }
+
+    }
+
+</ol>
+
+<h3>Pies</h3>
+
+<ol>
+
+    @foreach (DishType d in Model)
+    {
+
+        @if (d.SubType == "Pies")
+        {
+            <li>  @d.Name </li>
+        }
+
+    }
+
+</ol>
+
 
 <p>
     <input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard" )'" />
 </p>
 <p>
     <input type="button" value="Go Back" onclick="location.href='@Url.Action("Main", "MenuCard" )'" />
-

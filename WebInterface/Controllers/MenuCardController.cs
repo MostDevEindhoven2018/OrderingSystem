@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
+using WebInterface.Models;
+
 namespace WebInterface.Controllers
 {
     public class MenuCardController : Controller
@@ -15,22 +17,49 @@ namespace WebInterface.Controllers
 
         public IActionResult Drinks()
         {
-            return View();
+            //var HotBeverages = DishType.getAllHotBeverages();
+            //var ColdBeverages = DishType.getAllColdBeverages();
+            //var HardDrinks = DishType.getAllHardDrinks();
+
+
+            //drinks contains all drinks defined in the CLASS DISHTYPE
+
+            var drinks = DishType.getAllDrinks();
+
+            var result = drinks.ToList();
+
+            return View(result);
+
         }
 
         public IActionResult Starters()
         {
-            return View();
+            //starters contains all starters defined in the CLASS DISHTYPE
+
+            var starters = DishType.getAllStarters();
+
+            var result = starters.ToList();
+            return View(result);
         }
 
         public IActionResult Mains()
         {
-            return View();
+            //mains contains all Mains defined in the CLASS DISHTYPE
+
+            var mains = DishType.getAllMains();
+
+            var result = mains.ToList();
+            return View(result);
         }
 
         public IActionResult Desserts()
         {
-            return View();
+            //desserts contains all Desserts defined in the CLASS DISHTYPE
+
+            var dessert = DishType.getAllDesserts();
+
+            var result = dessert.ToList();
+            return View(result);
         }
 
         public IActionResult OrderOverview()

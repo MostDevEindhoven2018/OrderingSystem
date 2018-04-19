@@ -1,4 +1,6 @@
-﻿
+﻿@model List<DishType>
+
+
 @{
     ViewData["Title"] = "Mains";
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
@@ -15,4 +17,15 @@
 <p>
     <input type="button" value="Go Back" onclick="location.href='@Url.Action("Starters", "MenuCard" )'" />
 </p>
+
+<ol>
+
+    @foreach (DishType d in Model)
+    {
+        <li>  @d.Name </li>
+
+
+    }
+
+</ol>
 

@@ -1,8 +1,12 @@
-﻿
+﻿@model List<DishType>
+
+
 @{
     ViewData["Title"] = "Drinks";
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
 }
+
+<hr />
 
 <h2>Drinks</h2>
 <p>
@@ -12,3 +16,52 @@
     <input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard" )'" />
 </p>
 
+<hr />
+
+<h3>Cold Beverages</h3>
+
+<ol>
+
+    @foreach (DishType d in Model)
+    {
+        @if (d.SubType == "ColdBeverage")
+        {
+            <li>  @d.Name </li>
+        }
+
+    }
+
+</ol>
+
+
+<h3>Hot Beverages</h3>
+
+<ol>
+
+    @foreach (DishType d in Model)
+    {
+
+        @if (d.SubType == "HotBeverage")
+        {
+            <li>  @d.Name </li>
+        }
+
+    }
+
+</ol>
+
+<h3>Hard Drinks</h3>
+
+<ol>
+
+    @foreach (DishType d in Model)
+    {
+
+        @if (d.SubType == "HardDrink")
+        {
+            <li>  @d.Name </li>
+        }
+
+    }
+
+</ol>
