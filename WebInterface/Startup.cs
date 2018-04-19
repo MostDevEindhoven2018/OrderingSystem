@@ -4,9 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebInterface.Models;
+using WebInterface.Services;
 using WebInterface.Models;
 
 namespace WebInterface
@@ -24,6 +27,14 @@ namespace WebInterface
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MenuCardDBContext>(option => option.UseSqlServer(Configuration.GetConnectionString("MenuCardDatabase")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+               .AddEntityFrameworkStores<MenuCardDBContext>()
+               .AddDefaultTokenProviders();
+
+            // Add application services.
+            services.AddTransient<IEmailSender, EmailSender>();
+
             services.AddMvc();
         }
 
