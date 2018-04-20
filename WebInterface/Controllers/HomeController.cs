@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.DrawingCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using QRCoder;
 using WebInterface.Models;
 
 namespace WebInterface.Controllers
@@ -43,6 +45,13 @@ namespace WebInterface.Controllers
         public IActionResult PrintQR(string url, string directory)
         {
             var QR = new QRGeneration(url, directory);
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+
+            qrCodeImage.Save("C:\\Users\\Paulina\\Pictures\\" + directory + ".jpeg");
+
             return View();
         }
     }

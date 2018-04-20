@@ -24,8 +24,9 @@ namespace WebInterface.Models
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
             Bitmap qrCodeImage = qrCode.GetGraphic(20);
-            //qrCodeImage.Save("C:\\Users\\Paulina\\Pictures\\poop.jpeg");
-            qrCodeImage.Save(directory);
+
+            
+            //qrCodeImage.Save("C:\\Users\\Paulina\\Pictures\\"+directory+".jpeg");
         }
 
 
