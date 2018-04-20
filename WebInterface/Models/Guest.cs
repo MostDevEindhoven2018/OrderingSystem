@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace WebInterface.Models
         /// <summary>
         /// The code of a guest is used to ensure that 2 guests cannot use each others pages by guessing their ID
         /// </summary>
+        [StringLength(128)]
         public string Code { get; set; }
 
         /// <summary>
