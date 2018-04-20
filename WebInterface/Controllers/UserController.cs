@@ -14,50 +14,16 @@ namespace WebInterface.Controllers
 {
     public class UserController : Controller
     {
-        public UserController(MyDbContext _context)
+        public UserController(MenuCardDBContext _context)
         {
             ctx = _context;
         }
 
-        MyDbContext ctx = null;
-
-        public IActionResult Login()
-        {
-            ctx.Database.EnsureCreated();
-
-            var query = from u in ctx.Users
-                        select u;
-
-
-            //List<User> results = query.ToList();
-
-            return View();
-        }
+        MenuCardDBContext ctx = null;
 
         public IActionResult Customize()
         {
             return View();
-        }
-
-        //[HttpPost]
-        //public IActionResult Login(User user)
-        //{
-        //    ctx.Database.EnsureCreated();
-
-        //    var query = from u in ctx.Users
-        //                select u;
-
-        //    //if (user.Password == "")
-        //    //{
-
-        //    //}
-
-        //    return View();
-        //}
-
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
     }
