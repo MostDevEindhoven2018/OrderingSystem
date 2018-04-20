@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace WebInterface.Models
@@ -27,5 +28,19 @@ namespace WebInterface.Models
         /// belongs to a specific group.
         /// </summary>
         public virtual Group Group { get; set; }
+
+        private static Random rand = new Random();
+        public static string GenerateGuestCode(int guestID)
+        {
+            StringBuilder str = new StringBuilder();
+            str.Append(guestID.ToString());
+
+            for(int i = 0; i < 64; i++)
+            {
+                str.Append(rand.Next(10));
+            }
+
+            return str.ToString();
+        }
     }
 }

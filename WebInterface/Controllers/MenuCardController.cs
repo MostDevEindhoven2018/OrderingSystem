@@ -25,7 +25,7 @@ namespace WebInterface.Controllers
                 return RedirectToAction("ErrorView");
             }
             //TODO: add guest here
-            string guestCode = "ABC021";
+            string guestCode = Guest.GenerateGuestCode(1);
             return RedirectToAction("Index",new { guestCode = guestCode });
         }
 
