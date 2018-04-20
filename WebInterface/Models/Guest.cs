@@ -7,6 +7,7 @@ namespace WebInterface.Models
 {
     public class Guest
     {
+        public int GuestID { get; set; }
         /// <summary>
         /// The age of the customer.
         /// </summary>
@@ -19,6 +20,6 @@ namespace WebInterface.Models
         /// the current group, hence a Guest can always 
         /// belongs to a specific group.
         /// </summary>
-        public Group Group { get; set; }
+        public virtual Group Group { get; set; }
     }
 }

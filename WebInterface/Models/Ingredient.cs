@@ -7,7 +7,8 @@ namespace WebInterface.Models
 {
     public class Ingredient
     {
-        public IngredientType Type { get; private set; }
+        public int IngredientID { get; set; }
+        public virtual IngredientType Type { get; private set; }
 
         /// <summary>
         /// This quantity is expressed in units defined by the type of this ingredient.
