@@ -28,7 +28,7 @@ namespace WebInterface.Controllers
             }
             //TODO: add guest here
             string guestCode = Guest.GenerateGuestCode(1);
-            return RedirectToAction("Index", new { guestCode = guestCode });
+            return RedirectToAction("Index", new GuestCodeWithModel<object>(null, guestCode));
         }
 
         public async Task<IActionResult> Index(string guestCode)
@@ -38,7 +38,7 @@ namespace WebInterface.Controllers
                 return RedirectToAction("ErrorView");
             }
             await DBCreationTask;
-            return View("Index", guestCode);
+            return View("Index", new GuestCodeWithModel<object>(null, guestCode));
         }
 
         public async Task<IActionResult> Drinks(string guestCode)
@@ -132,9 +132,9 @@ namespace WebInterface.Controllers
         }
 
 
-        public IActionResult FinalizedOrder()
+        public IActionResult FinalizedOrder(string guestCode)
         {
-            return View();
+            return View(new GuestCodeWithModel<object>(null, guestCode));
         }
     }
 }

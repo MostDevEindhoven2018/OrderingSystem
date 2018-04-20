@@ -17,6 +17,10 @@
     </environment>
 </head>
 <body>
+    @{
+        var argument = new Dictionary<string, string>();
+        argument["GuestCode"] = Model.GuestCode;
+    }
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -26,16 +30,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="MenuCard" asp-action="Index" class="navbar-brand">Home</a>
+                <a asp-area="" asp-controller="MenuCard" asp-action="Index"  asp-all-route-data=argument class="navbar-brand">Home</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="MenuCard" asp-action="Drinks">Drinks</a></li>
-                    <li><a asp-area="" asp-controller="MenuCard" asp-action="Starters">Starters</a></li>
-                    <li><a asp-area="" asp-controller="MenuCard" asp-action="Mains">Main Courses</a></li>
-                    <li><a asp-area="" asp-controller="MenuCard" asp-action="Desserts">Desserts</a></li>
-                    <li><a asp-area="" asp-controller="MenuCard" asp-action="OrderOverview">Order Overview</a></li>
-                    <li><a asp-area="" asp-controller="MenuCard" asp-action="FinalizedOrder">Finalized Order </a></li>
+
+                    <li><a asp-area="" asp-controller="MenuCard" asp-action="Drinks" asp-all-route-data=argument>Drinks</a></li>
+                    <li><a asp-area="" asp-controller="MenuCard" asp-action="Starters" asp-all-route-data=argument>Starters</a></li>
+                    <li><a asp-area="" asp-controller="MenuCard" asp-action="Mains" asp-all-route-data=argument>Main Courses</a></li>
+                    <li><a asp-area="" asp-controller="MenuCard" asp-action="Desserts" asp-all-route-data=argument>Desserts</a></li>
+                    <li><a asp-area="" asp-controller="MenuCard" asp-action="OrderOverview" asp-all-route-data=argument>Order Overview</a></li>
+                    <li><a asp-area="" asp-controller="MenuCard" asp-action="FinalizedOrder" asp-all-route-data=argument>Finalized Order </a></li>
                 </ul>
             </div>
         </div>
