@@ -1,4 +1,4 @@
-﻿@model List<DishType>
+﻿@model GuestCodeWithModel<List<DishType>>
 
 @{
     ViewData["Title"] = "Desserts";
@@ -43,7 +43,7 @@
 <ul>
     <table name="IceCreamTable" class="table">
 
-        @foreach (DishType d in Model)
+        @foreach (DishType d in Model.Model)
         {
             <tr>
                 @if (d.SubType == "IceCreams")
@@ -108,7 +108,7 @@
 <ul>
         <table name="IceCreamTable" class="table">
 
-            @foreach (DishType d in Model)
+            @foreach (DishType d in Model.Model)
         {
             <tr>
                 @if (d.SubType == "Salads")
@@ -174,7 +174,7 @@
 <ul>
         <table name="IceCreamTable" class="table">
 
-            @foreach (DishType d in Model)
+            @foreach (DishType d in Model.Model)
         {
             <tr>
                 @if (d.SubType == "Pies")
@@ -217,7 +217,7 @@
             </table>
 </ul>
 
-    <input type="button" value="Go Back" onclick="location.href='@Url.Action("Mains", "MenuCard" )'" />
+    <input type="button" value="Go Back" onclick="location.href='@Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 
-    <input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard" )'" />
+    <input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 

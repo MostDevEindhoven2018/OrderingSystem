@@ -7,6 +7,7 @@ namespace WebInterface.Models
 {
     public class Bill
     {
-        public Guest Payer { get; set; }
+        public int BillID { get; set; }
+        public virtual Guest Payer { get; set; }
     }
 }

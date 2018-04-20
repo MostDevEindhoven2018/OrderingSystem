@@ -10,6 +10,8 @@ namespace WebInterface.Models
 
     public class Guest
     {
+<<<<<<< HEAD
+=======
         public int GuestID { get; set; }
 
         /// <summary>
@@ -19,6 +21,11 @@ namespace WebInterface.Models
         [StringLength(128)]
         public string Code { get; set; }
 
+        /// <summary>
+        /// The age of the customer.
+        /// </summary>
+        public string Name { get; set; }
+>>>>>>> develop
 
 
          // <summary>

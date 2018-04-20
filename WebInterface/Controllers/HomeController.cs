@@ -33,5 +33,17 @@ namespace WebInterface.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult PrintQR()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult PrintQR(string url, string dir)
+        {
+            var QR = new QRGeneration(url, dir);
+            return View();
+        }
     }
 }

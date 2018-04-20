@@ -1,4 +1,4 @@
-﻿@model List<DishType>
+﻿@model GuestCodeWithModel<List<DishType>>
 
 
 @{
@@ -18,7 +18,7 @@
 <ul>
     <table name="ColdBeverageTable" class="table">
 
-        @foreach (DishType d in Model)
+        @foreach (DishType d in Model.Model)
         {
             <tr>
                 @if (d.SubType == "ColdBeverage")
@@ -81,7 +81,7 @@
     <ul>
         <table name="HotbeverageTable" class="table">
 
-            @foreach (DishType d in Model)
+            @foreach (DishType d in Model.Model)
             {
                 <tr>
                     <!-- Each row data
@@ -147,7 +147,7 @@
         <ul>
             <table name="HotbeverageTable" class="table">
 
-                @foreach (DishType d in Model)
+                @foreach (DishType d in Model.Model)
                 {
                     <tr>
                         @if (d.SubType == "HardDrink")
@@ -191,7 +191,7 @@
             <ul>
                 <table name="HotbeverageTable" class="table">
 
-                    @foreach (DishType d in Model)
+                    @foreach (DishType d in Model.Model)
                     {
                         <tr>
                             @if (d.SubType == "HardDrinks")
@@ -256,10 +256,10 @@
 
 
 
-                    <input type="button" value="Go back to home" onclick="location.href='@Url.Action("MenuCard")'" />
+                    <input type="button" value="Go back to home" onclick="location.href='@Url.Action("Index", "MenuCard", new { GuestCode = Model.GuestCode})'" />
 
-                    <input type="button" value="Procced To Starter" onclick="location.href='@Url.Action("Starters", "MenuCard" )'" />
+                    <input type="button" value="Procced To Starter" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 
-                   <input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard" )'" />
+                   <input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 
 

@@ -1,4 +1,5 @@
-﻿
+﻿@model string
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
@@ -9,7 +10,7 @@
 <hr />
 
 <p>
-    <input type="button" value="Show Menu Card" onclick="location.href='@Url.Action("Drinks", "MenuCard" )'" />
+    <input type="button" value="Show Menu Card" onclick="location.href='@Url.Action("Drinks", "MenuCard", new { GuestCode = Model} )'" />
 </p>
 <p>
     <input type="button" value="Feedback" onclick="location.href='@Url.Action("Index", "Home" )'" />

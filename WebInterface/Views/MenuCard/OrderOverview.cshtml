@@ -1,4 +1,4 @@
-﻿
+﻿@Model  GuestCodeWithModel<List<DishType>>
 @{
     ViewData["Title"] = "OrderOverview";
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
@@ -13,7 +13,7 @@
 <ol>
     <table name="MainsTable" class="table">
 
-        @foreach (DishType d in Model)
+        @foreach (DishType d in Model.Model)
         {
             <tr>
 
@@ -57,4 +57,4 @@
 
 @*<input type="button" value="Go back" onclick="location.href='@Url.Action("Starters", "MenuCard" )'" />*@
 
-<input type="button" value="Finalized Order" onclick="location.href='@Url.Action("FinalizedOrder", "MenuCard" )'" />
+<input type="button" value="Finalized Order" onclick="location.href='@Url.Action("FinalizedOrder", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
