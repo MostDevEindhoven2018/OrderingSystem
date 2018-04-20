@@ -25,13 +25,13 @@ namespace WebInterface.Controllers
                 return RedirectToAction("ErrorView");
             }
             //TODO: add guest here
-            int guestID = 1;
-            return RedirectToAction("Index",new { guestID = guestID });
+            string guestCode = "ABC021";
+            return RedirectToAction("Index",new { guestCode = guestCode });
         }
 
-        public async Task<IActionResult> Index(int? guestID)
+        public async Task<IActionResult> Index(string guestCode)
         {
-            if (guestID == null)
+            if (guestCode == null)
             {
                 return RedirectToAction("ErrorView");
             }
@@ -39,9 +39,9 @@ namespace WebInterface.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Drinks(int? guestID)
+        public async Task<IActionResult> Drinks(string guestCode)
         {
-            if (guestID == null)
+            if (guestCode == null)
             {
                 return RedirectToAction("ErrorView");
             }
@@ -49,9 +49,9 @@ namespace WebInterface.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Starters(int? guestID)
+        public async Task<IActionResult> Starters(string guestCode)
         {
-            if (guestID == null)
+            if (guestCode == null)
             {
                 return RedirectToAction("ErrorView");
             }
@@ -59,9 +59,9 @@ namespace WebInterface.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Mains(int? guestID)
+        public async Task<IActionResult> Mains(string guestCode)
         {
-            if (guestID == null)
+            if (guestCode == null)
             {
                 return RedirectToAction("ErrorView");
             }
@@ -69,9 +69,9 @@ namespace WebInterface.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Desserts(int? guestID)
+        public async Task<IActionResult> Desserts(string guestCode)
         {
-            if (guestID == null)
+            if (guestCode == null)
             {
                 return RedirectToAction("ErrorView");
             }
@@ -79,9 +79,9 @@ namespace WebInterface.Controllers
             return View();
         }
 
-        public async Task<IActionResult> OrderOverview(int? guestID)
+        public async Task<IActionResult> OrderOverview(string guestCode)
         {
-            if (guestID == null)
+            if (guestCode == null)
             {
                 return RedirectToAction("ErrorView");
             }

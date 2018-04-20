@@ -8,6 +8,12 @@ namespace WebInterface.Models
     public class Guest
     {
         public int GuestID { get; set; }
+
+        /// <summary>
+        /// The code of a guest is used to ensure that 2 guests cannot use each others pages by guessing their ID
+        /// </summary>
+        public string Code { get; set; }
+
         /// <summary>
         /// The age of the customer.
         /// </summary>
