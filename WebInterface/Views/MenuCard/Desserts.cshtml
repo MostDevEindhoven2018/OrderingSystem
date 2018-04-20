@@ -12,210 +12,82 @@
 <hr />
 
 
-@*<ol>
+<style>
 
-        @foreach (DishType d in Model)
-        {
-            <li>  @d.Name </li>
+    .SubDrink {
+        float: left;
+        width: 50%;
+    }
 
-
-        }
-
-    </ol>*@
-
-
-<h3>Ice Creams</h3>
-
-@*<ol>
-
-        @foreach (DishType d in Model)
-        {
-            @if (d.SubType == "IceCreams")
-            {
-                <li>  @d.Name </li>
-            }
-
-        }
-
-    </ol>*@
+    .customize {
+        float: left;
+        width: 30%;
+    }
 
 
-<ul>
-    <table name="IceCreamTable" class="table">
+    .quantity {
+        float: left;
+        width: 20%;
+    }
+</style>
+
+
+
+
+<div class="Dessert">
+
+    <h3>Ice Cream</h3>
+
+    <div class="IceCream">
 
         @foreach (DishType d in Model.Model)
         {
-            <tr>
-                @if (d.SubType == "IceCreams")
-                {
-                    <td>
-            <li>  @d.Name </li>
-            </td>
-                    <td style="width:20%">
-                        [Customize]
-                    </td>
-        
-                    <td style="width:50%">
-
-                        <div class="quantity buttons_added">
-                            <input id="minus" type="button" class="minus" value="-">
-                            <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1">
-                            <input id="plus" type="button" class="plus" value="+">
-                        </div>
-                        <script>
-                            var input = document.getElementById('theInput');
-                            document.getElementById('plus').onclick = function () {
-                                input.value = parseInt(input.value, 10) + 1
-                            }
-                            document.getElementById('minus').onclick = function () {
-
-                                if (input.value > 0) { input.value = parseInt(input.value, 10) - 1 }
-                                else if (input.value <= 0) { input.value = 0 }
-
-
-
-                            }
-
-                                < !-- -->
-                        </script>
-                    </td>
-                }
-
-                </tr>
+            @if (d.SubType == "IceCreams")
+            {
+                <div class="SubDrink"> @d.Name</div>
+                <div class="customize"> [Customize] </div>
+                <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
 
             }
-        </table>
-</ul>
-
-
+        }
+    </div>
 
     <h3>Fruit Salads</h3>
 
-    @*<ol>
-
-        @foreach (DishType d in Model)
-        {
-
-            @if (d.SubType == "Salads")
-            {
-                <li>  @d.Name </li>
-            }
-
-        }
-
-    </ol>*@
-
-<ul>
-        <table name="IceCreamTable" class="table">
-
+    <div class="Salad">
             @foreach (DishType d in Model.Model)
         {
-            <tr>
-                @if (d.SubType == "Salads")
+            @if (d.SubType == "Salads")
             {
-                <td>
-        <li>  @d.Name </li>
-        </td>
-                    <td style="width:20%">
-                        [Customize]
-                    </td>
+                <div class="SubDrink"> @d.Name</div>
+                <div class="customize"> [Customize] </div>
+                <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
 
-                <td style="width:50%">
-
-                    <div class="quantity buttons_added">
-                        <input id="minus" type="button" class="minus" value="-">
-                        <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1">
-                        <input id="plus" type="button" class="plus" value="+">
-                    </div>
-                    <script>
-                                                    var input = document.getElementById('theInput');
-                            document.getElementById('plus').onclick = function () {
-                                input.value = parseInt(input.value, 10) + 1
-                            }
-                            document.getElementById('minus').onclick = function () {
-
-                                if (input.value > 0) { input.value = parseInt(input.value, 10) - 1 }
-                                else if (input.value <= 0) { input.value = 0 }
-
-
-
-                            }
-
-                                < !-- -->
-                    </script>
-                </td>
+            }
         }
-
-                </tr>
-
-        }
-            </table>
-</ul>
-
-
+    </div>
 
     <h3>Pies</h3>
 
-    @*<ol>
-
+    <div class="Pie">
         @foreach (DishType d in Model)
         {
-
             @if (d.SubType == "Pies")
             {
-                <li>  @d.Name </li>
+                <div class="SubDrink"> @d.Name</div>
+                <div class="customize"> [Customize] </div>
+                <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+
             }
-
-        }
-
-    </ol>*@
-
-
-<ul>
-        <table name="IceCreamTable" class="table">
-
             @foreach (DishType d in Model.Model)
-        {
-            <tr>
-                @if (d.SubType == "Pies")
-            {
-                <td>
-        <li>  @d.Name </li>
-        </td>
-                    <td style="width:20%">
-                        [Customize]
-                    </td>
-                <td style="width:50%">
-
-                    <div class="quantity buttons_added">
-                        <input id="minus" type="button" class="minus" value="-">
-                        <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1">
-                        <input id="plus" type="button" class="plus" value="+">
-                    </div>
-                    <script>
-                                                                            var input = document.getElementById('theInput');
-                            document.getElementById('plus').onclick = function () {
-                                input.value = parseInt(input.value, 10) + 1
-                            }
-                            document.getElementById('minus').onclick = function () {
-
-                                if (input.value > 0) { input.value = parseInt(input.value, 10) - 1 }
-                                else if (input.value <= 0) { input.value = 0 }
-
-
-
-                            }
-
-                                < !-- -->
-                    </script>
-                </td>
         }
+    </div>
 
-                </tr>
 
-        }
-            </table>
-</ul>
+
+</div>
+
+
 
     <input type="button" value="Go Back" onclick="location.href='@Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 

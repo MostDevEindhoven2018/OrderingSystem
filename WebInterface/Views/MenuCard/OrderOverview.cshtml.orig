@@ -1,4 +1,4 @@
-﻿@model  GuestCodeWithModel<List<DishType>>
+﻿@Model  GuestCodeWithModel<List<DishType>>
 @{
     ViewData["Title"] = "OrderOverview";
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
