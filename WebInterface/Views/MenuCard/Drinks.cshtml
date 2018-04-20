@@ -44,7 +44,7 @@
 
     <div class="ColdBeverage">
 
-        @foreach (DishType d in Model)
+        @foreach (DishType d in Model.Model)
            {
              @if (d.SubType == "ColdBeverage")
                 {
@@ -59,7 +59,7 @@
     <h3>Hot Beverages</h3>
 
     <div class="HotBeverage">
-        @foreach (DishType d in Model)
+        @foreach (DishType d in Model.Model)
            {
              @if (d.SubType == "HotBeverage")
                 {
@@ -74,7 +74,7 @@
     <h3>Hard Drinks</h3>
 
     <div class="HardDrink">
-        @foreach (DishType d in Model)
+        @foreach (DishType d in Model.Model)
            {
              @if (d.SubType == "HardDrink")
                 {
@@ -94,8 +94,8 @@
 <br />
 
 
-<input type="button" value="Go back to home" onclick="location.href='@Url.Action("MenuCard")'" />
+<input type="button" value="Go back to home" onclick="location.href='@Url.Action("Index", "MenuCard", new { GuestCode = Model.GuestCode})'" />
 
-<input type="button" value="Procced To Starter" onclick="location.href='@Url.Action("Starters", "MenuCard" )'" />
+<input type="button" value="Procced To Starter" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 
-<input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard" )'" />
+<input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />

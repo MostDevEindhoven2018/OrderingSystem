@@ -38,7 +38,7 @@
 
     <div class="IceCream">
 
-        @foreach (DishType d in Model)
+        @foreach (DishType d in Model.Model)
         {
             <div class="SubDrink"> @d.Name</div>
             <div class="customize"> [Customize] </div>
@@ -48,11 +48,11 @@
 </div>
 
 
-<input type="button" value="Go Back" onclick="location.href='@Url.Action("Starters", "MenuCard" )'" />
+<input type="button" value="Go Back" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 
-<input type="button" value="Proceed To Dessert" onclick="location.href='@Url.Action("Desserts", "MenuCard" )'" />
+<input type="button" value="Proceed To Dessert" onclick="location.href='@Url.Action("Desserts", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 
-<input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard" )'" />
+<input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard" ,new { GuestCode = Model.GuestCode} )'" />
 
 
 
