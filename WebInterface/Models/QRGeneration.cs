@@ -9,8 +9,8 @@ namespace WebInterface.Models
 {
     public class QRGeneration
     {
-        public string Url { get; set; }
-        public string Directory { get; set; }
+        public string Table_Number { get; set; }
+        //public string Directory { get; set; }
 
         /// <summary>
         /// Generate QR JPEG from provided URL
@@ -18,15 +18,15 @@ namespace WebInterface.Models
         /// </summary>
         /// <param name="url"></param>
         /// <param name="dir"></param>
-        public QRGeneration (string url, string directory)
+        public QRGeneration (string table)
         {
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode("http://localhost:52892/menucard/addguest?tableno=" + table, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
             Bitmap qrCodeImage = qrCode.GetGraphic(20);
 
-            
-            //qrCodeImage.Save("C:\\Users\\Paulina\\Pictures\\"+directory+".jpeg");
+
+            qrCodeImage.Save("C:\\Users\\Paulina\\Pictures\\"+"mu"+".jpeg");
         }
 
 

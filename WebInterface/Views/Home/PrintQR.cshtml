@@ -6,24 +6,24 @@
 
 <h2>PrintQR</h2>
 
-<h4>QRGeneration</h4>
+@*<h4>QRGeneration</h4>*@
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="PrintQR">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Url" class="control-label"></label>
-                <input asp-for="Url" class="form-control" />
-                <span asp-validation-for="Url" class="text-danger"></span>
+                <label asp-for="Table_Number" class="control-label"></label>
+                <input asp-for="Table_Number" class="form-control" />
+                <span asp-validation-for="Table_Number" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="Directory" class="control-label"></label>
                 <input asp-for="Directory" class="form-control" />
                 <span asp-validation-for="Directory" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="CreateQR" class="btn btn-default" />
             </div>
         </form>
     </div>
