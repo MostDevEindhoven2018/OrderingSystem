@@ -1,12 +1,15 @@
-﻿using System;
+﻿using System.Web;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.DrawingCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using QRCoder;
 using WebInterface.Models;
+
 
 namespace WebInterface.Controllers
 {
@@ -38,17 +41,79 @@ namespace WebInterface.Controllers
 
         public IActionResult PrintQR()
         {
-            return View();
+            var tables = GetAllTables();
+
+            var model = new QRGeneration();
+
+            //Create a list of all tables
+
+            model.Tables = GetSelectListItems(tables);
+
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult PrintQR(string Table_Number)
+        public IActionResult PrintQR(QRGeneration model)
         {
-            var QR = new QRGeneration(Table_Number);
+            //Get all tables again
+            var tables = GetAllTables();
 
-            return View();
+            //selected value from DropDownList is posted back
+            model.Tables = GetSelectListItems(tables);
+
+            //if a table is chosen the model is valid
+            if (ModelState.IsValid)
+            {
+                var QR = new QRGeneration(model.Table_Number);
+                return View(model);
+            }
+
+            return View("PrintQR", model);
         }
 
-        
+        //public ActionResult TableSelected()
+        //{
+        //    var model = Session["QRGeneration"] as QRGenerationModel;
+
+        //    return View(model);
+        //}
+
+        //TODO obtain Table information from database
+        private IEnumerable<string> GetAllTables()
+        {
+            return new List<string>
+            {
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10"
+            };
+        }
+
+        private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<string> elements)
+        {
+            var selectList = new List<SelectListItem>();
+
+            foreach (var element in elements)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = element,
+                    Text = element
+                });
+            }
+
+            return selectList;
+        }
+
+       
+
+
     }
 }
