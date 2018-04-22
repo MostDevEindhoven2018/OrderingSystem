@@ -42,15 +42,9 @@ namespace WebInterface.Controllers
         }
 
         [HttpPost]
-        public IActionResult PrintQR(string table)
+        public IActionResult PrintQR(string Table_Number)
         {
-            //var QR = new QRGeneration(url, directory);
-            //QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            //QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
-            //QRCode qrCode = new QRCode(qrCodeData);
-            //Bitmap qrCodeImage = qrCode.GetGraphic(20);
-
-            //qrCodeImage.Save("C:\\Users\\Paulina\\Pictures\\" + directory + ".jpeg");
+            var QR = new QRGeneration(Table_Number);
 
             return View();
         }
