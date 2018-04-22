@@ -10,6 +10,8 @@ namespace WebInterface.Models
     public class QRGeneration
     {
         public string Table_Number { get; set; }
+
+        public List<int> TableNum { get; set; } 
         //public string Directory { get; set; }
 
         /// <summary>
