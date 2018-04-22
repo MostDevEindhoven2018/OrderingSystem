@@ -65,18 +65,14 @@ namespace WebInterface.Controllers
             if (ModelState.IsValid)
             {
                 var QR = new QRGeneration(model.Table_Number);
-                return View(model);
+                //TODO Change the path or save as stream
+                byte[] fileBytes = System.IO.File.ReadAllBytes(@"C:\\Users\\Paulina\\Pictures\\" + "QRTable_" + model.Table_Number + ".jpeg");
+                string fileName = "QRTable_" + model.Table_Number + ".jpeg";
+                return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
             }
 
             return View("PrintQR", model);
         }
-
-        //public ActionResult TableSelected()
-        //{
-        //    var model = Session["QRGeneration"] as QRGenerationModel;
-
-        //    return View(model);
-        //}
 
         //TODO obtain Table information from database
         private IEnumerable<string> GetAllTables()
