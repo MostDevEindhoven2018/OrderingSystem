@@ -3,142 +3,135 @@
 @{
     ViewData["Title"] = "Create";
 }
+<body>
+        <h2>Create</h2>
 
-<h2>Create</h2>
+        <h4>DishType</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
 
-<h4>DishType</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-    <form asp-action="Create">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="Name" class="control-label"></label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>            
-        </div>
+                    <div class="form-group">
+                        @Html.DropDownList("CourseType",
+                                                 Html.GetEnumSelectList<CourseType>(),
+                                                 "Select Course", new { @class = "form-control" })
 
-        <div class="form-group">
-            @*<label asp-for="Course" class="control-label"></label>
-        <select asp-for="Course" class="form-control">
-            <option disabled selected>Select Course:</option>
-            <option>Unavailable</option>
-            <option>Drinks</option>
-            <option>Starters</option>
-            <option>Mains</option>
-            <option>Desserts</option>
-        </select>*@
-
-            @Html.DropDownList("CourseType",
-   Html.GetEnumSelectList<CourseType>(),
-   "Select Couse", new { @class = "form-control" })
-
-            <span asp-validation-for="Course" class="text-danger"></span>
-        </div>
-
-
-
-
-
-
-
-
-
-        @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-        }
-
-
-
-        <head>
-
-
-
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            @*<style type="text/css">
-                div {
-                    padding: 8px;
-                }
-            </style>*@
-
-        </head>
-
-        <body>
-
-
-
-            <script type="text/javascript">
-
-                $(document).ready(function () {
-
-                    var counter = 2;
-
-                    $("#addButton").click(function () {
-
-                        if (counter > 10) {
-                            alert("Only 10 textboxes allow");
-                            return false;
-                        }
-
-                        var newTextBoxDiv = $(document.createElement('div'))
-                            .attr("id", 'TextBoxDiv' + counter);
-
-                        newTextBoxDiv.after().html('<label>Ingredient #' + counter + ' : </label>' +
-                            '<input type="text" name="textbox' + counter +
-                            '" id="textbox' + counter + '" value="" >');
-
-                        newTextBoxDiv.appendTo("#TextBoxesGroup");
-
-
-                        counter++;
-                    });
-
-                    $("#removeButton").click(function () {
-                        if (counter == 1) {
-                            alert("No more textbox to remove");
-                            return false;
-                        }
-
-                        counter--;
-
-                        $("#TextBoxDiv" + counter).remove();
-
-                    });
-
-                    $("#getButtonValue").click(function () {
-
-                        var msg = '';
-                        for (i = 1; i < counter; i++) {
-                            msg += "\n Ingredient #" + i + " : " + $('#textbox' + i).val();
-                        }
-                        alert(msg);
-                    });
-                });
-            </script>
-
-
-            <div id='TextBoxesGroup'>
-                <div id="TextBoxDiv1">
-                    <label>Ingredient #1 : </label><input type='text' id='textbox1'>
-                </div>
+                        <span asp-validation-for="Course" class="text-danger"></span>
+                    </div>
+                    <div id='TextBoxesGroup'>
+                        <div id="TextBoxDiv1">
+                            <label>Ingredient #1 : </label><input type='text' id='textbox1'>
+                        </div>
+                    </div>
+                    <input type='button' value='Add Button' id='addButton'>
+                    <input type='button' value='Remove Button' id='removeButton'>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </form>
             </div>
-            <input type='button' value='Add Button' id='addButton'>
-            <input type='button' value='Remove Button' id='removeButton'>
+        </div>
 
+        <div>
+            <a asp-action="Index">Back to Overview</a>
+        </div>
+    </body>
 
-        </body>
-        </html>
+@*<form id="myform" >
+    <lable name="text" enter text/>
+        <input id="in" type="text" />
+        <input type="submit" />
 
-
-
-
+        <div id='TextBoxesGroup'>
+            <div id="TextBoxDiv1">
+                <label>Ingredient #1 : </label><input type='text' id='textbox1'>
+            </div>
+        </div>
+        <input type='button' value='Add Button' id='addButton'>
+        <input type='button' value='Remove Button' id='removeButton'>
         <div class="form-group">
             <input type="submit" value="Create" class="btn btn-default" />
         </div>
-    </form>
-</div>
-</div>
+</form>*@
 
-<div>
-    <a asp-action="Index">Back to Overview</a>
-</div>
+@*<div class="results">
+    <ul class="list">
+        <li></li>
+    </ul>
+</div>*@
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var counter = 2;
+        var listOfButtons;
+
+        $("#addButton").click(function () {
+
+            if (counter > 10) {
+                alert("Only 10 textboxes allow");
+                return false;
+            }
+
+            var newTextBoxDiv = $(document.createElement('div'))
+                .attr("id", 'TextBoxDiv' + counter);
+
+            newTextBoxDiv.after().html('<label>Ingredient #' + counter + ' : </label>' +
+                '<input type="text" name="textbox' + counter +
+                '" id="textbox' + counter + '" value="" >');
+
+            newTextBoxDiv.appendTo("#TextBoxesGroup");
+            listOfButtonsItem.set_item('textbox' + counter);
+
+            counter++;
+        });
+
+        $("#removeButton").click(function () {
+            if (counter == 1) {
+                alert("No more textbox to remove");
+                return false;
+            }
+
+            counter--;
+
+            $("#TextBoxDiv" + counter).remove();
+
+        });
+
+        $("#getButtonValue").click(function () {
+
+            var msg = '';
+            for (i = 1; i < counter; i++) {
+                msg += "\n Ingredient #" + i + " : " + $('#textbox' + i).val();
+            }
+            alert(msg);
+        });
+    });
+</script>
+
+@*<script>
+    (function ($) {
+        $('#myform').submit(function (e) {
+            var val = $(this).find('#textbox1').val();
+            var val1 = $(this).find('#textbox2').val();
+            var val2 = $(this).find('#textbox3').val();
+            $('ul.list').append('<li>' + val + '</li>' + '<li>' + val1 + '</li>' + '<li>' + val2 + '</li>');
+            e.preventDefault();
+        });
+    })(jQuery);
+</script>*@
