@@ -29,7 +29,7 @@ namespace WebInterface.Models
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode("http://localhost:52892/menucard/addguest?tableno=" + table, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
-            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+            Bitmap qrCodeImage = qrCode.GetGraphic(5);
 
             qrCodeImage.Save("C:\\Users\\Paulina\\Pictures\\"+"QRTable_"+ table +".jpeg");
         }
