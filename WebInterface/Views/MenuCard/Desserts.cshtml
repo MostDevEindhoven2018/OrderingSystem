@@ -1,8 +1,99 @@
-﻿
+﻿@model GuestCodeWithModel<List<DishType>>
+
 @{
     ViewData["Title"] = "Desserts";
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
 }
 
+<hr />
+
 <h2>Desserts</h2>
+
+<hr />
+
+
+<style>
+
+    .SubDrink {
+        float: left;
+        width: 50%;
+    }
+
+    .customize {
+        float: left;
+        width: 30%;
+    }
+
+
+    .quantity {
+        float: left;
+        width: 20%;
+    }
+
+    #theInput {
+        width: 30%;
+    }
+
+</style>
+
+
+
+
+<div class="Dessert">
+
+    <h3>Ice Cream</h3>
+
+    <div class="IceCream">
+
+        @foreach (DishType d in Model.Model)
+        {
+            @if (d.SubType == "IceCreams")
+            {
+                <div class="SubDrink"> @d.Name</div>
+                <div class="customize"> [Customize] </div>
+                <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+
+            }
+        }
+    </div>
+
+    <h3>Fruit Salads</h3>
+
+    <div class="Salad">
+            @foreach (DishType d in Model.Model)
+        {
+            @if (d.SubType == "Salads")
+            {
+                <div class="SubDrink"> @d.Name</div>
+                <div class="customize"> [Customize] </div>
+                <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+
+            }
+        }
+    </div>
+
+    <h3>Pies</h3>
+
+    <div class="Pie">
+        @foreach (DishType d in Model.Model)
+        {
+            @if (d.SubType == "Pies")
+            {
+                <div class="SubDrink"> @d.Name</div>
+                <div class="customize"> [Customize] </div>
+                <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+
+            }
+        }
+    </div>
+
+
+
+</div>
+
+
+
+    <input type="button" value="Go Back" onclick="location.href='@Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+
+    <input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 

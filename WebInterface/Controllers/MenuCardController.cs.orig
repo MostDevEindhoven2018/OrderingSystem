@@ -28,7 +28,7 @@ namespace WebInterface.Controllers
             }
             //TODO: add guest here
             string guestCode = Guest.GenerateGuestCode(1);
-            return RedirectToAction("Index", new GuestCodeWithModel<object>(null, guestCode));
+            return RedirectToAction("Index",new { guestCode = guestCode });
         }
 
         public async Task<IActionResult> Index(string guestCode)
@@ -38,7 +38,7 @@ namespace WebInterface.Controllers
                 return RedirectToAction("ErrorView");
             }
             await DBCreationTask;
-            return View("Index", new GuestCodeWithModel<object>(null, guestCode));
+            return View();
         }
 
         public async Task<IActionResult> Drinks(string guestCode)
@@ -48,6 +48,12 @@ namespace WebInterface.Controllers
                 return RedirectToAction("ErrorView");
             }
             await DBCreationTask;
+            return View();
+        }
+
+        public async Task<IActionResult> Starters(string guestCode)
+        {
+<<<<<<< HEAD
             //var HotBeverages = DishType.getAllHotBeverages();
             //var ColdBeverages = DishType.getAllColdBeverages();
             //var HardDrinks = DishType.getAllHardDrinks();
@@ -58,83 +64,91 @@ namespace WebInterface.Controllers
             var drinks = DishType.getAllDrinks();
 
             var result = drinks.ToList();
-            return View(new GuestCodeWithModel<List<DishType>>(result, guestCode));
-        }
 
-        public async Task<IActionResult> Starters(string guestCode)
-        {
+            return View(result);
+
+=======
             if (guestCode == null)
             {
                 return RedirectToAction("ErrorView");
             }
             await DBCreationTask;
+            return View();
+>>>>>>> develop
+        }
+
+        public async Task<IActionResult> Mains(string guestCode)
+        {
+<<<<<<< HEAD
             //starters contains all starters defined in the CLASS DISHTYPE
 
             var starters = DishType.getAllStarters();
 
             var result = starters.ToList();
-
-            return View(new GuestCodeWithModel<List<DishType>>(result, guestCode));
-
-        }
-
-        public async Task<IActionResult> Mains(string guestCode)
-        {
+            return View(result);
+=======
             if (guestCode == null)
             {
                 return RedirectToAction("ErrorView");
             }
             await DBCreationTask;
+            return View();
+>>>>>>> develop
+        }
+
+        public async Task<IActionResult> Desserts(string guestCode)
+        {
+<<<<<<< HEAD
             //mains contains all Mains defined in the CLASS DISHTYPE
 
             var mains = DishType.getAllMains();
 
             var result = mains.ToList();
-            return View(new GuestCodeWithModel<List<DishType>>(result, guestCode));
-        }
-
-        public async Task<IActionResult> Desserts(string guestCode)
-        {
+            return View(result);
+=======
             if (guestCode == null)
             {
                 return RedirectToAction("ErrorView");
             }
             await DBCreationTask;
+            return View();
+>>>>>>> develop
+        }
+
+        public async Task<IActionResult> OrderOverview(string guestCode)
+        {
+<<<<<<< HEAD
             //desserts contains all Desserts defined in the CLASS DISHTYPE
 
             var dessert = DishType.getAllDesserts();
 
             var result = dessert.ToList();
-            return View(new GuestCodeWithModel<List<DishType>>(result, guestCode));
-        }
-
-        public async Task<IActionResult> OrderOverview(string guestCode)
-        {
+            return View(result);
+=======
             if (guestCode == null)
             {
                 return RedirectToAction("ErrorView");
             }
             await DBCreationTask;
+            return View();
+>>>>>>> develop
+        }
+
+        public IActionResult ErrorView()
+        {
             var drinks = DishType.getAllDrinks();
             var starters = DishType.getAllStarters();
             var mains = DishType.getAllMains();
             var dessert = DishType.getAllDesserts();
 
-            var result = drinks.Concat(starters).Concat(mains).Concat(dessert).ToList();
+            var result = drinks.Concat(starters).Concat(mains).Concat(dessert);
 
-
-            return View(new GuestCodeWithModel<List<DishType>>(result, guestCode));
+        
+            return View(result);
         }
-
-        public IActionResult ErrorView()
+        public IActionResult FinalizedOrder()
         {
             return View();
-        }
-
-
-        public IActionResult FinalizedOrder(string guestCode)
-        {
-            return View(new GuestCodeWithModel<object>(null, guestCode));
         }
     }
 }

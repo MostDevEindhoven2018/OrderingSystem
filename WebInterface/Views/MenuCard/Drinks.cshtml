@@ -1,8 +1,104 @@
-﻿
+﻿@model GuestCodeWithModel<List<DishType>>
+
+
 @{
     ViewData["Title"] = "Drinks";
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
 }
 
+<hr />
+
 <h2>Drinks</h2>
 
+<hr />
+
+
+<style>
+
+    .SubDrink {
+        float: left;
+        width: 50%;
+    }
+
+    .customize {
+        float: left;
+        width: 30%;
+    }
+
+
+    .quantity {
+        float: left;
+        width: 20%;
+    }
+
+    #theInput{
+        width:20%;
+    }
+
+</style>
+
+
+
+
+<div class="Drinks">
+
+    <h3>Cold  Beverages</h3>
+
+    <div class="ColdBeverage">
+
+        @foreach (DishType d in Model.Model)
+           {
+             @if (d.SubType == "ColdBeverage")
+                {
+                  <div class="SubDrink"> @d.Name</div>
+                  <div class="customize"> [Customize] </div>
+                  <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+
+                }
+             
+           }
+    </div>
+
+    <h3>Hot Beverages</h3>
+
+    <div class="HotBeverage">
+        @foreach (DishType d in Model.Model)
+           {
+             @if (d.SubType == "HotBeverage")
+                {
+                  <div class="SubDrink"> @d.Name</div>
+                  <div class="customize"> [Customize] </div>
+                  <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+       
+                }
+           }
+    </div>
+
+    <h3>Hard Drinks</h3>
+
+    <div class="HardDrink">
+        @foreach (DishType d in Model.Model)
+           {
+             @if (d.SubType == "HardDrink")
+                {
+                  <div class="SubDrink"> @d.Name</div>
+                  <div class="customize"> [Customize] </div>
+                  <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+       
+                }
+           }
+    </div>
+
+
+
+</div>
+
+<br />
+<br />
+
+
+<input type="button" value="Go back to home" onclick="location.href='@Url.Action("Index", "MenuCard", new { GuestCode = Model.GuestCode})'" />
+
+<input type="button" value="Procced To Starter" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+
+<input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />

@@ -1,8 +1,65 @@
-﻿
+﻿@model GuestCodeWithModel<List<DishType>>
+
 @{
     ViewData["Title"] = "Mains";
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
 }
 
-<h2>Mains</h2>
+
+<style>
+
+    .SubDrink {
+        float: left;
+        width: 50%;
+    }
+
+    .customize {
+        float: left;
+        width: 30%;
+    }
+
+
+    .quantity {
+        float: left;
+        width: 20%;
+    }
+
+    #theInput {
+        width: 20%;
+    }
+
+</style>
+
+
+
+
+<div class="Mains">
+
+    <hr />
+
+    <h2>Main Courses</h2>
+
+    <hr />
+
+    <div class="IceCream">
+
+        @foreach (DishType d in Model.Model)
+        {
+            <div class="SubDrink"> @d.Name</div>
+            <div class="customize"> [Customize] </div>
+            <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+        }
+    </div>
+</div>
+
+
+<input type="button" value="Go Back" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+
+<input type="button" value="Proceed To Dessert" onclick="location.href='@Url.Action("Desserts", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+
+<input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard" ,new { GuestCode = Model.GuestCode} )'" />
+
+
+
+
 
