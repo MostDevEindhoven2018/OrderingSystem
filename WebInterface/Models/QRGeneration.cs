@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.DrawingCore;
+using System.DrawingCore.Imaging;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -24,16 +25,7 @@ namespace WebInterface.Models
         /// Saves it to the path provided by the USER
         /// </summary>
         /// <param name="table">Table selected by user </param>
-        public QRGeneration(string table)
-        {
-            QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode("http://localhost:52892/menucard/addguest?tableno=" + table, QRCodeGenerator.ECCLevel.Q);
-            QRCode qrCode = new QRCode(qrCodeData);
-            Bitmap qrCodeImage = qrCode.GetGraphic(5);
-            qrCodeImage.Save("C:\\Users\\Paulina\\Pictures\\poop.jpeg");
-            qrCodeImage.Save("C:\\Users\\Paulina\\Pictures\\"+"QRTable_"+ table +".jpeg");
-        }
-
+        
         public QRGeneration()
         {
 

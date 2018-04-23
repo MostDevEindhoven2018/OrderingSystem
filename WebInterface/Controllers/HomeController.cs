@@ -64,11 +64,21 @@ namespace WebInterface.Controllers
             //if a table is chosen the model is valid
             if (ModelState.IsValid)
             {
-                var QR = new QRGeneration(model.Table_Number);
                 //TODO Change the path or save as stream
-                byte[] fileBytes = System.IO.File.ReadAllBytes(@"C:\\Users\\Paulina\\Pictures\\" + "QRTable_" + model.Table_Number + ".jpeg");
+                QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                QRCodeData qrCodeData = qrGenerator.CreateQrCode("http://localhost:52892/menucard/addguest?tableno=" + model.Table_Number, QRCodeGenerator.ECCLevel.Q);
+                QRCode qrCode = new QRCode(qrCodeData);
+                Bitmap qrCodeImage = qrCode.GetGraphic(5);
+
                 string fileName = "QRTable_" + model.Table_Number + ".jpeg";
-                return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+
+                //Creates a jpeg image and saves it to stream
+                var stream = new System.IO.MemoryStream();
+                qrCodeImage.Save(stream, System.DrawingCore.Imaging.ImageFormat.Jpeg);
+                stream.Position = 0;
+
+                //Downloads QR jpeg to user's computer
+                return File(stream, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
             }
 
             return View("PrintQR", model);
