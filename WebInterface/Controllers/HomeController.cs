@@ -102,6 +102,7 @@ namespace WebInterface.Controllers
             };
         }
 
+        //Generate the drop down list
         private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<string> elements)
         {
             var selectList = new List<SelectListItem>();
@@ -118,6 +119,11 @@ namespace WebInterface.Controllers
             return selectList;
         }
 
+        //Add tables by the USER
+        public IActionResult AddTable()
+        {
+            return View();
+        }
        
 
 
