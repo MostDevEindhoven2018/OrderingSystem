@@ -4,26 +4,23 @@
     ViewData["Title"] = "AddTable";
 }
 
-<h2>AddTable</h2>
+<h2>Add a Table</h2>
 
-<h4>Table</h4>
+<h4>Please choose the capacity</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="AddTable">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TableID" class="control-label"></label>
-                <input asp-for="TableID" class="form-control" />
-                <span asp-validation-for="TableID" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <label asp-for="Capacity" class="control-label"></label>
                 <input asp-for="Capacity" class="form-control" />
                 <span asp-validation-for="Capacity" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create Table" class="btn btn-default" />
             </div>
         </form>
     </div>
