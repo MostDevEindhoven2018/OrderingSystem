@@ -14,6 +14,11 @@ namespace WebInterface.Controllers
 {
     public class UserController : Controller
     {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         public UserController(MenuCardDBContext _context)
         {
             ctx = _context;
