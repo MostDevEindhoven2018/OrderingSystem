@@ -10,10 +10,10 @@ namespace WebInterface.Models
         private static List<DishType> allDishes;
 
         public int DishTypeID { get; set; }
-        public virtual CourseType Type { get; set; }
+        public virtual CourseType Course { get; set; }
         public string Name { get; set; }
 
-        public ICollection<Ingredient> DefaultIngredients { get; private set; }
+        public ICollection<Ingredient> DefaultIngredients { get; /*private*/ set; }
 
         /// <summary>
         /// Returns all dishes known to the system
@@ -25,29 +25,29 @@ namespace WebInterface.Models
             {
                 List<DishType> list = new List<DishType>();
 
-                list.Add(new DishType() { Type = CourseType.DRINK, SubType = "ColdBeverage", Name = "Cola"});
-                list.Add(new DishType() { Type = CourseType.DRINK, SubType = "ColdBeverage", Name = "Fanta" });
-                list.Add(new DishType() { Type = CourseType.DRINK, SubType = "HardDrink", Name = "Wine" });
-                list.Add(new DishType() { Type = CourseType.DRINK, SubType = "HardDrink", Name = "Beer" });
-                list.Add(new DishType() { Type = CourseType.DRINK, SubType = "HotBeverage", Name = "Coffee" });
-                list.Add(new DishType() { Type = CourseType.DRINK, SubType = "HotBeverage", Name = "Tea" });
+                list.Add(new DishType() { Course = CourseType.DRINK, SubType = "ColdBeverage", Name = "Cola"});
+                list.Add(new DishType() { Course = CourseType.DRINK, SubType = "ColdBeverage", Name = "Fanta" });
+                list.Add(new DishType() { Course = CourseType.DRINK, SubType = "HardDrink", Name = "Wine" });
+                list.Add(new DishType() { Course = CourseType.DRINK, SubType = "HardDrink", Name = "Beer" });
+                list.Add(new DishType() { Course = CourseType.DRINK, SubType = "HotBeverage", Name = "Coffee" });
+                list.Add(new DishType() { Course = CourseType.DRINK, SubType = "HotBeverage", Name = "Tea" });
 
-                list.Add(new DishType() { Type = CourseType.STARTER, Name = "Carpachio" });
-                list.Add(new DishType() { Type = CourseType.STARTER, Name = "Tuna Salad" });
-                list.Add(new DishType() { Type = CourseType.STARTER, Name = "Shrimps" });
-                list.Add(new DishType() { Type = CourseType.STARTER, Name = "Tomato Soup" });
-                list.Add(new DishType() { Type = CourseType.STARTER, Name = "Onion Soup" });
+                list.Add(new DishType() { Course = CourseType.STARTER, Name = "Carpachio" });
+                list.Add(new DishType() { Course = CourseType.STARTER, Name = "Tuna Salad" });
+                list.Add(new DishType() { Course = CourseType.STARTER, Name = "Shrimps" });
+                list.Add(new DishType() { Course = CourseType.STARTER, Name = "Tomato Soup" });
+                list.Add(new DishType() { Course = CourseType.STARTER, Name = "Onion Soup" });
 
-                list.Add(new DishType() { Type = CourseType.MAINCOURSE, Name = "Steak" });
-                list.Add(new DishType() { Type = CourseType.MAINCOURSE, Name = "Salmon" });
-                list.Add(new DishType() { Type = CourseType.MAINCOURSE, Name = "Chicken breast" });
-                list.Add(new DishType() { Type = CourseType.MAINCOURSE, Name = "Duck" });
-                list.Add(new DishType() { Type = CourseType.MAINCOURSE, Name = "Vega burger" });
+                list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Steak" });
+                list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Salmon" });
+                list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Chicken breast" });
+                list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Duck" });
+                list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Vega burger" });
 
-                list.Add(new DishType() { Type = CourseType.DESSERT, SubType = "IceCreams", Name = "Vanilla Ice Cream" });
-                list.Add(new DishType() { Type = CourseType.DESSERT, SubType = "Salads", Name = "Banana split" });
-                list.Add(new DishType() { Type = CourseType.DESSERT, SubType = "Pies", Name = "Apple pie with whipped cream" });
-                list.Add(new DishType() { Type = CourseType.DESSERT, SubType = "Salads", Name = "Fruit salad" });
+                list.Add(new DishType() { Course = CourseType.DESSERT, SubType = "IceCreams", Name = "Vanilla Ice Cream" });
+                list.Add(new DishType() { Course = CourseType.DESSERT, SubType = "Salads", Name = "Banana split" });
+                list.Add(new DishType() { Course = CourseType.DESSERT, SubType = "Pies", Name = "Apple pie with whipped cream" });
+                list.Add(new DishType() { Course = CourseType.DESSERT, SubType = "Salads", Name = "Fruit salad" });
 
                 allDishes = list;
             }
@@ -60,7 +60,7 @@ namespace WebInterface.Models
         /// <returns></returns>
         public static IEnumerable<DishType> getAllDrinks()
         {
-            return GetAll().Where((dt) => { return (dt.Type == CourseType.DRINK); });
+            return GetAll().Where((dt) => { return (dt.Course == CourseType.DRINK); });
         }
 
         public static IEnumerable<DishType> getAllHotBeverages()
@@ -84,7 +84,7 @@ namespace WebInterface.Models
         /// <returns></returns>
         public static IEnumerable<DishType> getAllStarters()
         {
-            return GetAll().Where((dt) => { return (dt.Type == CourseType.STARTER); });
+            return GetAll().Where((dt) => { return (dt.Course == CourseType.STARTER); });
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace WebInterface.Models
         /// <returns></returns>
         public static IEnumerable<DishType> getAllMains()
         {
-            return GetAll().Where((dt) => { return (dt.Type == CourseType.MAINCOURSE); });
+            return GetAll().Where((dt) => { return (dt.Course == CourseType.MAINCOURSE); });
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace WebInterface.Models
         /// <returns></returns>
         public static IEnumerable<DishType> getAllDesserts()
         {
-            return GetAll().Where((dt) => { return (dt.Type == CourseType.DESSERT); });
+            return GetAll().Where((dt) => { return (dt.Course == CourseType.DESSERT); });
         }
         public static IEnumerable<DishType> getAllPies()
         {
@@ -121,7 +121,7 @@ namespace WebInterface.Models
 
     public enum CourseType
     {
-        INVALID,
+        UNAVAILABLE,
         DRINK,
         STARTER,
         MAINCOURSE,
