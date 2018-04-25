@@ -47,7 +47,7 @@
 
         @foreach (DishType d in Model.Model)
         {
-            @if (d.SubType == "IceCreams")
+            if (d.SubType == "IceCreams")
             {
                 <div class="SubDrink"> @d.Name</div>
                 <div class="customize"> [Customize] </div>
