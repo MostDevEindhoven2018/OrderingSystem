@@ -43,11 +43,17 @@ namespace WebInterface.Controllers
 
         public async Task<IActionResult> Drinks(string guestCode)
         {
+            
+
             if (guestCode == null)
             {
                 return RedirectToAction("ErrorView");
             }
             await DBCreationTask;
+
+            var dishtypes = ctx.DishTypes.ToList();
+            
+            var test = ctx.SubDishTypes.ToList();
             //var HotBeverages = DishType.getAllHotBeverages();
             //var ColdBeverages = DishType.getAllColdBeverages();
             //var HardDrinks = DishType.getAllHardDrinks();
@@ -56,9 +62,10 @@ namespace WebInterface.Controllers
             //drinks contains all drinks defined in the CLASS DISHTYPE
 
             var drinks = DishType.getAllDrinks();
+          
 
             var result = drinks.ToList();
-            return View(new GuestCodeWithModel<List<DishType>>(result, guestCode));
+            return View(new GuestCodeWithModel<List<DishType>>(dishtypes, guestCode));           
         }
 
         public async Task<IActionResult> Starters(string guestCode)
@@ -69,6 +76,8 @@ namespace WebInterface.Controllers
             }
             await DBCreationTask;
             //starters contains all starters defined in the CLASS DISHTYPE
+
+
 
             var starters = DishType.getAllStarters();
 

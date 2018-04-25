@@ -6,99 +6,116 @@
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
 }
 
-<hr />
+
 
 <h2>Drinks</h2>
 
-<hr />
+    <hr />
 
 
-<style>
+    <style>
 
-    .SubDrink {
-        float: left;
-        width: 50%;
-    }
+        .SubDrink {
+            float: left;
+            width: 50%;
+        }
 
-    .customize {
-        float: left;
-        width: 30%;
-    }
+        .customize {
+            float: left;
 
-
-    .quantity {
-        float: left;
-        width: 20%;
-    }
-
-    #theInput{
-        width:20%;
-    }
-
-</style>
+            width: 30%;
+        }
 
 
+        .quantity {
+            float: left;
+            width: 20%;
+        }
+
+        #theInput{
+            width:20%;
+        }
+
+    </style>
 
 
-<div class="Drinks">
 
-    <h3>Cold  Beverages</h3>
 
-    <div class="ColdBeverage">
+    <div class="Drinks">
 
-        @foreach (DishType d in Model.Model)
-           {
-             if (d.SubType.SubType == "ColdBeverage")
-                {
-                  <div class="SubDrink"> @d.Name</div>
-                  <div class="customize"> [Customize] </div>
-                  <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+        <h3>Cold  Beverages</h3>
 
-                }
-             
-           }
+        <div class="ColdBeverage">
+
+            @foreach (DishType d in Model.Model)
+               {   
+                   <div></div>             
+                                 
+                if (d.SubDishType == null)
+                    {                     
+                                }
+                                     
+                  else if (d.SubDishType.SubType == "Cold Beverage")
+                    {
+                      <div class="SubDrink"> @d.Name</div>
+                      <div class="customize"> [Customize] </div>
+                      <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+
+                    }
+
+               }
+        </div>
+
+        <h3>Hot Beverages</h3>
+
+        <div class="HotBeverage">
+            @foreach (DishType d in Model.Model)
+                        {
+                            if (d.SubDishType == null)
+                    { 
+                 <div></div>
+                    
+                                }
+                          else if (d.SubDishType.SubType == "Warm Beverage")
+                            {
+                      <div class="SubDrink"> @d.Name</div>
+                      <div class="customize"> [Customize] </div>
+                      <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+
+                    }
+            }
+        </div>
+
+        <h3>Hard Drinks</h3>
+
+        <div class="HardDrink">
+            @foreach (DishType d in Model.Model)
+               {
+                if (d.SubDishType == null)
+                    { 
+                 <div></div>
+                    
+                                }
+                 else if (d.SubDishType.SubType == "Alcohol Beverage")
+                    {
+                      <div class="SubDrink"> @d.Name</div>
+                      <div class="customize"> [Customize] </div>
+                      <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+
+                    }
+               }
+        </div>
+
+
+
     </div>
 
-    <h3>Hot Beverages</h3>
-
-    <div class="HotBeverage">
-        @foreach (DishType d in Model.Model)
-           {
-             if (d.SubType.SubType == "HotBeverage")
-                {
-                  <div class="SubDrink"> @d.Name</div>
-                  <div class="customize"> [Customize] </div>
-                  <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
-       
-                }
-           }
-    </div>
-
-    <h3>Hard Drinks</h3>
-
-    <div class="HardDrink">
-        @foreach (DishType d in Model.Model)
-           {
-             @if (d.SubType.SubType == "HardDrink")
-                {
-                  <div class="SubDrink"> @d.Name</div>
-                  <div class="customize"> [Customize] </div>
-                  <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
-       
-                }
-           }
-    </div>
+    <br />
+    <br />
 
 
+    <input type="button" value="Go back to home" onclick="location.href='@Url.Action("Index", "MenuCard", new { GuestCode = Model.GuestCode})'" />
 
-</div>
+    <input type="button" value="Procced To Starter" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 
-<br />
-<br />
-
-
-<input type="button" value="Go back to home" onclick="location.href='@Url.Action("Index", "MenuCard", new { GuestCode = Model.GuestCode})'" />
-
-<input type="button" value="Procced To Starter" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
-
-<input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />
+    <input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />
