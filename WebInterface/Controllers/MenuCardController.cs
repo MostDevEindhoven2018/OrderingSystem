@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebInterface.Models;
 
-using WebInterface.Models;
-
 namespace WebInterface.Controllers
 {
 

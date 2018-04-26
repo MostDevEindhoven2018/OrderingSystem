@@ -15,6 +15,7 @@ namespace WebInterface.Controllers
 {
     public class HomeController : Controller
     {
+        
         public IActionResult Index()
         {
             return View();
@@ -83,6 +84,8 @@ namespace WebInterface.Controllers
 
             return View("PrintQR", model);
         }
+
+        
 
         //TODO obtain Table information from database
         private IEnumerable<string> GetAllTables()
