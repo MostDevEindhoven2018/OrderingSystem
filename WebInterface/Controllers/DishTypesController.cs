@@ -61,19 +61,23 @@ namespace WebInterface.Controllers
                 DishType dishType = new DishType();
                 dishType.Name = createDishTypeModel.Name;
                 dishType.Course = createDishTypeModel.Course;
-                _context.SubDishTypes.ToList().Select(sdt => new { sdt.SubDishTypeID }).SingleOrDefault(sdt => sdt.SubDishTypeID == subDishTypeID);
 
-                if (id == null)
+                //_context.SubDishTypes.ToList().Select()
+
+                //_context.SubDishTypes.ToList().Select(sdt => new { sdt.SubDishTypeID }).SingleOrDefault(sdt => sdt.SubDishTypeID == subDishTypeID);
+
+
+                DbSet<SubDishType> subDishTypes = _context.SubDishTypes;
+                var query = subDishTypes.Where(s => createDishTypeModel.SubTypeID == s.SubDishTypeID);
+                SubDishType sdt = query.FirstOrDefault();
+
+                if (sdt==null)
                 {
                     return NotFound();
                 }
 
-                var subDishType = await _context.SubDishTypes.SingleOrDefaultAsync(m => m.SubDishTypeID == id);
-
-                if (subDishType == null)
-                {
-                    return NotFound();
-                }
+                dishType.SubType = sdt;
+                                                
                 _context.Add(dishType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
