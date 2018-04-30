@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebInterface.Models;
+using WebInterface.ViewModel;
 
 namespace WebInterface.Controllers
 {
@@ -56,6 +57,7 @@ namespace WebInterface.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DishTypeID,Course,Name,SubTypeID")] CreateDishTypeModel createDishTypeModel)
         {
+<<<<<<< HEAD
             if (ModelState.IsValid)
             {
                 DishType dishType = new DishType();
@@ -82,12 +84,38 @@ namespace WebInterface.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+=======
+            //if (ModelState.IsValid)
+            //{
+            //    DishType dishType = new DishType();
+            //    dishType.Name = createDishTypeModel.Name;
+            //    dishType.Course = createDishTypeModel.Course;
+            //    _context.SubDishTypes.ToList().Select(sdt => new { sdt.SubDishTypeID }).SingleOrDefault(sdt => sdt.SubDishTypeID == subDishTypeID);
+
+            //    if (id == null)
+            //    {
+            //        return NotFound();
+            //    }
+
+            //    var subDishType = await _context.SubDishTypes.SingleOrDefaultAsync(m => m.SubDishTypeID == id);
+
+            //    if (subDishType == null)
+            //    {
+            //        return NotFound();
+            //    }
+            //    _context.Add(dishType);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
+>>>>>>> Make the ingredient page work and tried to make the categories in the dishes work
             return View(createDishTypeModel);
         }
 
         // GET: DishTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var dishTypesViewModel = new DishTypesViewModel();
+
             if (id == null)
             {
                 return NotFound();
@@ -98,7 +126,13 @@ namespace WebInterface.Controllers
             {
                 return NotFound();
             }
-            return View(dishType);
+
+            var ingredientType = await _context.IngredientTypes.ToListAsync();
+
+            dishTypesViewModel.Dish = dishType;
+            dishTypesViewModel.Ingredients = ingredientType;
+
+            return View(dishTypesViewModel);
         }
 
         // POST: DishTypes/Edit/5

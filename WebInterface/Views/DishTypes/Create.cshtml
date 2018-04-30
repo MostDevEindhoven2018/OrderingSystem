@@ -22,6 +22,15 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+
+            <div id='TextBoxesGroup'>
+            <div id="TextBoxDiv1">
+                <label>Ingredient #1 : </label><input type='text' id='textbox1'>
+            </div>
+        </div>
+        <input type='button' value='Add Button' id='addButton'>
+        <input type='button' value='Remove Button' id='removeButton'>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
