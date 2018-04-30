@@ -2,15 +2,15 @@
 
 @model GuestCodeWithModel<DishTypeViewModel>
 
+
 @{
-    ViewData["Title"] = "Mains";
+    ViewData["Title"] = "Starters";
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
 }
 
-<h2>Main Courses</h2>
+<h2>Starters</h2>
 
 <hr />
-
 
 <style>
 
@@ -37,11 +37,16 @@
 
 
 
-<div class="Mains">
+<<<<<<< Updated upstream
+
+@*<div class="Starters">
+=======
+<div class="Starters">
+>>>>>>> Stashed changes
 
     @if (Model.Model.DishTypes.Count() == 0 || Model.Model.DishTypes.Count() < 0)
     {
-        <div>No Main courses to display</div>
+        <div>No Starters to display</div>
     }
 
     else if (Model.Model.DishTypes.Count() > 0)
@@ -109,8 +114,21 @@
 
 <hr />
 
-<input type="button" value="Go Back to Starters" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 
-<input type="button" value="Proceed to Dessert" onclick="location.href='@Url.Action("Desserts", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+<input type="button" value="Go Back to Drinks" onclick="location.href='@Url.Action("Drinks", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 
-<input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard" ,new { GuestCode = Model.GuestCode} )'" />
+
+<<<<<<< Updated upstream
+<input type="button" value="Procced To Main Course" onclick="location.href='@Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode} )'" />*@
+=======
+<input type="button" value="Proceed to Main Course" onclick="location.href='@Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+>>>>>>> Stashed changes
+
+
+<input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+
+
+
+
+
+

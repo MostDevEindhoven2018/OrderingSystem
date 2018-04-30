@@ -24,8 +24,12 @@ namespace WebInterface.Models
         //    public string DishType { get; set; }
         //}
 
+<<<<<<< Updated upstream
+        public DishType DishOrder { get; set; }
+=======
         //public IEnumerable<OrderDetails> DetailsOfOrder { get; set; }
-
+   
+>>>>>>> Stashed changes
         public int quantity {get;set;}
 
         public virtual ICollection<Dish> Selected { get; set; }

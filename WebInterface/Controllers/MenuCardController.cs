@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebInterface.Models;
-
-using WebInterface.Models;
+using System.Dynamic;
+using WebInterface.Models.CombinedModels;
 
 namespace WebInterface.Controllers
 {
@@ -43,7 +43,7 @@ namespace WebInterface.Controllers
 
         public async Task<IActionResult> Drinks(string guestCode)
         {
-            
+
 
             if (guestCode == null)
             {
@@ -51,9 +51,18 @@ namespace WebInterface.Controllers
             }
             await DBCreationTask;
 
-            var dishtypes = ctx.DishTypes.ToList();
-            
             var test = ctx.SubDishTypes.ToList();
+
+
+            List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();
+            var subDrinks = drinks.Where(x=>x.SubDishType!=null).Select(x => x.SubDishType).ToList();
+            List<SubDishType> uniqueSubDrinks = subDrinks.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToList();
+
+            //ViewBag.drinks = drinks;
+            //ViewBag.uniqueSubDrinks = uniqueSubDrinks;
+
+            //var drinks = ctx.DishTypes.ToList();
+            //var test = ctx.SubDishTypes.ToList();
             //var HotBeverages = DishType.getAllHotBeverages();
             //var ColdBeverages = DishType.getAllColdBeverages();
             //var HardDrinks = DishType.getAllHardDrinks();
@@ -61,12 +70,14 @@ namespace WebInterface.Controllers
 
             //drinks contains all drinks defined in the CLASS DISHTYPE
 
-            var drinks = DishType.getAllDrinks();
-          
+            DishTypeViewModel dishTypeViewModel = new DishTypeViewModel();
+            dishTypeViewModel.DishTypes = drinks;
+            dishTypeViewModel.SubDishTypes = uniqueSubDrinks;
 
-            var result = drinks.ToList();
-            return View(new GuestCodeWithModel<List<DishType>>(dishtypes, guestCode));           
+            return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
         }
+
+
 
         public async Task<IActionResult> Starters(string guestCode)
         {
@@ -77,13 +88,25 @@ namespace WebInterface.Controllers
             await DBCreationTask;
             //starters contains all starters defined in the CLASS DISHTYPE
 
+            //The (var test) fills the Entity Framework cache with subdishtypes,
+            //or else Entity Framework throws NullReference
+            var test = ctx.SubDishTypes.ToList();
 
 
-            var starters = DishType.getAllStarters();
+            List<DishType> starters = ctx.DishTypes.Where(x => x.Course == CourseType.STARTER).ToList();
+            var subStarters = starters.Where(x => x.SubDishType != null).Select(x => x.SubDishType).ToList();
+            List<SubDishType> uniqueSubStarters = subStarters.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToList();
 
-            var result = starters.ToList();
+            DishTypeViewModel dishTypeViewModel = new DishTypeViewModel();
+            dishTypeViewModel.DishTypes = starters;
+            dishTypeViewModel.SubDishTypes = uniqueSubStarters;
 
-            return View(new GuestCodeWithModel<List<DishType>>(result, guestCode));
+
+            //var starters = ctx.DishTypes.ToList();
+            //var starters = DishType.getAllStarters();
+            //var result = starters.ToList();
+
+            return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
 
         }
 
@@ -94,12 +117,28 @@ namespace WebInterface.Controllers
                 return RedirectToAction("ErrorView");
             }
             await DBCreationTask;
+
+            //The (var test) fills the Entity Framework cache with subdishtypes,
+            //or else Entity Framework throws NullReference
+            var test = ctx.SubDishTypes.ToList();
+
+
+            List<DishType> mains = ctx.DishTypes.Where(x => x.Course == CourseType.MAINCOURSE).ToList();
+            var subMains = mains.Where(x => x.SubDishType != null).Select(x => x.SubDishType).ToList();
+            var uniqueMains = subMains.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToList();
+            
+            
+            DishTypeViewModel dishTypeViewModel = new DishTypeViewModel();
+            dishTypeViewModel.DishTypes = mains;
+            dishTypeViewModel.SubDishTypes = uniqueMains;
+
+
             //mains contains all Mains defined in the CLASS DISHTYPE
+            //var mains = ctx.DishTypes.ToList();
+            //var mains = DishType.getAllMains();
 
-            var mains = DishType.getAllMains();
-
-            var result = mains.ToList();
-            return View(new GuestCodeWithModel<List<DishType>>(result, guestCode));
+            //var result = mains.ToList();
+            return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
         }
 
         public async Task<IActionResult> Desserts(string guestCode)
@@ -111,10 +150,26 @@ namespace WebInterface.Controllers
             await DBCreationTask;
             //desserts contains all Desserts defined in the CLASS DISHTYPE
 
-            var dessert = DishType.getAllDesserts();
+            //The (var test) fills the Entity Framework cache with subdishtypes,
+            //or else Entity Framework throws NullReference
+            var test = ctx.SubDishTypes.ToList();
 
-            var result = dessert.ToList();
-            return View(new GuestCodeWithModel<List<DishType>>(result, guestCode));
+
+            List<DishType> desserts = ctx.DishTypes.Where(x => x.Course == CourseType.DESSERT).ToList();
+            var subDesserts = desserts.Where(x => x.SubDishType != null).Select(x => x.SubDishType).ToList();
+            List<SubDishType> uniqueDesserts = subDesserts.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToList();
+
+
+            DishTypeViewModel dishTypeViewModel = new DishTypeViewModel();
+            dishTypeViewModel.DishTypes = desserts;
+            dishTypeViewModel.SubDishTypes = uniqueDesserts;
+
+            //var desserts = ctx.DishTypes.ToList();           
+
+            //var dessert = DishType.getAllDesserts();
+
+            //var result = dessert.ToList();
+            return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
         }
 
         public async Task<IActionResult> OrderOverview(string guestCode)

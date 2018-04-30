@@ -1,11 +1,12 @@
-﻿@model GuestCodeWithModel<List<DishType>>
+﻿@using WebInterface.Models.CombinedModels
+
+@model GuestCodeWithModel<DishTypeViewModel>
 
 @{
     ViewData["Title"] = "Desserts";
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
 }
 
-<hr />
 
 <h2>Desserts</h2>
 
@@ -13,6 +14,10 @@
 
 
 <style>
+
+    body {
+        background-image: url(https://i.dietdoctor.com/wp-content/uploads/2017/12/DessertsImageMob.jpg?auto=compress%2Cformat&w=1200&h=610&fit=crop)
+    }
 
     .SubDrink {
         float: left;
@@ -33,67 +38,86 @@
     #theInput {
         width: 30%;
     }
-
 </style>
 
 
+<body>
 
+    <div class="Desserts">
 
-<d@*iv class="Dessert">
-
-    <h3>Ice Cream</h3>
-
-    <div class="IceCream">
-
-        @foreach (DishType d in Model.Model)
+        @if (Model.Model.DishTypes.Count() == 0 || Model.Model.DishTypes.Count() < 0)
         {
-            if (d.SubType.SubType == "IceCreams")
+            <div>No Desserts to display</div>
+        }
+
+        else if (Model.Model.DishTypes.Count() > 0)
+        {
+            if (Model.Model.SubDishTypes.Count() == 0)
             {
-                <div class="SubDrink"> @d.Name</div>
-                <div class="customize"> [Customize] </div>
-                <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+                @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
+                {
+                    if (Model.Model.DishTypes[j].SubDishType == null)
+                    {
+                        <div>@Model.Model.DishTypes[j].Name</div>
+                    }
+                }
 
             }
+
+            else if (Model.Model.SubDishTypes.Count() > 0)
+            {
+                @for (int i = 0; i < Model.Model.SubDishTypes.Count(); i++)
+                {
+                    <h3>@Model.Model.SubDishTypes[i].SubType</h3>
+
+                    @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
+                    {
+                        if (Model.Model.DishTypes[j].SubDishType != null)
+                        {
+                            if (Model.Model.DishTypes[j].SubDishType.SubType == Model.Model.SubDishTypes[i].SubType)
+                            {
+                                <div>@Model.Model.DishTypes[j].Name</div>
+                            }
+
+                        }
+                    }
+                }
+
+
+
+                @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
+                {
+
+                    if (Model.Model.DishTypes[j].SubDishType == null)
+                    {
+                        <h3> Others </h3>
+                        break;
+
+                    }
+                }
+
+                @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
+                {
+
+                    if (Model.Model.DishTypes[j].SubDishType == null)
+                    {
+                        <div>@Model.Model.DishTypes[j].Name</div>
+                    }
+                }
+
+            }
+
+
         }
+
     </div>
 
-    <h3>Fruit Salads</h3>
+</body>
 
-    <div class="Salad">
-            @foreach (DishType d in Model.Model)
-        {
-            @if (d.SubType.SubType == "Salads")
-            {
-                <div class="SubDrink"> @d.Name</div>
-                <div class="customize"> [Customize] </div>
-                <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+<br />
+<br />
 
-            }
-        }
-    </div>
+<input type="button" value="Go Back to Main courses" onclick="location.href='@Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 
-    <h3>Pies</h3>
-
-    <div class="Pie">
-        @foreach (DishType d in Model.Model)
-        {
-            @if (d.SubType.SubType == "Pies")
-            {
-                <div class="SubDrink"> @d.Name</div>
-                <div class="customize"> [Customize] </div>
-                <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
-
-            }
-        }
-    </div>*@
-
-
-
-</div>
-
-
-
-    <input type="button" value="Go Back" onclick="location.href='@Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
-
-    <input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+<input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 

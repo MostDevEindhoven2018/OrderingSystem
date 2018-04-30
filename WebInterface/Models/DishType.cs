@@ -35,22 +35,22 @@ namespace WebInterface.Models
                 //list.Add(new DishType() { Course = CourseType.DRINK, SubDishType = new SubDishType { SubType = "HotBeverage" }, Name = "Coffee" });
                 //list.Add(new DishType() { Course = CourseType.DRINK, SubDishType = new SubDishType { SubType = "HotBeverage" }, Name = "Tea" });
 
-                list.Add(new DishType() { Course = CourseType.STARTER, Name = "Carpachio" });
-                list.Add(new DishType() { Course = CourseType.STARTER, Name = "Tuna Salad" });
-                list.Add(new DishType() { Course = CourseType.STARTER, Name = "Shrimps" });
-                list.Add(new DishType() { Course = CourseType.STARTER, Name = "Tomato Soup" });
-                list.Add(new DishType() { Course = CourseType.STARTER, Name = "Onion Soup" });
+                //list.Add(new DishType() { Course = CourseType.STARTER, Name = "Carpachio" });
+                //list.Add(new DishType() { Course = CourseType.STARTER, Name = "Tuna Salad" });
+                //list.Add(new DishType() { Course = CourseType.STARTER, Name = "Shrimps" });
+                //list.Add(new DishType() { Course = CourseType.STARTER, Name = "Tomato Soup" });
+                //list.Add(new DishType() { Course = CourseType.STARTER, Name = "Onion Soup" });
 
-                list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Steak" });
-                list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Salmon" });
-                list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Chicken breast" });
-                list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Duck" });
-                list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Vega burger" });
+                //list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Steak" });
+                //list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Salmon" });
+                //list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Chicken breast" });
+                //list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Duck" });
+                //list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Vega burger" });
 
-                list.Add(new DishType() { Course = CourseType.DESSERT, SubDishType = new SubDishType { SubType = "IceCreams" }, Name = "Vanilla Ice Cream" });
-                list.Add(new DishType() { Course = CourseType.DESSERT, SubDishType = new SubDishType { SubType = "Salads" }, Name = "Banana split" });
-                list.Add(new DishType() { Course = CourseType.DESSERT, SubDishType = new SubDishType { SubType = "Pies" }, Name = "Apple pie with whipped cream" });
-                list.Add(new DishType() { Course = CourseType.DESSERT, SubDishType = new SubDishType { SubType = "Salads" }, Name = "Fruit salad" });
+                //list.Add(new DishType() { Course = CourseType.DESSERT, SubDishType = new SubDishType { SubType = "IceCreams" }, Name = "Vanilla Ice Cream" });
+                //list.Add(new DishType() { Course = CourseType.DESSERT, SubDishType = new SubDishType { SubType = "Salads" }, Name = "Banana split" });
+                //list.Add(new DishType() { Course = CourseType.DESSERT, SubDishType = new SubDishType { SubType = "Pies" }, Name = "Apple pie with whipped cream" });
+                //list.Add(new DishType() { Course = CourseType.DESSERT, SubDishType = new SubDishType { SubType = "Salads" }, Name = "Fruit salad" });
 
                 allDishes = list;
             }

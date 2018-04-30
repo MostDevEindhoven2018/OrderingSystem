@@ -1,15 +1,19 @@
 ﻿@using WebInterface.Models.CombinedModels
+
 @model GuestCodeWithModel<DishTypeViewModel>
+
 
 @{
     ViewData["Title"] = "Drinks";
-    Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
+ Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
 }
+
 <h2>Drinks</h2>
+
 <hr />
 
-<style>
 
+<style>
 
     .SubDrink {
         float: left;
@@ -38,11 +42,11 @@
         <div>No Drinks to display</div>
     }
 
-
     else if (Model.Model.DishTypes.Count() > 0)
     {
         if (Model.Model.SubDishTypes.Count() == 0)
         {
+
             @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
             {
                 if (Model.Model.DishTypes[j].SubDishType == null)
@@ -59,6 +63,27 @@
             {
                 <h3>@Model.Model.SubDishTypes[i].SubType</h3>
 
+<<<<<<< Updated upstream
+    @*<div class="drinks">
+
+        <h3>cold  beverages</h3>
+
+        <div class="coldbeverage">
+
+            @foreach (dishtype d in model.model)
+               {   
+                   <div></div>             
+                                 
+                if (d.subdishtype == null)
+                    {                     
+                                }
+                                     
+                  else if (d.subdishtype.subtype == "cold beverage")
+                    {
+                      <div class="subdrink"> @d.name</div>
+                      <div class="customize"> [customize] </div>
+                      <div class="quantity"> <input id="theinput" type="number" size="3" class="input-text qty text" title="qty" value="0" min="0" step="1"> </div>
+=======
                 @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
                 {
                     if (Model.Model.DishTypes[j].SubDishType != null)
@@ -73,6 +98,7 @@
             }
 
 
+>>>>>>> Stashed changes
 
             @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
             {
@@ -82,27 +108,73 @@
                     <h3> Others </h3>
                     break;
 
+<<<<<<< Updated upstream
+        <h3>hot beverages</h3>
+
+        <div class="hotbeverage">
+            @foreach (dishtype d in model.model)
+                        {
+                            if (d.subdishtype == null)
+                    { 
+                 <div></div>
+                    
+                                }
+                          else if (d.subdishtype.subtype == "warm beverage")
+                            {
+                      <div class="subdrink"> @d.name</div>
+                      <div class="customize"> [customize] </div>
+                      <div class="quantity"> <input id="theinput" type="number" size="3" class="input-text qty text" title="qty" value="0" min="0" step="1"> </div>
+=======
                 }
             }
 
             @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
             {
+>>>>>>> Stashed changes
 
                 if (Model.Model.DishTypes[j].SubDishType == null)
                 {
                     <div>@Model.Model.DishTypes[j].Name</div>
                 }
             }
+<<<<<<< Updated upstream
+        </div>
+
+        <h3>hard drinks</h3>
+
+        <div class="harddrink">
+            @foreach (dishtype d in model.model)
+               {
+                if (d.subdishtype == null)
+                    { 
+                 <div></div>
+                    
+                                }
+                 else if (d.subdishtype.subtype == "alcohol beverage")
+                    {
+                      <div class="subdrink"> @d.name</div>
+                      <div class="customize"> [customize] </div>
+                      <div class="quantity"> <input id="theinput" type="number" size="3" class="input-text qty text" title="qty" value="0" min="0" step="1"> </div>
+=======
+>>>>>>> Stashed changes
 
         }
 
 
     }
 
+<<<<<<< Updated upstream
+    </div>*@
+=======
 </div>
+>>>>>>> Stashed changes
+
 <br />
 <br />
 
+
 <input type="button" value="Go back to home" onclick="location.href='@Url.Action("Index", "MenuCard", new { GuestCode = Model.GuestCode})'" />
+
 <input type="button" value="Proceed to Starters" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+
 <input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />
