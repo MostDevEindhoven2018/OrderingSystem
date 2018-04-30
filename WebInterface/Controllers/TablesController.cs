@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebInterface.Models;
+using QRCoder;
+using System.Drawing;
 
 namespace WebInterface.Controllers
 {
@@ -148,5 +150,39 @@ namespace WebInterface.Controllers
         {
             return _context.Tables.Any(e => e.TableID == id);
         }
+
+        public async Task<IActionResult> PrintQR(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var table = await _context.Tables
+                .SingleOrDefaultAsync(m => m.TableID == id);
+            if (table == null)
+            {
+                return NotFound();
+            }
+
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            //TODO dummy webpage address
+            QRCodeData qrCodeData =
+                qrGenerator.CreateQrCode
+                ("http://localhost:52892/menucard/addguest?tableno=" + id, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(5);
+            string fileName = "QRTable_" + id + ".jpeg";
+
+            //Creates a jpeg image and saves it to stream
+            var stream = new System.IO.MemoryStream();
+            qrCodeImage.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
+            stream.Position = 0;
+
+            //Downloads QR jpeg to user's computer
+            return File(stream, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+        
     }
 }
