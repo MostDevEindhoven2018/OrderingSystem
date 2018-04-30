@@ -124,6 +124,9 @@ namespace WebInterface.Controllers
                 return RedirectToAction("ErrorView");
             }
             await DBCreationTask;
+
+           // ctx.Orders
+
             var drinks = DishType.getAllDrinks();
             var starters = DishType.getAllStarters();
             var mains = DishType.getAllMains();

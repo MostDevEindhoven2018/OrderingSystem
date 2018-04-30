@@ -16,7 +16,7 @@ namespace WebInterface.Models
         /// </summary>
 
 
-   
+        public DishType DishOrder { get; set; }
         public int quantity {get;set;}
 
         public virtual ICollection<Dish> Selected { get; set; }

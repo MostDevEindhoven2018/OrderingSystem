@@ -41,66 +41,66 @@
 
 
 
-    <div class="Drinks">
+    @*<div class="drinks">
 
-        <h3>Cold  Beverages</h3>
+        <h3>cold  beverages</h3>
 
-        <div class="ColdBeverage">
+        <div class="coldbeverage">
 
-            @foreach (DishType d in Model.Model)
+            @foreach (dishtype d in model.model)
                {   
                    <div></div>             
                                  
-                if (d.SubDishType == null)
+                if (d.subdishtype == null)
                     {                     
                                 }
                                      
-                  else if (d.SubDishType.SubType == "Cold Beverage")
+                  else if (d.subdishtype.subtype == "cold beverage")
                     {
-                      <div class="SubDrink"> @d.Name</div>
-                      <div class="customize"> [Customize] </div>
-                      <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+                      <div class="subdrink"> @d.name</div>
+                      <div class="customize"> [customize] </div>
+                      <div class="quantity"> <input id="theinput" type="number" size="3" class="input-text qty text" title="qty" value="0" min="0" step="1"> </div>
 
                     }
 
                }
         </div>
 
-        <h3>Hot Beverages</h3>
+        <h3>hot beverages</h3>
 
-        <div class="HotBeverage">
-            @foreach (DishType d in Model.Model)
+        <div class="hotbeverage">
+            @foreach (dishtype d in model.model)
                         {
-                            if (d.SubDishType == null)
+                            if (d.subdishtype == null)
                     { 
                  <div></div>
                     
                                 }
-                          else if (d.SubDishType.SubType == "Warm Beverage")
+                          else if (d.subdishtype.subtype == "warm beverage")
                             {
-                      <div class="SubDrink"> @d.Name</div>
-                      <div class="customize"> [Customize] </div>
-                      <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+                      <div class="subdrink"> @d.name</div>
+                      <div class="customize"> [customize] </div>
+                      <div class="quantity"> <input id="theinput" type="number" size="3" class="input-text qty text" title="qty" value="0" min="0" step="1"> </div>
 
                     }
             }
         </div>
 
-        <h3>Hard Drinks</h3>
+        <h3>hard drinks</h3>
 
-        <div class="HardDrink">
-            @foreach (DishType d in Model.Model)
+        <div class="harddrink">
+            @foreach (dishtype d in model.model)
                {
-                if (d.SubDishType == null)
+                if (d.subdishtype == null)
                     { 
                  <div></div>
                     
                                 }
-                 else if (d.SubDishType.SubType == "Alcohol Beverage")
+                 else if (d.subdishtype.subtype == "alcohol beverage")
                     {
-                      <div class="SubDrink"> @d.Name</div>
-                      <div class="customize"> [Customize] </div>
-                      <div class="quantity"> <input id="theInput" type="number" size="3" class="input-text qty text" title="Qty" value="0" min="0" step="1"> </div>
+                      <div class="subdrink"> @d.name</div>
+                      <div class="customize"> [customize] </div>
+                      <div class="quantity"> <input id="theinput" type="number" size="3" class="input-text qty text" title="qty" value="0" min="0" step="1"> </div>
 
                     }
                }
@@ -108,7 +108,7 @@
 
 
 
-    </div>
+    </div>*@
 
     <br />
     <br />
