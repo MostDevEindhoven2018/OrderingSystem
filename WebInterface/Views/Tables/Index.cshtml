@@ -16,6 +16,9 @@
         <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.TableID) 
+                    
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Capacity)
                 </th>
             <th></th>
@@ -26,13 +29,16 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.TableID)
+                
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Capacity)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.TableID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.TableID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.TableID">Delete</a> |
-                <a asp-action="PrintQR">PrintQR</a>
+                <a asp-action="PrintQR" asp-route-id="@item.TableID">PrintQR</a>
             </td>
         </tr>
 }
