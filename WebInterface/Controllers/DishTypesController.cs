@@ -57,7 +57,7 @@ namespace WebInterface.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DishTypeID,Course,Name,SubTypeID")] CreateDishTypeModel createDishTypeModel)
         {
-<<<<<<< HEAD
+            //HEAD
             if (ModelState.IsValid)
             {
                 DishType dishType = new DishType();
@@ -84,7 +84,7 @@ namespace WebInterface.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-=======
+
             //if (ModelState.IsValid)
             //{
             //    DishType dishType = new DishType();
@@ -107,7 +107,8 @@ namespace WebInterface.Controllers
             //    await _context.SaveChangesAsync();
             //    return RedirectToAction(nameof(Index));
             //}
->>>>>>> Make the ingredient page work and tried to make the categories in the dishes work
+            // Make the ingredient page work and tried to make the categories in the dishes work
+
             return View(createDishTypeModel);
         }
 

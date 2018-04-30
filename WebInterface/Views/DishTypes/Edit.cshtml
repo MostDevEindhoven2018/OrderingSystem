@@ -32,29 +32,29 @@
 
         function AddDropDownList() {
             //Build an array containing Customer records.
-            var customers = [
+            var ingredient = [
                 @foreach(IngredientType ingredientA in Model.Ingredients)
                 {
-                    Html.Raw("{ IngredientId: "+ingredientA.IngredientTypeID+", " +
+                    @Html.Raw("{ IngredientId: "+ingredientA.IngredientTypeID+", " +
                         "Name: \""+ingredientA.Name+"\"},");
                 }
 
             ];
             //Create a DropDownList element.
-            var ddlCustomers = $("<select />");
+            var ddlIngredients = $("<select />");
 
             //Add the Options to the DropDownList.
-            $(customers).each(function () {
+            $(ingredient).each(function () {
                var option = $("<option />");
 
-                //Set Customer Name in Text part.
+                //Set Ingredient Name in Text part.
                 option.html(this.Name);
 
-                //Set CustomerId in Value part.
-                option.val(this.CustomerId);
+                //Set IngredientId in Value part.
+                option.val(this.IngredientId);
 
                 //Add the Option element to DropDownList.
-                ddlCustomers.append(option);
+                ddlIngredients.append(option);
             });
 
             //Reference the container DIV.
@@ -62,7 +62,7 @@
 
             //Add the DropDownList to DIV.
             var div = $("<div />");
-            div.append(ddlCustomers);
+            div.append(ddlIngredients);
 
             //Create a Remove Button.
             var btnRemove = $("<input type = 'button' value = 'Remove' />");
