@@ -47,6 +47,12 @@ namespace WebInterface.Controllers
         public IActionResult Create()
         {
             _context.Database.EnsureCreated();
+            CreateDishTypeModel createDishType = new CreateDishTypeModel();
+            var ListOfSubDishTypes = _context.SubDishTypes.Select(s => s.SubDishTypeID);
+            //List<int> query = ListOfSubDishTypes.ToList();
+            
+            createDishType.SubTypeList = ListOfSubDishTypes.ToList();
+
             return View();
         }
 
@@ -66,8 +72,6 @@ namespace WebInterface.Controllers
 
                 ////_context.SubDishTypes.ToList().Select()
 
-                ////_context.SubDishTypes.ToList().Select(sdt => new { sdt.SubDishTypeID }).SingleOrDefault(sdt => sdt.SubDishTypeID == subDishTypeID);
-
 
                 //DbSet<SubDishType> subDishTypes = _context.SubDishTypes;
                 //var query = subDishTypes.Where(s => createDishTypeModel.SubTypeID == s.SubDishTypeID);
@@ -79,7 +83,7 @@ namespace WebInterface.Controllers
                 //}
 
                 //dishType.SubType = sdt;
-                                                
+
                 _context.Add(dishType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

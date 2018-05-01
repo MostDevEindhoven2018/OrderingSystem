@@ -22,6 +22,25 @@
                 <label asp-for="Dish.Name" class="control-label"></label>
                 <input asp-for="Dish.Name" class="form-control" />
                 <span asp-validation-for="Dish.Name" class="text-danger"></span>
+                @*<label asp-for="SubTypeID" class="control-label"></label>
+        <select asp-for="SubTypeID" option value="" class="form-control"></select>
+        <span asp-validation-for="SubTypeID" class="text-danger"></span>*@
+
+                @*<label asp-for="Course" class="control-label"></label>
+                <select asp-for="Course" asp-items="Html.GetListSelectList<createDishType.SubTypeList>()" class="form-control"></select>
+                <span asp-validation-for="Course" class="text-danger"></span>*@
+            </div>
+
+
+                
+                @*<select asp-for="SubTypeID">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>*@
+            </div>
+            <div class="form-group">
             </div>
 
 
@@ -31,6 +50,8 @@
         </form>
     </div>
 </div>
+
+
 
 <div>
     <a asp-action="Index">Back to List</a>

@@ -10,5 +10,6 @@ namespace WebInterface.Models
         public virtual CourseType Course { get; set; }
         public string Name { get; set; }
         public int SubTypeID { get; set; }
+        public List<int> SubTypeList { get; set; }
     }
 }
