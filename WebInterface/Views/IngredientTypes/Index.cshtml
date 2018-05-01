@@ -9,43 +9,53 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table" id="ingredientTable">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UnitSingular)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UnitPlural)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitSingular)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPlural)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnitSingular)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnitPlural)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IngredientTypeID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IngredientTypeID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IngredientTypeID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitSingular)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPlural)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IngredientTypeID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IngredientTypeID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IngredientTypeID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
 <body>
     <a asp-controller="User" asp-action="Index">Go back to user overview</a>
 </body>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#ingredientTable').DataTable();
+        });
+    </script>
+    }
+

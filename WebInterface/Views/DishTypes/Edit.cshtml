@@ -15,7 +15,7 @@
             <input type="hidden" asp-for="Dish.DishTypeID" />
             <div class="form-group">
                 <label asp-for="Dish.Course" class="control-label"></label>
-                <select asp-for="Dish.Course" class="form-control"></select>
+                <select asp-for="Dish.Course" asp-items="Html.GetEnumSelectList<CourseType>()" class="form-control"></select>
                 <span asp-validation-for="Dish.Course" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -24,7 +24,7 @@
                 <span asp-validation-for="Dish.Name" class="text-danger"></span>
             </div>
 
-            <input type="button" id="btnAdd" onclick="AddDropDownList()" value="Add DropDownList" />
+            <input type="button" id="btnAdd" onclick="AddDropDownList()" value="Add Ingredient" />
             <hr />
             <div id="dvContainer"></div>
             <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>

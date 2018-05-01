@@ -55,30 +55,30 @@ namespace WebInterface.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DishTypeID,Course,Name,SubTypeID")] CreateDishTypeModel createDishTypeModel)
+        public async Task<IActionResult> Create([Bind("DishTypeID,Course,Name,SubTypeID")] DishTypesViewModel createDishTypeViewModel)
         {
             //HEAD
             if (ModelState.IsValid)
             {
                 DishType dishType = new DishType();
-                dishType.Name = createDishTypeModel.Name;
-                dishType.Course = createDishTypeModel.Course;
+                dishType.Name = createDishTypeViewModel.Dish.Name;
+                dishType.Course = createDishTypeViewModel.Dish.Course;
 
-                //_context.SubDishTypes.ToList().Select()
+                ////_context.SubDishTypes.ToList().Select()
 
-                //_context.SubDishTypes.ToList().Select(sdt => new { sdt.SubDishTypeID }).SingleOrDefault(sdt => sdt.SubDishTypeID == subDishTypeID);
+                ////_context.SubDishTypes.ToList().Select(sdt => new { sdt.SubDishTypeID }).SingleOrDefault(sdt => sdt.SubDishTypeID == subDishTypeID);
 
 
-                DbSet<SubDishType> subDishTypes = _context.SubDishTypes;
-                var query = subDishTypes.Where(s => createDishTypeModel.SubTypeID == s.SubDishTypeID);
-                SubDishType sdt = query.FirstOrDefault();
+                //DbSet<SubDishType> subDishTypes = _context.SubDishTypes;
+                //var query = subDishTypes.Where(s => createDishTypeModel.SubTypeID == s.SubDishTypeID);
+                //SubDishType sdt = query.FirstOrDefault();
 
-                if (sdt==null)
-                {
-                    return NotFound();
-                }
+                //if (sdt==null)
+                //{
+                //    return NotFound();
+                //}
 
-                dishType.SubType = sdt;
+                //dishType.SubType = sdt;
                                                 
                 _context.Add(dishType);
                 await _context.SaveChangesAsync();
@@ -109,7 +109,7 @@ namespace WebInterface.Controllers
             //}
             // Make the ingredient page work and tried to make the categories in the dishes work
 
-            return View(createDishTypeModel);
+            return View(createDishTypeViewModel);
         }
 
         // GET: DishTypes/Edit/5
@@ -141,9 +141,9 @@ namespace WebInterface.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DishTypeID,Course,Name")] DishType dishType)
+        public async Task<IActionResult> Edit(int id, [Bind("DishTypeID,Course,Name")] DishTypesViewModel dishType)
         {
-            if (id != dishType.DishTypeID)
+            if (id != dishType.Dish.DishTypeID)
             {
                 return NotFound();
             }
@@ -157,7 +157,7 @@ namespace WebInterface.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DishTypeExists(dishType.DishTypeID))
+                    if (!DishTypeExists(dishType.Dish.DishTypeID))
                     {
                         return NotFound();
                     }
