@@ -8,7 +8,7 @@ namespace WebInterface.ViewModel
 {
     public class DishTypesViewModel 
     {
-        internal readonly string Name;
+        //internal readonly string Name;
 
         public DishType Dish { get; set; }
 

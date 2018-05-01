@@ -14,6 +14,7 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Dish.DishTypeID" />
+            <input type="hidden" asp-for="Ingredients" />
             <div class="form-group">
                 <label asp-for="Dish.Course" class="control-label"></label>
                 <select asp-for="Dish.Course" asp-items="Html.GetEnumSelectList<CourseType>()" class="form-control"></select>
@@ -28,8 +29,24 @@
             <input type="button" id="btnAdd" onclick="AddDropDownList()" value="Add Ingredient" />
             <hr />
             <div id="dvContainer"></div>
-            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-            <script type="text/javascript">
+
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script type="text/javascript">
 
         function AddDropDownList() {
             //Build an array containing Customer records.
@@ -77,19 +94,4 @@
             //Add the DIV to the container DIV.
             dvContainer.append(div);
         };
-            </script>
-
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+</script>

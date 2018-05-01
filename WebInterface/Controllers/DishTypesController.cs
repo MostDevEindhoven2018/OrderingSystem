@@ -136,7 +136,7 @@ namespace WebInterface.Controllers
 
             dishTypesViewModel.Dish = dishType;
             dishTypesViewModel.Ingredients = ingredientType;
-
+            
             return View(dishTypesViewModel);
         }
 
@@ -145,18 +145,13 @@ namespace WebInterface.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DishTypeID,Course,Name")] DishTypesViewModel dishType)
+        public async Task<IActionResult> Edit(DishTypesViewModel dishType)
         {
-            if (id != dishType.Dish.DishTypeID)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(dishType);
+                    _context.Update(dishType.Dish);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
