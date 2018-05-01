@@ -149,6 +149,25 @@ namespace WebInterface.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (dishType.IngredientToAdd != null)
+                {
+                    //Ingredient ingredient;
+                    //ingredient = new Ingredient();
+                    Ingredient ingredient = new Ingredient();
+
+                    ingredient.Type = dishType.IngredientToAdd;
+                    ingredient.Quantity = 0;
+
+                    _context.Ingredients.Add(ingredient);
+                    await _context.SaveChangesAsync();
+
+                    if (dishType.Dish.DefaultIngredients ==null)
+                    {
+                        dishType.Dish.DefaultIngredients = new List<Ingredient>();
+                    }
+                    dishType.Dish.DefaultIngredients.Add(ingredient);
+                }
+
                 try
                 {
                     _context.Update(dishType.Dish);

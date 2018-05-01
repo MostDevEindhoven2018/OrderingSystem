@@ -14,5 +14,6 @@ namespace WebInterface.ViewModel
 
         public List<IngredientType> Ingredients { get; set; }
 
+        public IngredientType IngredientToAdd { get; set; }
     }
 }
