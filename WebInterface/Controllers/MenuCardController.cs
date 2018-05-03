@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using WebInterface.Models;
 using System.Dynamic;
 using WebInterface.Models.CombinedModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebInterface.Controllers
 {
@@ -74,10 +76,49 @@ namespace WebInterface.Controllers
             dishTypeViewModel.DishTypes = drinks;
             dishTypeViewModel.SubDishTypes = uniqueSubDrinks;
 
+
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
         }
 
+        [HttpPost]
+        public IActionResult Drinks(IFormCollection col,string GuestCode)
+        {
 
+            List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();
+
+            var all = from c in ctx.Orders select c;
+            ctx.Orders.RemoveRange(all);
+            ctx.SaveChanges();
+
+            for (int i = 0; i < drinks.Count; i++)
+            {
+                if (Convert.ToInt32(col[$"{drinks[i].Name}"])>0)
+                {
+                    Order newOrder = new Order() {orderDish=drinks[i], quantity = Convert.ToInt32(col[$"{drinks[i].Name}"]) };
+                    ctx.Orders.Add(newOrder);
+                    try
+                    {
+                        ctx.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        // Make some adjustments.
+                        // ...
+                        // Try again.
+                        ctx.SaveChanges();
+                    }
+                    //ab.Add(Convert.ToInt32(col[$"{drinks[i].Name}"]));
+
+                }
+            }
+
+            //string a = col["Cola"];
+
+            return RedirectToAction("OrderOverview", "MenuCard", new { guestCode = GuestCode });
+        }
+
+        
 
         public async Task<IActionResult> Starters(string guestCode)
         {
@@ -180,17 +221,26 @@ namespace WebInterface.Controllers
             }
             await DBCreationTask;
 
-           // ctx.Orders
+            // ctx.Orders
 
-            var drinks = DishType.getAllDrinks();
-            var starters = DishType.getAllStarters();
-            var mains = DishType.getAllMains();
-            var dessert = DishType.getAllDesserts();
+            //var drinks = DishType.getAllDrinks();
+            //var starters = DishType.getAllStarters();
+            //var mains = DishType.getAllMains();
+            //var dessert = DishType.getAllDesserts();
 
-            var result = drinks.Concat(starters).Concat(mains).Concat(dessert).ToList();
+            //var result = drinks.Concat(starters).Concat(mains).Concat(dessert).ToList();
+
+            List<DishType> drinks = ctx.Orders.Select(x=>x.orderDish).ToList();
+            List<Order> order = ctx.Orders.ToList();
+
+            OrderDishTypeViewModel orderDishTypeViewModel = new OrderDishTypeViewModel()
+            {
+                orderDishType = drinks,
+                orders = order
+            };
 
 
-            return View(new GuestCodeWithModel<List<DishType>>(result, guestCode));
+            return View(new GuestCodeWithModel<OrderDishTypeViewModel>(orderDishTypeViewModel, guestCode));
         }
 
         public IActionResult ErrorView()

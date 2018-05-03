@@ -1,19 +1,22 @@
 ﻿@using WebInterface.Models.CombinedModels
-
+@using WebMatrix.Data
 @model GuestCodeWithModel<DishTypeViewModel>
-
 @{
     ViewData["Title"] = "Desserts";
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
 }
 
+@*@{
+    var db = Database.Open("Orders");
+    var selectQueryString = "SELECT * FROM DishTypes ORDER BY Name";
+
+}*@
 
 <h2>Desserts</h2>
-
 <hr />
 
-
 <style>
+
 
     body {
         background-image: url(https://i.dietdoctor.com/wp-content/uploads/2017/12/DessertsImageMob.jpg?auto=compress%2Cformat&w=1200&h=610&fit=crop)
@@ -42,9 +45,7 @@
 
 
 <body>
-
     <div class="Desserts">
-
         @if (Model.Model.DishTypes.Count() == 0 || Model.Model.DishTypes.Count() < 0)
         {
             <div>No Desserts to display</div>
@@ -109,15 +110,9 @@
 
 
         }
-
     </div>
-
 </body>
-
 <br />
 <br />
-
 <input type="button" value="Go Back to Main courses" onclick="location.href='@Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
-
 <input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
-
