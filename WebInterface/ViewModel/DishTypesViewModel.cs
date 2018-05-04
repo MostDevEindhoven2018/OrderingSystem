@@ -16,7 +16,6 @@ namespace WebInterface.ViewModel
         public List<IngredientType> Ingredients { get; set; }
 
         public IngredientType IngredientToAdd { get; set; }
-        public IEnumerable<SelectListItem> SubDishTypes { get; set; }
 
         public List<SubDishType> SubTypeList { get; set; }
 

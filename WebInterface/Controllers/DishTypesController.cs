@@ -23,7 +23,17 @@ namespace WebInterface.Controllers
         // GET: DishTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DishTypes.ToListAsync());
+            //DishType dishType = new DishType
+            //{
+            //    dishType.SubType = "Test";
+            //}
+
+
+
+            var model = await _context.DishTypes.ToListAsync();
+            await _context.SubDishTypes.ToListAsync();
+
+            return View(model);
         }
 
         // GET: DishTypes/Details/5
@@ -40,6 +50,7 @@ namespace WebInterface.Controllers
             {
                 return NotFound();
             }
+            await _context.SubDishTypes.ToListAsync();
 
             return View(dishType);
         }
@@ -50,10 +61,11 @@ namespace WebInterface.Controllers
             _context.Database.EnsureCreated();
 
             var ListOfSubDishTypes = _context.SubDishTypes;
-            
-            DishTypesViewModel model = new DishTypesViewModel();
 
-            model.SubTypeList = ListOfSubDishTypes.ToList();
+            DishTypesViewModel model = new DishTypesViewModel
+            {
+                SubTypeList = ListOfSubDishTypes.ToList()
+            };
 
             return View(model);
         }
@@ -69,9 +81,12 @@ namespace WebInterface.Controllers
             if (ModelState.IsValid)
             {
                 //
-                DishType model = new DishType();
-                model.Name = dishTypeViewModel.Dish.Name;
-                model.Course = dishTypeViewModel.Dish.Course;
+                DishType model = new DishType
+                {
+                    Name = dishTypeViewModel.Dish.Name,
+                    Course = dishTypeViewModel.Dish.Course,
+                    Price = dishTypeViewModel.Dish.Price
+                };
 
                 DbSet<SubDishType> subDishTypes = _context.SubDishTypes;
 
@@ -134,10 +149,11 @@ namespace WebInterface.Controllers
                 {
                     //Ingredient ingredient;
                     //ingredient = new Ingredient();
-                    Ingredient ingredient = new Ingredient();
-
-                    ingredient.Type = dishType.IngredientToAdd;
-                    ingredient.Quantity = 0;
+                    Ingredient ingredient = new Ingredient
+                    {
+                        Type = dishType.IngredientToAdd,
+                        Quantity = 0
+                    };
 
                     _context.Ingredients.Add(ingredient);
                     await _context.SaveChangesAsync();
