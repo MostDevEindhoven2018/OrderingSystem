@@ -15,16 +15,32 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Dish.DishTypeID" />
             <input type="hidden" asp-for="Ingredients" />
-            <div class="form-group">
-                <label asp-for="Dish.Course" class="control-label"></label>
-                <select asp-for="Dish.Course" asp-items="Html.GetEnumSelectList<CourseType>()" class="form-control"></select>
-                <span asp-validation-for="Dish.Course" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="Dish.Name" class="control-label"></label>
                 <input asp-for="Dish.Name" class="form-control" />
                 <span asp-validation-for="Dish.Name" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="Dish.Course" class="control-label"></label>
+                <select asp-for="Dish.Course" asp-items="Html.GetEnumSelectList<CourseType>()" class="form-control"></select>
+                <span asp-validation-for="Dish.Course" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                @{
+            string data = "SubDishTypeID";
+            string name = "SubType";
+            string dropDownName = "SubTypeID";
+                }
+                @Html.DropDownList(dropDownName, new SelectList(Model.SubTypeList, data, name))
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+
 
             <input type="button" id="btnAdd" onclick="AddDropDownList()" value="Add Ingredient" />
             <hr />

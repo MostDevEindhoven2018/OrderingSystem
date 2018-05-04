@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebInterface.Models;
 using WebInterface.ViewModel;
+using Microsoft.AspNetCore.Http;
 
 namespace WebInterface.Controllers
 {
@@ -47,13 +48,14 @@ namespace WebInterface.Controllers
         public IActionResult Create()
         {
             _context.Database.EnsureCreated();
-            CreateDishTypeModel createDishType = new CreateDishTypeModel();
-            var ListOfSubDishTypes = _context.SubDishTypes.Select(s => s.SubDishTypeID);
-            //List<int> query = ListOfSubDishTypes.ToList();
-            
-            createDishType.SubTypeList = ListOfSubDishTypes.ToList();
 
-            return View();
+            var ListOfSubDishTypes = _context.SubDishTypes;
+            
+            DishTypesViewModel model = new DishTypesViewModel();
+
+            model.SubTypeList = ListOfSubDishTypes.ToList();
+
+            return View(model);
         }
 
         // POST: DishTypes/Create
@@ -61,59 +63,35 @@ namespace WebInterface.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DishTypeID,Course,Name,SubTypeID")] DishTypesViewModel createDishTypeViewModel)
+        public async Task<IActionResult> Create ([Bind("Dish, Dish.Name, Dish.Course, Ingredients, Dish.DishTypeID, SubTypeID")]DishTypesViewModel dishTypeViewModel)
         {
             //HEAD
             if (ModelState.IsValid)
             {
-                DishType dishType = new DishType();
-                dishType.Name = createDishTypeViewModel.Dish.Name;
-                dishType.Course = createDishTypeViewModel.Dish.Course;
+                //
+                DishType model = new DishType();
+                model.Name = dishTypeViewModel.Dish.Name;
+                model.Course = dishTypeViewModel.Dish.Course;
 
-                ////_context.SubDishTypes.ToList().Select()
+                DbSet<SubDishType> subDishTypes = _context.SubDishTypes;
+
+                var query = subDishTypes.Where(s => dishTypeViewModel.SubTypeID == s.SubDishTypeID);
+                SubDishType sdt = query.FirstOrDefault();
+
+                if (sdt == null)
+                {
+                    return NotFound();
+                }
 
 
-                //DbSet<SubDishType> subDishTypes = _context.SubDishTypes;
-                //var query = subDishTypes.Where(s => createDishTypeModel.SubTypeID == s.SubDishTypeID);
-                //SubDishType sdt = query.FirstOrDefault();
+                model.SubType = sdt;
 
-                //if (sdt==null)
-                //{
-                //    return NotFound();
-                //}
-
-                //dishType.SubType = sdt;
-
-                _context.Add(dishType);
+                _context.Add(model);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+            }            
 
-            //if (ModelState.IsValid)
-            //{
-            //    DishType dishType = new DishType();
-            //    dishType.Name = createDishTypeModel.Name;
-            //    dishType.Course = createDishTypeModel.Course;
-            //    _context.SubDishTypes.ToList().Select(sdt => new { sdt.SubDishTypeID }).SingleOrDefault(sdt => sdt.SubDishTypeID == subDishTypeID);
-
-            //    if (id == null)
-            //    {
-            //        return NotFound();
-            //    }
-
-            //    var subDishType = await _context.SubDishTypes.SingleOrDefaultAsync(m => m.SubDishTypeID == id);
-
-            //    if (subDishType == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //    _context.Add(dishType);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Index));
-            //}
-            // Make the ingredient page work and tried to make the categories in the dishes work
-
-            return View(createDishTypeViewModel);
+            return View(dishTypeViewModel);
         }
 
         // GET: DishTypes/Edit/5
@@ -134,9 +112,12 @@ namespace WebInterface.Controllers
 
             var ingredientType = await _context.IngredientTypes.ToListAsync();
 
+            var subCourseType = await _context.SubDishTypes.ToListAsync();
+
             dishTypesViewModel.Dish = dishType;
             dishTypesViewModel.Ingredients = ingredientType;
-            
+            dishTypesViewModel.SubTypeList = subCourseType;
+
             return View(dishTypesViewModel);
         }
 
