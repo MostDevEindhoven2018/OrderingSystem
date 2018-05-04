@@ -47,7 +47,8 @@ namespace WebInterface.Controllers
 
         public async Task<IActionResult> Drinks(string guestCode)
         {
-            
+            //HttpContext.Session.SetString("Drinks", "ColdBeverages");
+            //HttpContext.Session.SetString("Drinks", "HotBeverages");
 
             if (guestCode == null)
             {
