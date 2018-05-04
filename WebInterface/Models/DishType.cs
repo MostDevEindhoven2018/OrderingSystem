@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebInterface.Models
 {
@@ -9,11 +10,19 @@ namespace WebInterface.Models
     {
         private static List<DishType> allDishes;
 
-        public int DishTypeID { get; set; }
-        public virtual CourseType Course { get; set; }
+        [Required]
         public string Name { get; set; }
+
+        public int DishTypeID { get; set; }
+        public virtual CourseType Course { get; set; }        
         public SubDishType SubType { get; set; }
-        public int Price { get; set; }
+
+        [Required]
+        [RegularExpression("([0-9 .]*)", ErrorMessage = "This Field only accepts numbers")]
+        public string Price { get; set; }
+
+        [Required]
+        public string Recipe { get; set; }
 
         public ICollection<Ingredient> DefaultIngredients { get; /*private*/ set; }
 

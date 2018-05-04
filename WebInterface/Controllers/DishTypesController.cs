@@ -75,7 +75,7 @@ namespace WebInterface.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create ([Bind("Dish, Dish.Name, Dish.Course, Ingredients, Dish.DishTypeID, SubTypeID")]DishTypesViewModel dishTypeViewModel)
+        public async Task<IActionResult> Create ([Bind("Dish, Dish.Name, Dish.Course, Ingredients, Dish.DishTypeID, SubTypeID, Dish.Recipe, Dish.Price")]DishTypesViewModel dishTypeViewModel)
         {
             //HEAD
             if (ModelState.IsValid)
@@ -85,6 +85,7 @@ namespace WebInterface.Controllers
                 {
                     Name = dishTypeViewModel.Dish.Name,
                     Course = dishTypeViewModel.Dish.Course,
+                    Recipe = dishTypeViewModel.Dish.Recipe,
                     Price = dishTypeViewModel.Dish.Price
                 };
 
