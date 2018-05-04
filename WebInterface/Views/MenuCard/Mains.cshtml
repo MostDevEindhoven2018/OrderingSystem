@@ -13,8 +13,11 @@
 
 
 <style>
+    input[type=number]::-webkit-inner-spin-button {
+        opacity: 1
+    }
 
-    .SubDrink {
+    .SubMains {
         float: left;
         width: 50%;
     }
@@ -38,7 +41,6 @@
 
 
 <div class="Mains">
-
     @if (Model.Model.DishTypes.Count() == 0 || Model.Model.DishTypes.Count() < 0)
     {
         <div>No Main courses to display</div>
@@ -53,7 +55,9 @@
             {
                 if (Model.Model.DishTypes[j].SubDishType == null)
                 {
-                    <div>@Model.Model.DishTypes[j].Name</div>
+                    <div class="SubMains">@Model.Model.DishTypes[j].Name</div>
+                    <div class="customize">[Customize]</div>
+                    <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
                 }
             }
 
@@ -71,7 +75,9 @@
                     {
                         if (Model.Model.DishTypes[j].SubDishType.SubType == Model.Model.SubDishTypes[i].SubType)
                         {
-                            <div>@Model.Model.DishTypes[j].Name</div>
+                            <div class="SubMains">@Model.Model.DishTypes[j].Name</div>
+                            <div class="customize">[Customize]</div>
+                            <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
                         }
 
                     }
@@ -104,7 +110,6 @@
 
 
     }
-
 </div>
 
 <hr />

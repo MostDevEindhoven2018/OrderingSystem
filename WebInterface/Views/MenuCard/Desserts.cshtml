@@ -7,10 +7,10 @@
 }
 
 @*@{
-    var db = Database.Open("Orders");
-    var selectQueryString = "SELECT * FROM DishTypes ORDER BY Name";
+        var db = Database.Open("Orders");
+        var selectQueryString = "SELECT * FROM DishTypes ORDER BY Name";
 
-}*@
+    }*@
 
 <h2>Desserts</h2>
 <hr />
@@ -22,7 +22,7 @@
         background-image: url(https://i.dietdoctor.com/wp-content/uploads/2017/12/DessertsImageMob.jpg?auto=compress%2Cformat&w=1200&h=610&fit=crop)
     }
 
-    .SubDrink {
+    .SubDessert {
         float: left;
         width: 50%;
     }
@@ -59,7 +59,9 @@
                 {
                     if (Model.Model.DishTypes[j].SubDishType == null)
                     {
-                        <div>@Model.Model.DishTypes[j].Name</div>
+                        <div class="SubDessert">@Model.Model.DishTypes[j].Name</div>
+                        <div class="customize">[Customize]</div>
+                        <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
                     }
                 }
 
@@ -77,7 +79,9 @@
                         {
                             if (Model.Model.DishTypes[j].SubDishType.SubType == Model.Model.SubDishTypes[i].SubType)
                             {
-                                <div>@Model.Model.DishTypes[j].Name</div>
+                                <div class="SubDessert">@Model.Model.DishTypes[j].Name</div>
+                                <div class="customize">[Customize]</div>
+                                <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
                             }
 
                         }

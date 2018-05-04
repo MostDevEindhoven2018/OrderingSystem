@@ -21,6 +21,9 @@
 
 <style>
 
+    input[type=number]::-webkit-inner-spin-button {
+        opacity: 1
+    }
 
     .SubDrink {
         float: left;
@@ -47,11 +50,9 @@
     }
 </style>
 
-
 <form asp-action="Drinks">
 
-        <input type="hidden" name="GuestCode" value="@Model.GuestCode" />
-
+    <input type="hidden" name="GuestCode" value="@Model.GuestCode" />
 
     <div class="Drinks">
 
@@ -69,6 +70,8 @@
                     if (Model.Model.DishTypes[j].SubDishType == null)
                     {
                         <div>@Model.Model.DishTypes[j].Name</div>
+                        <div class="customize">[Customize]</div>
+                        <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
                     }
                 }
 
@@ -123,6 +126,9 @@
         }
 
     </div>
+
+    <hr />
+
     <br />
     <br />
 
@@ -131,3 +137,5 @@
     <input type="submit" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />
 
 </form>
+
+

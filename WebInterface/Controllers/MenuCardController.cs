@@ -9,13 +9,15 @@ using System.Dynamic;
 using WebInterface.Models.CombinedModels;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace WebInterface.Controllers
 {
-
     public class MenuCardController : Controller
     {
         MenuCardDBContext ctx;
         Task DBCreationTask;
+        
+
         public MenuCardController(MenuCardDBContext context)
         {
             ctx = context;
@@ -45,7 +47,7 @@ namespace WebInterface.Controllers
 
         public async Task<IActionResult> Drinks(string guestCode)
         {
-
+            
 
             if (guestCode == null)
             {
@@ -84,11 +86,7 @@ namespace WebInterface.Controllers
         public IActionResult Drinks(IFormCollection col,string GuestCode)
         {
 
-            List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();
-
-            var all = from c in ctx.Orders select c;
-            ctx.Orders.RemoveRange(all);
-            ctx.SaveChanges();
+            List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();            
 
             for (int i = 0; i < drinks.Count; i++)
             {
@@ -128,7 +126,6 @@ namespace WebInterface.Controllers
             }
             await DBCreationTask;
             //starters contains all starters defined in the CLASS DISHTYPE
-
             //The (var test) fills the Entity Framework cache with subdishtypes,
             //or else Entity Framework throws NullReference
             var test = ctx.SubDishTypes.ToList();
@@ -149,6 +146,44 @@ namespace WebInterface.Controllers
 
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
 
+        }
+
+        [HttpPost]
+        public IActionResult Starters(IFormCollection col, string GuestCode)
+        {
+
+            List<DishType> starters = ctx.DishTypes.Where(x => x.Course == CourseType.STARTER).ToList();
+
+            //var all = from c in ctx.Orders select c;
+            //ctx.Orders.RemoveRange(all);
+            //ctx.SaveChanges();
+
+            for (int i = 0; i < starters.Count; i++)
+            {
+                if (Convert.ToInt32(col[$"{starters[i].Name}"]) > 0)
+                {
+                    Order newOrder = new Order() { orderDish = starters[i], quantity = Convert.ToInt32(col[$"{starters[i].Name}"]) };
+                    ctx.Orders.Add(newOrder);
+                    try
+                    {
+                        ctx.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        // Make some adjustments.
+                        // ...
+                        // Try again.
+                        ctx.SaveChanges();
+                    }
+                    //ab.Add(Convert.ToInt32(col[$"{drinks[i].Name}"]));
+
+                }
+            }
+
+            //string a = col["Cola"];
+
+            return RedirectToAction("OrderOverview", "MenuCard", new { guestCode = GuestCode });
         }
 
         public async Task<IActionResult> Mains(string guestCode)
