@@ -19,7 +19,7 @@ namespace WebInterface.Models
 
         [Required]
         [RegularExpression("([0-9 .]*)", ErrorMessage = "This Field only accepts numbers")]
-        public string Price { get; set; }
+        public double? Price { get; set; }
 
         [Required]
         public string Recipe { get; set; }

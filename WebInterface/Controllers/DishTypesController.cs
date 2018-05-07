@@ -152,12 +152,13 @@ namespace WebInterface.Controllers
                     return NotFound();
                 }
 
-
                 model.SubType = sdt;
 
                 _context.Add(model);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                int id = model.DishTypeID;
+                return RedirectToAction(nameof(Edit), new { id = id });
             }            
 
             return View(dishTypeViewModel);
