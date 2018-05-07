@@ -40,7 +40,7 @@
             string name = "SubType";
             string dropDownName = "SubTypeID";
                 }
-                <label asp-for="Dish.SubType" class="control-label"></label>
+                <label asp-for="Dish.SubType" class="control-label">Category</label>
                 @Html.DropDownList(dropDownName, new SelectList(Model.SubTypeList, data, name), new { @class = "form-control" })
                 <span asp-validation-for="Dish.SubType" class="text-danger"></span>
             </div>

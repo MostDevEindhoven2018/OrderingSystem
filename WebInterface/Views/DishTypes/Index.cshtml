@@ -22,10 +22,11 @@
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.SubType)
+                Category
             </th>
-
-            <th></th>
+            <th>
+                Price (euro)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -42,6 +43,9 @@
 
             <td>
                 @Html.DisplayFor(modelItem => item.SubType.SubType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
             </td>
 
             <td>
