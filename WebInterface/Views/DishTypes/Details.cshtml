@@ -1,0 +1,52 @@
+﻿@model WebInterface.Models.DishType
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DishType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Course)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Course)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubType.SubType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SubType.SubType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Recipe)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Recipe)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.DishTypeID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

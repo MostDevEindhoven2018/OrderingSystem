@@ -11,9 +11,10 @@ using WebInterface.Models;
 namespace WebInterface.Migrations
 {
     [DbContext(typeof(MenuCardDBContext))]
-    partial class MenuCardDBContextModelSnapshot : ModelSnapshot
+    [Migration("20180425134240_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,19 +40,19 @@ namespace WebInterface.Migrations
                     b.Property<int>("DishID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("CourseDishTypeID");
+
                     b.Property<int?>("OrderID");
 
                     b.Property<int?>("OrderID1");
 
-                    b.Property<int?>("TypeDishTypeID");
-
                     b.HasKey("DishID");
+
+                    b.HasIndex("CourseDishTypeID");
 
                     b.HasIndex("OrderID");
 
                     b.HasIndex("OrderID1");
-
-                    b.HasIndex("TypeDishTypeID");
 
                     b.ToTable("Dishes");
                 });
@@ -61,15 +62,15 @@ namespace WebInterface.Migrations
                     b.Property<int>("DishTypeID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("Course");
+
                     b.Property<string>("Name");
 
-                    b.Property<int>("SubDishTypeID");
-
-                    b.Property<string>("SubType");
-
-                    b.Property<int>("Type");
+                    b.Property<int?>("SubTypeSubDishTypeID");
 
                     b.HasKey("DishTypeID");
+
+                    b.HasIndex("SubTypeSubDishTypeID");
 
                     b.ToTable("DishTypes");
                 });
@@ -165,6 +166,18 @@ namespace WebInterface.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("WebInterface.Models.SubDishType", b =>
+                {
+                    b.Property<int>("SubDishTypeID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("SubType");
+
+                    b.HasKey("SubDishTypeID");
+
+                    b.ToTable("SubDishTypes");
+                });
+
             modelBuilder.Entity("WebInterface.Models.Table", b =>
                 {
                     b.Property<int>("TableID")
@@ -186,6 +199,10 @@ namespace WebInterface.Migrations
 
             modelBuilder.Entity("WebInterface.Models.Dish", b =>
                 {
+                    b.HasOne("WebInterface.Models.DishType", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseDishTypeID");
+
                     b.HasOne("WebInterface.Models.Order")
                         .WithMany("Finalized")
                         .HasForeignKey("OrderID");
@@ -193,10 +210,13 @@ namespace WebInterface.Migrations
                     b.HasOne("WebInterface.Models.Order")
                         .WithMany("Selected")
                         .HasForeignKey("OrderID1");
+                });
 
-                    b.HasOne("WebInterface.Models.DishType", "Type")
+            modelBuilder.Entity("WebInterface.Models.DishType", b =>
+                {
+                    b.HasOne("WebInterface.Models.SubDishType", "SubType")
                         .WithMany()
-                        .HasForeignKey("TypeDishTypeID");
+                        .HasForeignKey("SubTypeSubDishTypeID");
                 });
 
             modelBuilder.Entity("WebInterface.Models.Group", b =>

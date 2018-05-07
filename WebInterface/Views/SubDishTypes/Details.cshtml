@@ -1,0 +1,25 @@
+﻿@model WebInterface.Models.SubDishType
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SubDishType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SubType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SubType)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.SubDishTypeID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
