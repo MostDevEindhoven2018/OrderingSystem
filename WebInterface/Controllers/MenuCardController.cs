@@ -332,74 +332,23 @@ namespace WebInterface.Controllers
 
             await DBCreationTask;
 
-            //creating cache for entity framework
+            Guest guest = ctx.Guests.Where(x => x.Code == guestCode).FirstOrDefault();
 
-            ctx.Orders.ToList();
-            ctx.Guests.ToList();
-            ctx.DishTypes.ToList();
-            ctx.SubDishTypes.ToList();
-            ctx.Dishes.ToList();
-
-            List<Order> order = ctx.Orders.ToList();
-
-            List<Dish> selectedOrderItems = null;
-
-            foreach (var item in order)
+            if (guest == null)
             {
-                if (item.Owner.Code==guestCode)
-                {
-                    selectedOrderItems = item.Selected.ToList();
-
-                }
-
+                return ErrorView();
             }
 
-            var test = selectedOrderItems;
+            Order order = ctx.Orders.Where(x => x.Owner == guest).FirstOrDefault();
+            ctx.Dishes.ToList();
 
-            OrderDishTypeViewModel orderDishTypeViewModel = new OrderDishTypeViewModel
+            if (order == null)
             {
-                orderDishes =selectedOrderItems,                
+                return ErrorView();
+            }
 
-            };
+            var selected = order.Selected;
 
-
-
-
-            ////For the particular guest code, update the selected dishes
-
-            //for (int i = 0; i < order.Count; i++)
-            //{
-            //    if (order[i].Owner.Code == guestCode)
-            //    {
-            //        order[i].Selected;
-            //        ctx.SaveChanges();
-            //    }
-            //}
-
-            //for (int i = 0; i < orderedDishes.Count; i++)
-            //{
-            //    if (orderedDishes[i].)
-            //    {
-            //        var selectedOrder = order[i].Selected;
-            //    }
-            //}
-
-
-
-
-            //selects distinct drinks from the user form
-            //var test4 = ctx.Dishes.GroupBy(x => x.Course).Select(x => x.First()).Distinct().ToList();
-            //var test2 = ctx.Orders.Select(x => x.Selected);
-            //var test3 = test2.Count();
-
-            ////var test1 = newOrder.Selected.Count;
-
-
-            //OrderDishTypeViewModel orderDishTypeViewModel = new OrderDishTypeViewModel()
-            //{
-            //    orderDishes = orderedDishes,
-            //    orders = order
-            //};
 
 
             //return View(new GuestCodeWithModel<OrderDishTypeViewModel>(orderDishTypeViewModel, guestCode));
