@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebInterface.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebInterface.Controllers
 {
+    [Authorize]
     public class IngredientTypesController : Controller
     {
         private readonly MenuCardDBContext _context;

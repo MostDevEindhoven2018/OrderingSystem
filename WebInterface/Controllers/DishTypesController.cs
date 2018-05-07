@@ -10,9 +10,11 @@ using WebInterface.ViewModel;
 using Microsoft.AspNetCore.Http;
 using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebInterface.Controllers
 {
+    
     public class DishTypesController : Controller
     {
         private readonly MenuCardDBContext _context;

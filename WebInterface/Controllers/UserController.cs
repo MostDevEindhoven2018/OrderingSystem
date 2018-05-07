@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace WebInterface.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         public IActionResult Index()
