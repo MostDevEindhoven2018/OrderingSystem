@@ -170,7 +170,7 @@ namespace WebInterface.Controllers
             //TODO dummy webpage address
             QRCodeData qrCodeData =
                 qrGenerator.CreateQrCode
-                ("http://localhost:52892/menucard/addguest?tableno=" + id, QRCodeGenerator.ECCLevel.Q);
+                ("http://molvanogroup1.azurewebsites.net/" + id, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
             Bitmap qrCodeImage = qrCode.GetGraphic(5);
             string fileName = "QRTable_" + id + ".jpeg";
