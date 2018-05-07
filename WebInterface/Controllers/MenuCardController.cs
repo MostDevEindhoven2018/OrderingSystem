@@ -16,7 +16,7 @@ namespace WebInterface.Controllers
     {
         MenuCardDBContext ctx;
         Task DBCreationTask;
-        
+
 
         public MenuCardController(MenuCardDBContext context)
         {
@@ -26,13 +26,72 @@ namespace WebInterface.Controllers
 
         public IActionResult AddGuest(int? tableNo)
         {
-            if(tableNo == null)
+            if (tableNo == null)
             {
                 return RedirectToAction("ErrorView");
             }
+
+            //
+            DBCreationTask.Wait();
+
             //TODO: add guest here
-            string guestCode = Guest.GenerateGuestCode(1);
-            return RedirectToAction("Index", new GuestCodeWithModel<object>(null, guestCode));
+
+            //var guestID = ctx.Guests.Select(x => x.GuestID).ToList();
+            //if (guestID.Count > 0)
+            //{
+            //    for (int i = 0; i < guestID.Count; i++)
+            //    {
+            //        ctx.Guests.Add(new Guest { Code = Guest.GenerateGuestCode(guestID[i]) });
+            //        ctx.SaveChanges();
+            //    }
+
+            //}
+
+            
+
+            //Created new object for a guest
+
+            Guest g = new Guest();
+            ctx.Guests.Add(g);
+            ctx.SaveChanges();
+            string guestCode = Guest.GenerateGuestCode(g.GuestID);
+            g.Code = guestCode;
+
+            ctx.Guests.ToList();
+
+            //created new order object that has a owner for above guest object
+            ctx.Orders.Add(new Order() { Owner = g });            
+            ctx.SaveChanges();
+
+            ctx.Orders.ToList();
+
+            //List<Group> listOfGroups = new List<Group>();
+
+            //for (int i = 0; i < listOfGroups.Count; i++)
+            //{
+            //    for (int j = 0; j < listOfGroups[i].GroupSize; j++)
+            //    {
+            //        ctx.Guests.Add(new Guest() { Code=Guest.GenerateGuestCode()});
+            //        ctx.SaveChanges;
+            //    }
+
+            //}
+
+
+            //var guests = ctx.Guests.ToList();
+            //for (int i = 0; i < guests.Count; i++)
+            //{
+            //    listOfGuests.Add(new Guest() { Code = Guest.GenerateGuestCode(guests[i].GuestID) });
+            //    //Guest guest = new Guest() { Code = Guest.GenerateGuestCode(guests[i].GuestID) };
+            //}
+
+            //for (int i = 0; i < listOfGuests.Count; i++)
+            //{
+            //    return RedirectToAction("Index", new GuestCodeWithModel<object>(null, listOfGuests[i].Code));
+            //}
+            return RedirectToAction("Index", new { guestCode = guestCode });
+            //return RedirectToAction("Index", new GuestCodeWithModel<object>(null, guestCode));
+
         }
 
         public async Task<IActionResult> Index(string guestCode)
@@ -47,8 +106,7 @@ namespace WebInterface.Controllers
 
         public async Task<IActionResult> Drinks(string guestCode)
         {
-            //HttpContext.Session.SetString("Drinks", "ColdBeverages");
-            //HttpContext.Session.SetString("Drinks", "HotBeverages");
+
 
             if (guestCode == null)
             {
@@ -58,9 +116,8 @@ namespace WebInterface.Controllers
 
             var test = ctx.SubDishTypes.ToList();
 
-
             List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();
-            var subDrinks = drinks.Where(x=>x.SubDishType!=null).Select(x => x.SubDishType).ToList();
+            var subDrinks = drinks.Where(x => x.SubDishType != null).Select(x => x.SubDishType).ToList();
             List<SubDishType> uniqueSubDrinks = subDrinks.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToList();
 
             //ViewBag.drinks = drinks;
@@ -84,40 +141,57 @@ namespace WebInterface.Controllers
         }
 
         [HttpPost]
-        public IActionResult Drinks(IFormCollection col,string GuestCode)
+        public IActionResult Drinks(IFormCollection col, string GuestCode)
         {
+            //var all = from c in ctx.Orders select c;
+            //if (all.Count()>0) { ctx.Orders.RemoveRange(all); }            
+            //ctx.SaveChanges();
 
-            List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();            
+            List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();
+            //List<Dish> drinks = ctx.Dishes.Where(x => x.Course == CourseType.DRINK).ToList();
+            ctx.Guests.ToList();
+            ctx.Dishes.ToList();
+            ctx.SubDishTypes.ToList();
 
-            for (int i = 0; i < drinks.Count; i++)
+            var orderList = ctx.Orders.ToList();
+
+            foreach (var selectedDrinks in drinks)
             {
-                if (Convert.ToInt32(col[$"{drinks[i].Name}"])>0)
+                int quantity = Convert.ToInt32(col[selectedDrinks.Name]);
+
+                for (int i = 0; i < quantity; i++)
                 {
-                    Order newOrder = new Order() {orderDish=drinks[i], quantity = Convert.ToInt32(col[$"{drinks[i].Name}"]) };
-                    ctx.Orders.Add(newOrder);
-                    try
+                    foreach (var item in orderList)
                     {
-                        ctx.SaveChanges();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        // Make some adjustments.
-                        // ...
-                        // Try again.
-                        ctx.SaveChanges();
-                    }
-                    //ab.Add(Convert.ToInt32(col[$"{drinks[i].Name}"]));
+                        if (item.Owner.Code == GuestCode)
+                        {
+                            if (item.Selected == null)
+                            {
+                                Dish dish = new Dish() { Course = drinks[i] };
+                                item.Selected = new List<Dish>() { dish };
+                                ctx.Dishes.Add(dish);
+                                ctx.SaveChanges();
+                            }
+                            else
+                            {
+                                Dish dish = new Dish() { Course = drinks[i] };
+                                item.Selected.Add(dish);
+                                ctx.Dishes.Add(dish);
+                                ctx.SaveChanges();
+                            }
 
-                }
+                        }
+
+                    }
+
+                }  
+
             }
-
-            //string a = col["Cola"];
 
             return RedirectToAction("OrderOverview", "MenuCard", new { guestCode = GuestCode });
         }
 
-        
+
 
         public async Task<IActionResult> Starters(string guestCode)
         {
@@ -159,28 +233,28 @@ namespace WebInterface.Controllers
             //ctx.Orders.RemoveRange(all);
             //ctx.SaveChanges();
 
-            for (int i = 0; i < starters.Count; i++)
-            {
-                if (Convert.ToInt32(col[$"{starters[i].Name}"]) > 0)
-                {
-                    Order newOrder = new Order() { orderDish = starters[i], quantity = Convert.ToInt32(col[$"{starters[i].Name}"]) };
-                    ctx.Orders.Add(newOrder);
-                    try
-                    {
-                        ctx.SaveChanges();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        // Make some adjustments.
-                        // ...
-                        // Try again.
-                        ctx.SaveChanges();
-                    }
-                    //ab.Add(Convert.ToInt32(col[$"{drinks[i].Name}"]));
+            //for (int i = 0; i < starters.Count; i++)
+            //{
+            //    if (Convert.ToInt32(col[$"{starters[i].Name}"]) > 0)
+            //    {
+            //        Order newOrder = new Order() { orderDish = starters[i], quantity = Convert.ToInt32(col[$"{starters[i].Name}"]) };
+            //        ctx.Orders.Add(newOrder);
+            //        try
+            //        {
+            //            ctx.SaveChanges();
+            //        }
+            //        catch (Exception e)
+            //        {
+            //            Console.WriteLine(e);
+            //            // Make some adjustments.
+            //            // ...
+            //            // Try again.
+            //            ctx.SaveChanges();
+            //        }
+            //        //ab.Add(Convert.ToInt32(col[$"{drinks[i].Name}"]));
 
-                }
-            }
+            //    }
+            //}
 
             //string a = col["Cola"];
 
@@ -203,8 +277,8 @@ namespace WebInterface.Controllers
             List<DishType> mains = ctx.DishTypes.Where(x => x.Course == CourseType.MAINCOURSE).ToList();
             var subMains = mains.Where(x => x.SubDishType != null).Select(x => x.SubDishType).ToList();
             var uniqueMains = subMains.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToList();
-            
-            
+
+
             DishTypeViewModel dishTypeViewModel = new DishTypeViewModel();
             dishTypeViewModel.DishTypes = mains;
             dishTypeViewModel.SubDishTypes = uniqueMains;
@@ -255,28 +329,83 @@ namespace WebInterface.Controllers
             {
                 return RedirectToAction("ErrorView");
             }
+
             await DBCreationTask;
 
-            // ctx.Orders
+            //creating cache for entity framework
 
-            //var drinks = DishType.getAllDrinks();
-            //var starters = DishType.getAllStarters();
-            //var mains = DishType.getAllMains();
-            //var dessert = DishType.getAllDesserts();
+            ctx.Orders.ToList();
+            ctx.Guests.ToList();
+            ctx.DishTypes.ToList();
+            ctx.SubDishTypes.ToList();
+            ctx.Dishes.ToList();
 
-            //var result = drinks.Concat(starters).Concat(mains).Concat(dessert).ToList();
-
-            List<DishType> drinks = ctx.Orders.Select(x=>x.orderDish).ToList();
             List<Order> order = ctx.Orders.ToList();
 
-            OrderDishTypeViewModel orderDishTypeViewModel = new OrderDishTypeViewModel()
+            List<Dish> selectedOrderItems = null;
+
+            foreach (var item in order)
             {
-                orderDishType = drinks,
-                orders = order
+                if (item.Owner.Code==guestCode)
+                {
+                    selectedOrderItems = item.Selected.ToList();
+
+                }
+
+            }
+
+            var test = selectedOrderItems;
+
+            OrderDishTypeViewModel orderDishTypeViewModel = new OrderDishTypeViewModel
+            {
+                orderDishes =selectedOrderItems,                
+
             };
 
 
-            return View(new GuestCodeWithModel<OrderDishTypeViewModel>(orderDishTypeViewModel, guestCode));
+
+
+            ////For the particular guest code, update the selected dishes
+
+            //for (int i = 0; i < order.Count; i++)
+            //{
+            //    if (order[i].Owner.Code == guestCode)
+            //    {
+            //        order[i].Selected;
+            //        ctx.SaveChanges();
+            //    }
+            //}
+
+            //for (int i = 0; i < orderedDishes.Count; i++)
+            //{
+            //    if (orderedDishes[i].)
+            //    {
+            //        var selectedOrder = order[i].Selected;
+            //    }
+            //}
+
+
+
+
+            //selects distinct drinks from the user form
+            //var test4 = ctx.Dishes.GroupBy(x => x.Course).Select(x => x.First()).Distinct().ToList();
+            //var test2 = ctx.Orders.Select(x => x.Selected);
+            //var test3 = test2.Count();
+
+            ////var test1 = newOrder.Selected.Count;
+
+
+            //OrderDishTypeViewModel orderDishTypeViewModel = new OrderDishTypeViewModel()
+            //{
+            //    orderDishes = orderedDishes,
+            //    orders = order
+            //};
+
+
+            //return View(new GuestCodeWithModel<OrderDishTypeViewModel>(orderDishTypeViewModel, guestCode));
+
+            return View();
+            //return View(new GuestCodeWithModel<OrderDishTypeViewModel>(orderDishTypeViewModel, guestCode));
         }
 
         public IActionResult ErrorView()
