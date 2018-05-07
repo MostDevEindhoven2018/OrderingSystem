@@ -27,7 +27,7 @@ namespace WebInterface.Models
 
         //public IEnumerable<OrderDetails> DetailsOfOrder { get; set; }
 
-        public int quantity {get;set;}
+        //public int quantity {get;set;}
 
         public string customeNote { get; set; }
 
@@ -47,4 +47,5 @@ namespace WebInterface.Models
         /// 
         public Guest Owner { get; set; }
     }
+    
 }
