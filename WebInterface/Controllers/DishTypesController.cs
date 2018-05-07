@@ -128,11 +128,11 @@ namespace WebInterface.Controllers
 
             var ingredientType = await _context.IngredientTypes.ToListAsync();
 
-            var subCourseType = await _context.SubDishTypes.ToListAsync();
+            var subDishType = await _context.SubDishTypes.ToListAsync();
 
             dishTypesViewModel.Dish = dishType;
             dishTypesViewModel.Ingredients = ingredientType;
-            dishTypesViewModel.SubTypeList = subCourseType;
+            dishTypesViewModel.SubTypeList = subDishType;
 
             return View(dishTypesViewModel);
         }
@@ -195,14 +195,20 @@ namespace WebInterface.Controllers
                 return NotFound();
             }
 
-            var dishType = await _context.DishTypes
+            var dishTypesViewModel = new DishTypesViewModel();
+
+            var model = await _context.DishTypes
                 .SingleOrDefaultAsync(m => m.DishTypeID == id);
-            if (dishType == null)
+
+            var subDishType = await _context.SubDishTypes.ToListAsync();
+            dishTypesViewModel.SubTypeList = subDishType;
+
+            if (model == null)
             {
                 return NotFound();
             }
 
-            return View(dishType);
+            return View(model);
         }
 
         // POST: DishTypes/Delete/5
