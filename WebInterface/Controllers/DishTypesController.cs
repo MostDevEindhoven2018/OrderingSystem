@@ -36,9 +36,10 @@ namespace WebInterface.Controllers
             var ingredients = await _context.IngredientTypes.Where(x => x.IngredientTypeID <100).ToListAsync();
             var totalRecords = await _context.IngredientTypes.CountAsync();
 
-            var totalRecordsFiltered = ingredients.Count;
-
             return Json(ingredients);
+
+            //var totalRecordsFiltered = ingredients.Count;
+
         }
 
         // Add ingredients to the dish
