@@ -167,10 +167,11 @@ namespace WebInterface.Controllers
             }
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            //TODO dummy webpage address
+            //Data in QRcode
             QRCodeData qrCodeData =
                 qrGenerator.CreateQrCode
-                ("http://molvanogroup1.azurewebsites.net/" + id, QRCodeGenerator.ECCLevel.Q);
+                //TODO make link dynamic
+                ("http://molvanogroup1.azurewebsites.net/menucard?guestcode=" + id, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
             Bitmap qrCodeImage = qrCode.GetGraphic(5);
             string fileName = "QRTable_" + id + ".jpeg";
