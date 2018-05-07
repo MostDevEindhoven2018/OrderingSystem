@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebInterface.Controllers
 {
-    
+    [Authorize]
     public class DishTypesController : Controller
     {
         private readonly MenuCardDBContext _context;
