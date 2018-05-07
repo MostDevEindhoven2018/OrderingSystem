@@ -35,19 +35,6 @@ namespace WebInterface.Controllers
 
             //TODO: add guest here
 
-            //var guestID = ctx.Guests.Select(x => x.GuestID).ToList();
-            //if (guestID.Count > 0)
-            //{
-            //    for (int i = 0; i < guestID.Count; i++)
-            //    {
-            //        ctx.Guests.Add(new Guest { Code = Guest.GenerateGuestCode(guestID[i]) });
-            //        ctx.SaveChanges();
-            //    }
-
-            //}
-
-            
-
             //Created new object for a guest
 
             Guest g = new Guest();
@@ -59,7 +46,7 @@ namespace WebInterface.Controllers
             ctx.Guests.ToList();
 
             //created new order object that has a owner for above guest object
-            ctx.Orders.Add(new Order() { Owner = g });            
+            ctx.Orders.Add(new Order() { Owner = g });
             ctx.SaveChanges();
 
             ctx.Orders.ToList();
@@ -142,12 +129,8 @@ namespace WebInterface.Controllers
         [HttpPost]
         public IActionResult Drinks(IFormCollection col, string GuestCode)
         {
-            //var all = from c in ctx.Orders select c;
-            //if (all.Count()>0) { ctx.Orders.RemoveRange(all); }            
-            //ctx.SaveChanges();
-
             List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();
-            //List<Dish> drinks = ctx.Dishes.Where(x => x.Course == CourseType.DRINK).ToList();
+
             ctx.Guests.ToList();
             ctx.Dishes.ToList();
             ctx.SubDishTypes.ToList();
@@ -158,34 +141,44 @@ namespace WebInterface.Controllers
             {
                 int quantity = Convert.ToInt32(col[selectedDrinks.Name]);
 
+                var uniqueOrderList = orderList.Where(x => x.Owner.Code == GuestCode).FirstOrDefault();
+
+                if (uniqueOrderList == null)
+                {
+                    RedirectToAction("ErrorView");
+                }
+
                 for (int i = 0; i < quantity; i++)
                 {
-                    foreach (var item in orderList)
+                    if (uniqueOrderList.Selected == null)
                     {
-                        if (item.Owner.Code == GuestCode)
-                        {
-                            if (item.Selected == null)
-                            {
-                                Dish dish = new Dish() { DishOfDishType = drinks[i] };
-                                item.Selected = new List<Dish>() { dish };
-                                ctx.Dishes.Add(dish);
-                                ctx.SaveChanges();
-                            }
-                            else
-                            {
-                                Dish dish = new Dish() { DishOfDishType = drinks[i] };
-                                item.Selected.Add(dish);
-                                ctx.Dishes.Add(dish);
-                                ctx.SaveChanges();
-                            }
-
-                        }
-
+                        uniqueOrderList.Selected = new List<Dish>();
                     }
+                    Dish dish = new Dish() { Course = selectedDrinks };
+                    uniqueOrderList.Selected.Add(dish);
+                    ctx.Dishes.Add(dish);
+                    ctx.SaveChanges();
 
-                }  
+                }
 
             }
+
+            Order order = ctx.Orders.Where(x => x.Owner.Code == GuestCode).FirstOrDefault();
+            var a = order.Selected.Where(x => x.Course.Course == CourseType.DRINK).ToList();
+
+            //Dictionary<DishType, int> output = new Dictionary<DishType, int>();
+
+            //foreach (Dish d in a)
+            //{
+            //    bool check;
+            //    check = output.ContainsKey(d.Course);
+
+            //    if (check==false)
+            //    {
+            //        output[d.Course]++;
+            //    }
+
+            //}
 
             return RedirectToAction("OrderOverview", "MenuCard", new { guestCode = GuestCode });
         }
@@ -225,37 +218,39 @@ namespace WebInterface.Controllers
         [HttpPost]
         public IActionResult Starters(IFormCollection col, string GuestCode)
         {
-
             List<DishType> starters = ctx.DishTypes.Where(x => x.Course == CourseType.STARTER).ToList();
 
-            //var all = from c in ctx.Orders select c;
-            //ctx.Orders.RemoveRange(all);
-            //ctx.SaveChanges();
+            ctx.Guests.ToList();
+            ctx.Dishes.ToList();
+            ctx.SubDishTypes.ToList();
 
-            //for (int i = 0; i < starters.Count; i++)
-            //{
-            //    if (Convert.ToInt32(col[$"{starters[i].Name}"]) > 0)
-            //    {
-            //        Order newOrder = new Order() { orderDish = starters[i], quantity = Convert.ToInt32(col[$"{starters[i].Name}"]) };
-            //        ctx.Orders.Add(newOrder);
-            //        try
-            //        {
-            //            ctx.SaveChanges();
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            Console.WriteLine(e);
-            //            // Make some adjustments.
-            //            // ...
-            //            // Try again.
-            //            ctx.SaveChanges();
-            //        }
-            //        //ab.Add(Convert.ToInt32(col[$"{drinks[i].Name}"]));
+            var orderList = ctx.Orders.ToList();
 
-            //    }
-            //}
+            foreach (var selectedStarters in starters)
+            {
+                int quantity = Convert.ToInt32(col[selectedStarters.Name]);
 
-            //string a = col["Cola"];
+                var uniqueOrderList = orderList.Where(x => x.Owner.Code == GuestCode).FirstOrDefault();
+
+                if (uniqueOrderList == null)
+                {
+                    RedirectToAction("ErrorView");
+                }
+
+                for (int i = 0; i < quantity; i++)
+                {
+                    if (uniqueOrderList.Selected == null)
+                    {
+                        uniqueOrderList.Selected = new List<Dish>();
+                    }
+                    Dish dish = new Dish() { Course = selectedStarters };
+                    uniqueOrderList.Selected.Add(dish);
+                    ctx.Dishes.Add(dish);
+                    ctx.SaveChanges();
+
+                }
+
+            }
 
             return RedirectToAction("OrderOverview", "MenuCard", new { guestCode = GuestCode });
         }
@@ -282,13 +277,48 @@ namespace WebInterface.Controllers
             dishTypeViewModel.DishTypes = mains;
             dishTypeViewModel.SubDishTypes = uniqueMains;
 
-
-            //mains contains all Mains defined in the CLASS DISHTYPE
-            //var mains = ctx.DishTypes.ToList();
-            //var mains = DishType.getAllMains();
-
-            //var result = mains.ToList();
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
+        }
+
+        [HttpPost]
+        public IActionResult Mains(IFormCollection col, string GuestCode)
+        {
+            List<DishType> mains = ctx.DishTypes.Where(x => x.Course == CourseType.STARTER).ToList();
+
+            ctx.Guests.ToList();
+            ctx.Dishes.ToList();
+            ctx.SubDishTypes.ToList();
+
+            var orderList = ctx.Orders.ToList();
+
+            foreach (var selectedMains in mains)
+            {
+                int quantity = Convert.ToInt32(col[selectedMains.Name]);
+
+                var uniqueOrderList = orderList.Where(x => x.Owner.Code == GuestCode).FirstOrDefault();
+
+                if (uniqueOrderList == null)
+                {
+                    RedirectToAction("ErrorView");
+                }
+
+                for (int i = 0; i < quantity; i++)
+                {
+                    if (uniqueOrderList.Selected == null)
+                    {
+                        uniqueOrderList.Selected = new List<Dish>();
+                    }
+                    Dish dish = new Dish() { Course = selectedMains };
+                    uniqueOrderList.Selected.Add(dish);
+                    ctx.Dishes.Add(dish);
+                    ctx.SaveChanges();
+
+                }
+
+            }
+
+            return RedirectToAction("OrderOverview", "MenuCard", new { guestCode = GuestCode });
+
         }
 
         public async Task<IActionResult> Desserts(string guestCode)
@@ -322,6 +352,47 @@ namespace WebInterface.Controllers
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
         }
 
+        [HttpPost]
+        public IActionResult Desserts(IFormCollection col, string GuestCode)
+        {
+            List<DishType> desserts = ctx.DishTypes.Where(x => x.Course == CourseType.DESSERT).ToList();
+
+            ctx.Guests.ToList();
+            ctx.Dishes.ToList();
+            ctx.SubDishTypes.ToList();
+
+            var orderList = ctx.Orders.ToList();
+
+            foreach (var selectedDesserts in desserts)
+            {
+                int quantity = Convert.ToInt32(col[selectedDesserts.Name]);
+
+                var uniqueOrderList = orderList.Where(x => x.Owner.Code == GuestCode).FirstOrDefault();
+
+                if (uniqueOrderList == null)
+                {
+                    RedirectToAction("ErrorView");
+                }
+
+                for (int i = 0; i < quantity; i++)
+                {
+                    if (uniqueOrderList.Selected == null)
+                    {
+                        uniqueOrderList.Selected = new List<Dish>();
+                    }
+                    Dish dish = new Dish() { Course = selectedDesserts };
+                    uniqueOrderList.Selected.Add(dish);
+                    ctx.Dishes.Add(dish);
+                    ctx.SaveChanges();
+
+                }
+
+            }
+
+            return RedirectToAction("OrderOverview", "MenuCard", new { guestCode = GuestCode });
+
+        }
+
         public async Task<IActionResult> OrderOverview(string guestCode)
         {
             if (guestCode == null)
@@ -331,19 +402,33 @@ namespace WebInterface.Controllers
 
             await DBCreationTask;
 
-            Guest guest = ctx.Guests.Where(x => x.Code == guestCode).FirstOrDefault();
+            //creating cache for entity framework
 
-            if (guest == null)
-            {
-                return ErrorView();
-            }
-            Order order = ctx.Orders.Where(x => x.Owner == guest).FirstOrDefault();
+            ctx.Orders.ToList();
+            ctx.Guests.ToList();
+            ctx.DishTypes.ToList();
+            ctx.SubDishTypes.ToList();
             ctx.Dishes.ToList();
-            if (order == null)
+
+            List<Order> order = ctx.Orders.ToList();
+
+            List<Dish> selectedOrderItems = null;
+
+            foreach (var item in order)
             {
-                return ErrorView();
+                if (item.Owner.Code == guestCode)
+                {
+                    selectedOrderItems = item.Selected.ToList();
+
+                }
+
             }
-            var selected = order.Selected;
+
+            OrderDishTypeViewModel orderDishTypeViewModel = new OrderDishTypeViewModel
+            {
+                orderDishes = selectedOrderItems,
+
+            };
 
             //return View();
             return View(new GuestCodeWithModel<OrderDishTypeViewModel>(orderDishTypeViewModel, guestCode));

@@ -1,5 +1,4 @@
 ﻿@using WebInterface.Models.CombinedModels
-
 @model GuestCodeWithModel<DishTypeViewModel>
 
 @{
@@ -8,7 +7,6 @@
 }
 
 <h2>Main Courses</h2>
-
 <hr />
 
 
@@ -39,83 +37,89 @@
 </style>
 
 
+<form asp-action="Mains">
 
-<div class="Mains">
-    @if (Model.Model.DishTypes.Count() == 0 || Model.Model.DishTypes.Count() < 0)
-    {
-        <div>No Main courses to display</div>
-    }
-
-    else if (Model.Model.DishTypes.Count() > 0)
-    {
-        if (Model.Model.SubDishTypes.Count() == 0)
+    <div class="Mains">
+        @if (Model.Model.DishTypes.Count() == 0 || Model.Model.DishTypes.Count() < 0)
         {
-
-            @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
-            {
-                if (Model.Model.DishTypes[j].SubDishType == null)
-                {
-                    <div class="SubMains">@Model.Model.DishTypes[j].Name</div>
-                    <div class="customize">[Customize]</div>
-                    <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
-                }
-            }
-
+            <div>No Main courses to display</div>
         }
 
-        else if (Model.Model.SubDishTypes.Count() > 0)
+        else if (Model.Model.DishTypes.Count() > 0)
         {
-            @for (int i = 0; i < Model.Model.SubDishTypes.Count(); i++)
+            if (Model.Model.SubDishTypes.Count() == 0)
             {
-                <h3>@Model.Model.SubDishTypes[i].SubType</h3>
 
                 @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
                 {
-                    if (Model.Model.DishTypes[j].SubDishType != null)
+                    if (Model.Model.DishTypes[j].SubDishType == null)
                     {
-                        if (Model.Model.DishTypes[j].SubDishType.SubType == Model.Model.SubDishTypes[i].SubType)
+                        <div class="SubMains">@Model.Model.DishTypes[j].Name</div>
+                        <div class="customize">[Customize]</div>
+                        <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
+                    }
+                }
+
+            }
+
+            else if (Model.Model.SubDishTypes.Count() > 0)
+            {
+                @for (int i = 0; i < Model.Model.SubDishTypes.Count(); i++)
+                {
+                    <h3>@Model.Model.SubDishTypes[i].SubType</h3>
+
+                    @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
+                    {
+                        if (Model.Model.DishTypes[j].SubDishType != null)
                         {
-                            <div class="SubMains">@Model.Model.DishTypes[j].Name</div>
-                            <div class="customize">[Customize]</div>
-                            <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
+                            if (Model.Model.DishTypes[j].SubDishType.SubType == Model.Model.SubDishTypes[i].SubType)
+                            {
+                                <div class="SubMains">@Model.Model.DishTypes[j].Name</div>
+                                <div class="customize">[Customize]</div>
+                                <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
+                            }
+
                         }
+                    }
+                }
+
+
+
+                @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
+                {
+
+                    if (Model.Model.DishTypes[j].SubDishType == null)
+                    {
+                        <h3> Others </h3>
+                        break;
 
                     }
                 }
-            }
 
-
-
-            @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
-            {
-
-                if (Model.Model.DishTypes[j].SubDishType == null)
+                @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
                 {
-                    <h3> Others </h3>
-                    break;
 
+                    if (Model.Model.DishTypes[j].SubDishType == null)
+                    {
+                        <div>@Model.Model.DishTypes[j].Name</div>
+                    }
                 }
+
             }
 
-            @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
-            {
-
-                if (Model.Model.DishTypes[j].SubDishType == null)
-                {
-                    <div>@Model.Model.DishTypes[j].Name</div>
-                }
-            }
 
         }
+    </div>
 
+    <hr />
 
-    }
-</div>
+    <br />
+    <br />
 
-<hr />
+    <input type="button" value="Go Back to Starters" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 
-<input type="button" value="Go Back to Starters" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+    <input type="button" value="Proceed to Dessert" onclick="location.href='@Url.Action("Desserts", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 
-<input type="button" value="Proceed to Dessert" onclick="location.href='@Url.Action("Desserts", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+    <input type="submit" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />
 
-<input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard" ,new { GuestCode = Model.GuestCode} )'" />
+</form>

@@ -15,11 +15,12 @@
 <h2>Desserts</h2>
 <hr />
 
+
+
 <style>
 
-
-    body {
-        background-image: url(https://i.dietdoctor.com/wp-content/uploads/2017/12/DessertsImageMob.jpg?auto=compress%2Cformat&w=1200&h=610&fit=crop)
+    input[type=number]::-webkit-inner-spin-button {
+        opacity: 1
     }
 
     .SubDessert {
@@ -32,91 +33,106 @@
         width: 30%;
     }
 
-
     .quantity {
         float: left;
         width: 20%;
     }
 
     #theInput {
-        width: 30%;
+        width: 20%;
+    }
+
+    .Quantity {
+        float: left;
+        width: 20%;
+    }
+
+    body {
+        background-image: url(https://i.dietdoctor.com/wp-content/uploads/2017/12/DessertsImageMob.jpg?auto=compress%2Cformat&w=1200&h=610&fit=crop)
     }
 </style>
 
 
-<body>
-    <div class="Desserts">
-        @if (Model.Model.DishTypes.Count() == 0 || Model.Model.DishTypes.Count() < 0)
-        {
-            <div>No Desserts to display</div>
-        }
+<form asp-action="Desserts">
 
-        else if (Model.Model.DishTypes.Count() > 0)
-        {
-            if (Model.Model.SubDishTypes.Count() == 0)
+    <body>
+
+        <input type="hidden" name="GuestCode" value="@Model.GuestCode" />
+
+        <div class="Desserts">
+            @if (Model.Model.DishTypes.Count() == 0 || Model.Model.DishTypes.Count() < 0)
             {
-                @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
-                {
-                    if (Model.Model.DishTypes[j].SubDishType == null)
-                    {
-                        <div class="SubDessert">@Model.Model.DishTypes[j].Name</div>
-                        <div class="customize">[Customize]</div>
-                        <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
-                    }
-                }
-
+                <div>No Desserts to display</div>
             }
 
-            else if (Model.Model.SubDishTypes.Count() > 0)
+            else if (Model.Model.DishTypes.Count() > 0)
             {
-                @for (int i = 0; i < Model.Model.SubDishTypes.Count(); i++)
+                if (Model.Model.SubDishTypes.Count() == 0)
                 {
-                    <h3>@Model.Model.SubDishTypes[i].SubType</h3>
+                    @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
+                    {
+                        if (Model.Model.DishTypes[j].SubDishType == null)
+                        {
+                            <div class="SubDessert">@Model.Model.DishTypes[j].Name</div>
+                            <div class="customize">[Customize]</div>
+                            <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
+                        }
+                    }
+
+                }
+
+                else if (Model.Model.SubDishTypes.Count() > 0)
+                {
+                    @for (int i = 0; i < Model.Model.SubDishTypes.Count(); i++)
+                    {
+                        <h3>@Model.Model.SubDishTypes[i].SubType</h3>
+
+                        @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
+                        {
+                            if (Model.Model.DishTypes[j].SubDishType != null)
+                            {
+                                if (Model.Model.DishTypes[j].SubDishType.SubType == Model.Model.SubDishTypes[i].SubType)
+                                {
+                                    <div class="SubDessert">@Model.Model.DishTypes[j].Name</div>
+                                    <div class="customize">[Customize]</div>
+                                    <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
+                                }
+
+                            }
+                        }
+                    }
+
+
 
                     @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
                     {
-                        if (Model.Model.DishTypes[j].SubDishType != null)
+
+                        if (Model.Model.DishTypes[j].SubDishType == null)
                         {
-                            if (Model.Model.DishTypes[j].SubDishType.SubType == Model.Model.SubDishTypes[i].SubType)
-                            {
-                                <div class="SubDessert">@Model.Model.DishTypes[j].Name</div>
-                                <div class="customize">[Customize]</div>
-                                <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
-                            }
+                            <h3> Others </h3>
+                            break;
 
                         }
                     }
-                }
 
-
-
-                @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
-                {
-
-                    if (Model.Model.DishTypes[j].SubDishType == null)
+                    @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
                     {
-                        <h3> Others </h3>
-                        break;
 
+                        if (Model.Model.DishTypes[j].SubDishType == null)
+                        {
+                            <div>@Model.Model.DishTypes[j].Name</div>
+                        }
                     }
+
                 }
 
-                @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
-                {
-
-                    if (Model.Model.DishTypes[j].SubDishType == null)
-                    {
-                        <div>@Model.Model.DishTypes[j].Name</div>
-                    }
-                }
 
             }
+        </div>
 
-
-        }
-    </div>
-</body>
-<br />
-<br />
-<input type="button" value="Go Back to Main courses" onclick="location.href='@Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
-<input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+        <br />
+        <br />
+        <input type="button" value="Go Back to Main courses" onclick="location.href='@Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+        <input type="submit" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+    </body>
+</form>

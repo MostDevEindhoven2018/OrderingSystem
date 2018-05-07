@@ -1,8 +1,6 @@
 ﻿@using WebInterface.Models.CombinedModels
 @model GuestCodeWithModel<DishTypeViewModel>
 
-
-
 @{
     ViewData["Title"] = "Drinks";
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
@@ -133,5 +131,3 @@
     <input type="submit" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />
 
 </form>
-
-
