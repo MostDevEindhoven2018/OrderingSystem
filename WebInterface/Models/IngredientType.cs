@@ -12,13 +12,13 @@ namespace WebInterface.Models
         /// <summary>
         /// User readable name of this ingredient type.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The quentity of this ingredient type is expressed in this unit.
         /// Examples: "gram", "liter", "piece"
         /// </summary>
-        public string UnitSingular { get; private set; }
+        public string UnitSingular { get; set; }
 
         /// <summary>
         /// See UnitSingular for details. This is simply the plural version.

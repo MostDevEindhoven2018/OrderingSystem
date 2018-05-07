@@ -9,7 +9,6 @@ using System.Dynamic;
 using WebInterface.Models.CombinedModels;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace WebInterface.Controllers
 {
     public class MenuCardController : Controller
@@ -338,15 +337,12 @@ namespace WebInterface.Controllers
             {
                 return ErrorView();
             }
-
             Order order = ctx.Orders.Where(x => x.Owner == guest).FirstOrDefault();
             ctx.Dishes.ToList();
-
             if (order == null)
             {
                 return ErrorView();
             }
-
             var selected = order.Selected;
 
 
