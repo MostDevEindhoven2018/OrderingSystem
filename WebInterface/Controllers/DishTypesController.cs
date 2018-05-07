@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using WebInterface.Models;
 using WebInterface.ViewModel;
 using Microsoft.AspNetCore.Http;
+using DataTables.AspNet.AspNetCore;
+using DataTables.AspNet.Core;
 
 namespace WebInterface.Controllers
 {
@@ -23,17 +25,67 @@ namespace WebInterface.Controllers
         // GET: DishTypes
         public async Task<IActionResult> Index()
         {
-            //DishType dishType = new DishType
-            //{
-            //    dishType.SubType = "Test";
-            //}
-
-
-
             var model = await _context.DishTypes.ToListAsync();
             await _context.SubDishTypes.ToListAsync();
 
             return View(model);
+        }
+
+        public async Task<IActionResult> PageData(IDataTablesRequest request)
+        {
+            var ingredients = await _context.IngredientTypes.Where(x => x.IngredientTypeID <100).ToListAsync();
+            var totalRecords = await _context.IngredientTypes.CountAsync();
+
+            var totalRecordsFiltered = ingredients.Count;
+
+            return Json(ingredients);
+        }
+
+        // Add ingredients to the dish
+        [HttpPost]
+        public IActionResult AddIngredientToDish(int IngredientTypeID, int DishTypeID)
+        {
+            Ingredient ingredient = new Ingredient();
+
+
+            DishType P = _context.DishTypes.Where(x => x.DishTypeID == DishTypeID).FirstOrDefault();
+
+            if (P == null)
+            {
+                return NotFound();
+            }
+
+            IngredientType T = _context.IngredientTypes.Where(x => x.IngredientTypeID == IngredientTypeID).FirstOrDefault();
+
+            if (T == null)
+            {
+                return NotFound();
+            }
+
+            _context.Ingredients.ToList();
+
+            ingredient.Type = T;
+            
+            if (P.DefaultIngredients == null)
+            {
+                P.DefaultIngredients = new List<Ingredient>();
+            }
+
+            P.DefaultIngredients.Add(ingredient);
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Edit", new { id=DishTypeID });
+        }
+
+        // Remove ingredients from the dish
+        public IActionResult RemoveIngredient (int DishTypeID, int IngredientID)
+        {
+            var ingredientID = _context.Ingredients.SingleOrDefault(x => x.IngredientID == IngredientID);
+            _context.Ingredients.Remove(ingredientID);
+            _context.SaveChanges();
+
+            return RedirectToAction("Edit", new { id = DishTypeID });
         }
 
         // GET: DishTypes/Details/5
@@ -121,6 +173,9 @@ namespace WebInterface.Controllers
             }
 
             var dishType = await _context.DishTypes.SingleOrDefaultAsync(m => m.DishTypeID == id);
+
+            _context.Ingredients.ToList();
+
             if (dishType == null)
             {
                 return NotFound();
@@ -134,7 +189,7 @@ namespace WebInterface.Controllers
             dishTypesViewModel.Ingredients = ingredientType;
             dishTypesViewModel.SubTypeList = subDishType;
 
-            return View(dishTypesViewModel);
+            return View("Edit",dishTypesViewModel);
         }
 
         // POST: DishTypes/Edit/5
@@ -146,26 +201,6 @@ namespace WebInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (dishType.IngredientToAdd != null)
-                {
-                    //Ingredient ingredient;
-                    //ingredient = new Ingredient();
-                    Ingredient ingredient = new Ingredient
-                    {
-                        Type = dishType.IngredientToAdd,
-                        Quantity = 0
-                    };
-
-                    _context.Ingredients.Add(ingredient);
-                    await _context.SaveChangesAsync();
-
-                    if (dishType.Dish.DefaultIngredients ==null)
-                    {
-                        dishType.Dish.DefaultIngredients = new List<Ingredient>();
-                    }
-                    dishType.Dish.DefaultIngredients.Add(ingredient);
-                }
-
                 try
                 {
                     _context.Update(dishType.Dish);

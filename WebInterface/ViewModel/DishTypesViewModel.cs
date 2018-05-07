@@ -15,8 +15,6 @@ namespace WebInterface.ViewModel
 
         public List<IngredientType> Ingredients { get; set; }
 
-        public IngredientType IngredientToAdd { get; set; }
-
         public List<SubDishType> SubTypeList { get; set; }
 
         public int SubTypeID { get; set; }
