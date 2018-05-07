@@ -166,14 +166,14 @@ namespace WebInterface.Controllers
                         {
                             if (item.Selected == null)
                             {
-                                Dish dish = new Dish() { Course = drinks[i] };
+                                Dish dish = new Dish() { DishOfDishType = drinks[i] };
                                 item.Selected = new List<Dish>() { dish };
                                 ctx.Dishes.Add(dish);
                                 ctx.SaveChanges();
                             }
                             else
                             {
-                                Dish dish = new Dish() { Course = drinks[i] };
+                                Dish dish = new Dish() { DishOfDishType = drinks[i] };
                                 item.Selected.Add(dish);
                                 ctx.Dishes.Add(dish);
                                 ctx.SaveChanges();
@@ -345,12 +345,8 @@ namespace WebInterface.Controllers
             }
             var selected = order.Selected;
 
-
-
-            //return View(new GuestCodeWithModel<OrderDishTypeViewModel>(orderDishTypeViewModel, guestCode));
-
-            return View();
-            //return View(new GuestCodeWithModel<OrderDishTypeViewModel>(orderDishTypeViewModel, guestCode));
+            //return View();
+            return View(new GuestCodeWithModel<OrderDishTypeViewModel>(orderDishTypeViewModel, guestCode));
         }
 
         public IActionResult ErrorView()

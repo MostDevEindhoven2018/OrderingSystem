@@ -12,54 +12,70 @@
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
 }
 
+<h2>Order Overview</h2>
+<hr />
 
 <style>
 
-    .ordername {
-        float: left;
-        width: 60%;
+    input[type=number]::-webkit-inner-spin-button {
+        opacity: 1
     }
 
+    .SubDrink {
+        float: left;
+        width: 50%;
+    }
+
+    .customize {
+        float: left;
+        width: 30%;
+    }
 
     .quantity {
         float: left;
-        width: 40%;
+        width: 20%;
     }
 
     #theInput {
-        width: 15%;
+        width: 20%;
+    }
+
+    .Quantity {
+        float: left;
+        width: 20%;
     }
 </style>
 
 
-<div class="OverOverview">
+<input type="hidden" name="GuestCode" value="@Model.GuestCode" />
 
-    <hr />
+<div class="OrderOverview">
 
-    <h2>OrderOverview</h2>
-    <hr />
-
-    <div class="Orders">
-
-        @{
-            var a = Model.Model.orderDishType.Count;
-                }
-
-            @for (int i = 0; i < Model.Model.orderDishType.Count; i++)
+    @if (Model.Model.orderDishes.Count <= 0)
     {
-        <div class="ordername">@Model.Model.orderDishType[i].Name</div>
-        <div class="quantity">@Model.Model.orders[i].quantity</div>
+        <div>No orders to display</div>
+    }
 
-}
+    else if (Model.Model.orderDishes.Count > 0)
+    {
+        @for (int i = 0; i < Model.Model.orderDishes.Count; i++)
+        {
+            <div> @Model.Model.orderDishes[i].DishOfDishType.Course</div>
+        }
+    }
+    else
+    {
 
 
+    }
 
 
-    </div>
 </div>
 
-
 <hr />
+
+<br />
+<br />
 
 @*<input type="button" value="Go back" onclick="location.href='@Url.Action("Starters", "MenuCard" )'" />*@
 
