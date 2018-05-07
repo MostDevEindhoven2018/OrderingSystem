@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using WebInterface.Models;
 using System.Dynamic;
 using WebInterface.Models.CombinedModels;
-
 namespace WebInterface.Controllers
 {
 
@@ -180,15 +179,7 @@ namespace WebInterface.Controllers
             }
             await DBCreationTask;
 
-           // ctx.Orders
-
-            var drinks = DishType.getAllDrinks();
-            var starters = DishType.getAllStarters();
-            var mains = DishType.getAllMains();
-            var dessert = DishType.getAllDesserts();
-
-            var result = drinks.Concat(starters).Concat(mains).Concat(dessert).ToList();
-
+            var result = ctx.DishTypes.ToList();
 
             return View(new GuestCodeWithModel<List<DishType>>(result, guestCode));
         }

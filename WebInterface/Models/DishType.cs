@@ -3,138 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebInterface.Models
 {
     public class DishType
     {
-        private static List<DishType> allDishes;
+        [Required]
+        public string Name { get; set; }
 
         public int DishTypeID { get; set; }
         public virtual CourseType Course { get; set; }
-        public string Name { get; set; }
-        [ForeignKey("SubDishTypeID")]
+
         public SubDishType SubDishType { get; set; }
 
-        public ICollection<Ingredient> DefaultIngredients { get; /*private*/ set; }
+        [Required]
+        [RegularExpression("([0-9 .]*)", ErrorMessage = "This Field only accepts numbers")]
+        public double? Price { get; set; }
 
-        /// <summary>
-        /// Returns all dishes known to the system
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<DishType> GetAll()
-        {
-            if(allDishes == null)
-            {
-                List<DishType> list = new List<DishType>();
+        [Required]
+        public string Recipe { get; set; }
 
-                //list.Add(new DishType() { Course = CourseType.DRINK, SubDishType = new SubDishType { SubType = "ColdBeverage" }, Name = "Cola"});
-                //list.Add(new DishType() { Course = CourseType.DRINK, SubDishType = new SubDishType { SubType = "ColdBeverage" }, Name = "Fanta" });
-                //list.Add(new DishType() { Course = CourseType.DRINK, SubDishType = new SubDishType { SubType = "HardDrink" }, Name = "Wine" });
-                //list.Add(new DishType() { Course = CourseType.DRINK, SubDishType = new SubDishType { SubType = "HardDrink" }, Name = "Beer" });
-                //list.Add(new DishType() { Course = CourseType.DRINK, SubDishType = new SubDishType { SubType = "HotBeverage" }, Name = "Coffee" });
-                //list.Add(new DishType() { Course = CourseType.DRINK, SubDishType = new SubDishType { SubType = "HotBeverage" }, Name = "Tea" });
-
-                //list.Add(new DishType() { Course = CourseType.STARTER, Name = "Carpachio" });
-                //list.Add(new DishType() { Course = CourseType.STARTER, Name = "Tuna Salad" });
-                //list.Add(new DishType() { Course = CourseType.STARTER, Name = "Shrimps" });
-                //list.Add(new DishType() { Course = CourseType.STARTER, Name = "Tomato Soup" });
-                //list.Add(new DishType() { Course = CourseType.STARTER, Name = "Onion Soup" });
-
-                //list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Steak" });
-                //list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Salmon" });
-                //list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Chicken breast" });
-                //list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Duck" });
-                //list.Add(new DishType() { Course = CourseType.MAINCOURSE, Name = "Vega burger" });
-
-                //list.Add(new DishType() { Course = CourseType.DESSERT, SubDishType = new SubDishType { SubType = "IceCreams" }, Name = "Vanilla Ice Cream" });
-                //list.Add(new DishType() { Course = CourseType.DESSERT, SubDishType = new SubDishType { SubType = "Salads" }, Name = "Banana split" });
-                //list.Add(new DishType() { Course = CourseType.DESSERT, SubDishType = new SubDishType { SubType = "Pies" }, Name = "Apple pie with whipped cream" });
-                //list.Add(new DishType() { Course = CourseType.DESSERT, SubDishType = new SubDishType { SubType = "Salads" }, Name = "Fruit salad" });
-
-                allDishes = list;
-            }
-            return allDishes;
-        }
-
-        /// <summary>
-        /// Returns all DishTypes with DRINK as CourseType
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<DishType> getAllDrinks()
-        {
-            return GetAll().Where((dt) => { return (dt.Course == CourseType.DRINK); });
-        }
-
-        public static IEnumerable<DishType> getAllHotBeverages()
-        {
-            return GetAll().Where((dt) => { return (dt.Course == CourseType.DRINK && dt.SubDishType.SubType == "HotBeverage"); });
-        }
-
-        public static IEnumerable<DishType> getAllColdBeverages()
-        {
-            return GetAll().Where((dt) => { return (dt.Course == CourseType.DRINK && dt.SubDishType.SubType == "ColdBeverage"); });
-        }
-
-        public static IEnumerable<DishType> getAllHardDrinks()
-        {
-            return GetAll().Where((dt) => { return (dt.Course == CourseType.DRINK && dt.SubDishType.SubType == "HardDrink"); });
-        }
-
-        /// <summary>
-        /// Returns all DishTypes with STARTER as CourseType
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<DishType> getAllStarters()
-        {
-            return GetAll().Where((dt) => { return (dt.Course == CourseType.STARTER); });
-        }
-
-        /// <summary>
-        /// Returns all DishTypes with MAINCOURSE as CourseType
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<DishType> getAllMains()
-        {
-            return GetAll().Where((dt) => { return (dt.Course == CourseType.MAINCOURSE); });
-        }
-
-        /// <summary>
-        /// Returns all DishTypes with DESSERT as CourseType
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<DishType> getAllDesserts()
-        {
-            return GetAll().Where((dt) => { return (dt.Course == CourseType.DESSERT); });
-        }
-        public static IEnumerable<DishType> getAllPies()
-        {
-            return GetAll().Where((dt) => { return (dt.Course == CourseType.DESSERT && dt.SubDishType.SubType == "Pies"); });
-        }
-        public static IEnumerable<DishType> getAllIceCreams()
-        {
-            return GetAll().Where((dt) => { return (dt.Course == CourseType.DESSERT && dt.SubDishType.SubType == "IceCreams"); });
-        }
-        public static IEnumerable<DishType> getAllSalads()
-        {
-            return GetAll().Where((dt) => { return (dt.Course == CourseType.DESSERT && dt.SubDishType.SubType == "Salads"); });
-        }
-
+        public ICollection<Ingredient> DefaultIngredients { get; set; }
     }
 
     public enum CourseType
     {
-        UNAVAILABLE,
+        Unavailable,
         DRINK,
         STARTER,
         MAINCOURSE,
         DESSERT
     }
-
-    //public enum DrinkType
-    //{
-    //    ColdBeverage,
-    //    HotBeverage,
-    //    SoftDrink
-    //}
 }
