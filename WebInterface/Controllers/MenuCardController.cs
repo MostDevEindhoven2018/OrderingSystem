@@ -7,7 +7,10 @@ using Microsoft.AspNetCore.Http;
 using WebInterface.Models;
 using System.Dynamic;
 using WebInterface.Models.CombinedModels;
+<<<<<<< HEAD
 using Microsoft.EntityFrameworkCore;
+=======
+>>>>>>> view for orders
 
 namespace WebInterface.Controllers
 {
