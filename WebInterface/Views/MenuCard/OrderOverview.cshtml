@@ -21,6 +21,11 @@
         opacity: 1
     }
 
+    .uniqueDishes {
+        float: left;
+        width: 40%;
+    }
+
     .SubDrink {
         float: left;
         width: 50%;
@@ -33,7 +38,7 @@
 
     .quantity {
         float: left;
-        width: 20%;
+        width: 60%;
     }
 
     #theInput {
@@ -51,28 +56,125 @@
 
 <div class="OrderOverview">
 
+    @{
+        var drinks = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.DRINK).ToList();
+        var uniqueDrinks = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.DRINK).GroupBy(x => x.Course.Name).Select(x => x.FirstOrDefault()).ToList();
+        var starters = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.STARTER).ToList();
+        var uniqueStarters = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.STARTER).GroupBy(x => x.Course.Name).Select(x => x.FirstOrDefault()).ToList();
+        var mains = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.MAINCOURSE).ToList();
+        var uniqueMains = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.MAINCOURSE).GroupBy(x => x.Course.Name).Select(x => x.FirstOrDefault()).ToList();
+        var desserts = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.DESSERT).ToList();
+        var uniqueDesserts = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.DESSERT).GroupBy(x => x.Course.Name).Select(x => x.FirstOrDefault()).ToList();
+
+        int a = 0;
+    }
+
     @if (Model.Model.orderDishes.Count <= 0)
     {
         <div>No orders to display</div>
     }
 
+
     else if (Model.Model.orderDishes.Count > 0)
     {
-        @for (int i = 0; i < Model.Model.orderDishes.Count; i++)
+        if (drinks.Count > 0)
         {
-            <div> @Model.Model.orderDishes[i].Course.Name</div>
+            <div><h3>Drinks</h3></div>
+            for (int i = 0; i < uniqueDrinks.Count; i++)
+            {
+                <div class="uniqueDishes">@uniqueDrinks[i].Course.Name</div>
+
+                for (int j = 0; j < drinks.Count; j++)
+                {
+                    if (drinks[j].Course.Name == uniqueDrinks[i].Course.Name)
+                    {
+                        a++;
+                    }
+
+                }
+                <div class="quantity"><input type="number" value="@a" /></div>
+                a = 0;
+            }
+            <hr />
+        }
+
+
+
+
+        if (starters.Count > 0)
+        {
+            <div><h3>Starters</h3></div>
+            for (int i = 0; i < uniqueStarters.Count; i++)
+            {
+                <div class="uniqueDishes">@uniqueStarters[i].Course.Name</div>
+
+                for (int j = 0; j < starters.Count; j++)
+                {
+                    if (starters[j].Course.Name == uniqueStarters[i].Course.Name)
+                    {
+                        a++;
+                    }
+
+                }
+                <div class="quantity"><input type="number" value="@a" /></div>
+                a = 0;
+            }
+            <hr />
+
+        }
+
+
+
+        if (mains.Count > 0)
+        {
+            <div><h3>Mains</h3></div>
+            for (int i = 0; i < uniqueMains.Count; i++)
+            {
+                <div class="uniqueDishes">@uniqueMains[i].Course.Name</div>
+
+                for (int j = 0; j < mains.Count; j++)
+                {
+                    if (mains[j].Course.Name == uniqueMains[i].Course.Name)
+                    {
+                        a++;
+                    }
+
+                }
+                <div class="quantity"><input type="number" value="@a" /></div>
+                a = 0;
+            }
+            <hr />
+
+        }
+
+
+
+        if (desserts.Count > 0)
+        {
+            <div><h3>Desserts</h3></div>
+            for (int i = 0; i < uniqueDesserts.Count; i++)
+            {
+                <div class="uniqueDishes">@uniqueDesserts[i].Course.Name</div>
+
+                for (int j = 0; j < desserts.Count; j++)
+                {
+                    if (desserts[j].Course.Name == uniqueDesserts[i].Course.Name)
+                    {
+                        a++;
+                    }
+
+                }
+                <div class="quantity"><input type="number" value="@a" /></div>
+                a = 0;
+            }
+            <hr />
+
         }
     }
-    else
-    {
 
-
-    }
 
 
 </div>
-
-<hr />
 
 <br />
 <br />

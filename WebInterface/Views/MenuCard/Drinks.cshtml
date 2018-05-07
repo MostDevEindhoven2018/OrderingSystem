@@ -21,12 +21,17 @@
 
     .SubDrink {
         float: left;
-        width: 50%;
+        width: 45%;
     }
 
     .customize {
         float: left;
-        width: 30%;
+        width: 20%;
+    }
+
+    .Price {
+        float: left;
+        width: 15%;
     }
 
     .quantity {
@@ -63,8 +68,9 @@
                 {
                     if (Model.Model.DishTypes[j].SubDishType == null)
                     {
-                        <div>@Model.Model.DishTypes[j].Name</div>
+                        <div class="SubDrink">@Model.Model.DishTypes[j].Name</div>
                         <div class="customize">[Customize]</div>
+                        <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
                         <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
                     }
                 }
@@ -85,6 +91,7 @@
                             {
                                 <div class="SubDrink">@Model.Model.DishTypes[j].Name</div>
                                 <div class="customize">[Customize]</div>
+                                <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
                                 <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
                             }
 

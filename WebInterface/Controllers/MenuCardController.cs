@@ -106,15 +106,6 @@ namespace WebInterface.Controllers
             var subDrinks = drinks.Where(x => x.SubDishType != null).Select(x => x.SubDishType).ToList();
             List<SubDishType> uniqueSubDrinks = subDrinks.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToList();
 
-            //ViewBag.drinks = drinks;
-            //ViewBag.uniqueSubDrinks = uniqueSubDrinks;
-
-            //var drinks = ctx.DishTypes.ToList();
-            //var test = ctx.SubDishTypes.ToList();
-            //var HotBeverages = DishType.getAllHotBeverages();
-            //var ColdBeverages = DishType.getAllColdBeverages();
-            //var HardDrinks = DishType.getAllHardDrinks();
-
 
             //drinks contains all drinks defined in the CLASS DISHTYPE
 
@@ -163,8 +154,8 @@ namespace WebInterface.Controllers
 
             }
 
-            Order order = ctx.Orders.Where(x => x.Owner.Code == GuestCode).FirstOrDefault();
-            var a = order.Selected.Where(x => x.Course.Course == CourseType.DRINK).ToList();
+            //Order order = ctx.Orders.Where(x => x.Owner.Code == GuestCode).FirstOrDefault();
+            //var a = order.Selected.Where(x => x.Course.Course == CourseType.DRINK).ToList();
 
             //Dictionary<DishType, int> output = new Dictionary<DishType, int>();
 
@@ -182,8 +173,6 @@ namespace WebInterface.Controllers
 
             return RedirectToAction("OrderOverview", "MenuCard", new { guestCode = GuestCode });
         }
-
-
 
         public async Task<IActionResult> Starters(string guestCode)
         {
@@ -205,11 +194,6 @@ namespace WebInterface.Controllers
             DishTypeViewModel dishTypeViewModel = new DishTypeViewModel();
             dishTypeViewModel.DishTypes = starters;
             dishTypeViewModel.SubDishTypes = uniqueSubStarters;
-
-
-            //var starters = ctx.DishTypes.ToList();
-            //var starters = DishType.getAllStarters();
-            //var result = starters.ToList();
 
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
 
@@ -270,12 +254,12 @@ namespace WebInterface.Controllers
 
             List<DishType> mains = ctx.DishTypes.Where(x => x.Course == CourseType.MAINCOURSE).ToList();
             var subMains = mains.Where(x => x.SubDishType != null).Select(x => x.SubDishType).ToList();
-            var uniqueMains = subMains.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToList();
+            var uniqueSubMains = subMains.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToList();
 
 
             DishTypeViewModel dishTypeViewModel = new DishTypeViewModel();
             dishTypeViewModel.DishTypes = mains;
-            dishTypeViewModel.SubDishTypes = uniqueMains;
+            dishTypeViewModel.SubDishTypes = uniqueSubMains;
 
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
         }
@@ -283,7 +267,7 @@ namespace WebInterface.Controllers
         [HttpPost]
         public IActionResult Mains(IFormCollection col, string GuestCode)
         {
-            List<DishType> mains = ctx.DishTypes.Where(x => x.Course == CourseType.STARTER).ToList();
+            List<DishType> mains = ctx.DishTypes.Where(x => x.Course == CourseType.MAINCOURSE).ToList();
 
             ctx.Guests.ToList();
             ctx.Dishes.ToList();
@@ -318,8 +302,8 @@ namespace WebInterface.Controllers
             }
 
             return RedirectToAction("OrderOverview", "MenuCard", new { guestCode = GuestCode });
-
         }
+
 
         public async Task<IActionResult> Desserts(string guestCode)
         {
