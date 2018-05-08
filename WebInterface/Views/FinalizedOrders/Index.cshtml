@@ -7,13 +7,44 @@
 <div id="finalizedOrders">
     <h1>Orders</h1>
 
-    @foreach (var element in Model)
+    <table id="fOrders">
+        <thead>
+            @foreach (var element in Model)
+            {
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(m => element.OrderID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => element.TableID)
+                    </th>
+                </tr>
+            }
+        </thead>
+        <tbody>
+            @foreach (var element in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => element.OrderID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => element.TableID)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @*@foreach (var element in Model)
     {
         <p>@Html.DisplayFor(m => element.Name)</p>
         <p>@Html.DisplayFor(m => element.OrderID)</p>
         <p>@Html.DisplayFor(m => element.TableID)</p>
-    }
+    }*@
 </div>
+<br />
+<br />
 
 <button onclick="printPDF('finalizedOrders')">Print Orders</button>
 
@@ -21,11 +52,9 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 
-    @*<script>
-            $(document).ready(function () {
-                $('#qr').DataTable();
-            });
-        </script>*@
+   <script>
+       
+    </script>
 
     <script>
         function printPDF(elem) {
