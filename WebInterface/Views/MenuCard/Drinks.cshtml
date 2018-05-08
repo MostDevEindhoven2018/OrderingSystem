@@ -150,8 +150,13 @@
     <br />
     <br />
 
-    <input type="button"  value="Go back to home" onclick="location.href='@Url.Action("Index", "MenuCard", new { GuestCode = Model.GuestCode})'" />
-    <input type="button" value="Orders overview" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />
-    <input type="submit" value="Proceed to Starters" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+    <input type="button" value="Go back to home" onclick="location.href='@Url.Action("Index", "MenuCard", new { GuestCode = Model.GuestCode})'" />
+
+    <button type="submit" name="orderName" value="OrderOverview">Order Overview</button>
+    <button type="submit" name="proceedName" value="Starters">Proceed to Starters</button>
+
+
+    @*<input type="submit" name="orderName" value="OrderOverview" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />
+    <input type="submit" name="proceedName" value="Starters" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />*@
 
 </form>

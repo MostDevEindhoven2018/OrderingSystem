@@ -149,7 +149,12 @@
 
         <br />
         <br />
-        <input type="button" value="Go Back to Main courses" onclick="location.href='@Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
-        <input type="submit" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+
+        <button type="submit" name="goBack" value="Mains">Go to Main Course</button>
+        <button type="submit" name="proceedName" value="OrderOverview">Place Order</button>
+
+
+        @*<input type="button" value="Go Back to Main courses" onclick="location.href='@Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+        <input type="submit" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode} )'" />*@
     </body>
 </form>

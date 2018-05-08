@@ -143,7 +143,7 @@ namespace WebInterface.Controllers
         }
 
         [HttpPost]
-        public IActionResult Drinks(IFormCollection col, string GuestCode)
+        public IActionResult Drinks(IFormCollection col, string GuestCode, string orderName, string proceedName)
         {
             List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();
 
@@ -214,15 +214,17 @@ namespace WebInterface.Controllers
 
                     for (int i = 0; i < (output[selectedDrinks] - quantity); i++)
                     {
+                        var test = (output[selectedDrinks] - quantity);
                         if (uniqueOrderList.Selected == null)
                         {
                             uniqueOrderList.Selected = new List<Dish>();
                         }
 
-                        var toRemoveSelectedDrink = ctx.Dishes.Where(x => x.Course == selectedDrinks).FirstOrDefault();
+                        var toRemoveSelectedDrink = ctx.Dishes.Where(x => x.Course == selectedDrinks).LastOrDefault();
                         uniqueOrderList.Selected.Remove(toRemoveSelectedDrink);
                         ctx.Dishes.Remove(toRemoveSelectedDrink);
                         ctx.SaveChanges();
+                        var a = ctx.Dishes.ToList().Count();
 
                     }
 
@@ -230,7 +232,21 @@ namespace WebInterface.Controllers
 
             }
 
-            return RedirectToAction("Starters", "MenuCard", new { guestCode = GuestCode });
+            //based on selected button page redirects to return view (either to order overview page or else to Starters page)
+
+
+            string selectedChoice = "";
+
+            if (orderName == null)
+            {
+                selectedChoice = proceedName;
+            }
+            else
+            {
+                selectedChoice = orderName;
+            }
+
+            return RedirectToAction(selectedChoice, "MenuCard", new { guestCode = GuestCode });
         }
 
         public async Task<IActionResult> Starters(string guestCode)
@@ -287,7 +303,7 @@ namespace WebInterface.Controllers
         }
 
         [HttpPost]
-        public IActionResult Starters(IFormCollection col, string GuestCode)
+        public IActionResult Starters(IFormCollection col, string GuestCode, string orderName, string proceedName, string goBack)
         {
             List<DishType> starters = ctx.DishTypes.Where(x => x.Course == CourseType.STARTER).ToList();
 
@@ -361,7 +377,7 @@ namespace WebInterface.Controllers
                             uniqueOrderList.Selected = new List<Dish>();
                         }
 
-                        var toRemoveSelectedStarter = ctx.Dishes.Where(x => x.Course == selectedStarters).FirstOrDefault();
+                        var toRemoveSelectedStarter = ctx.Dishes.Where(x => x.Course == selectedStarters).LastOrDefault();
                         uniqueOrderList.Selected.Remove(toRemoveSelectedStarter);
                         ctx.Dishes.Remove(toRemoveSelectedStarter);
                         ctx.SaveChanges();
@@ -371,7 +387,26 @@ namespace WebInterface.Controllers
                 }
 
             }
-            return RedirectToAction("Mains", "MenuCard", new { guestCode = GuestCode });
+
+            //based on selected button page redirects to return view (either to order overview page or else to Main course page)
+
+
+            string selectedChoice = "";
+
+            if (orderName != null)
+            {
+                selectedChoice = orderName;
+            }
+            else if (proceedName != null)
+            {
+                selectedChoice = proceedName;
+            }
+            else if (goBack != null)
+            {
+                selectedChoice = goBack;
+            }
+
+            return RedirectToAction(selectedChoice, "MenuCard", new { guestCode = GuestCode });
         }
 
         public async Task<IActionResult> Mains(string guestCode)
@@ -428,7 +463,7 @@ namespace WebInterface.Controllers
         }
 
         [HttpPost]
-        public IActionResult Mains(IFormCollection col, string GuestCode)
+        public IActionResult Mains(IFormCollection col, string GuestCode, string orderName, string proceedName, string goBack)
         {
             List<DishType> mains = ctx.DishTypes.Where(x => x.Course == CourseType.MAINCOURSE).ToList();
 
@@ -502,7 +537,7 @@ namespace WebInterface.Controllers
                             uniqueOrderList.Selected = new List<Dish>();
                         }
 
-                        var toRemoveSelectedMains = ctx.Dishes.Where(x => x.Course == selectedMains).FirstOrDefault();
+                        var toRemoveSelectedMains = ctx.Dishes.Where(x => x.Course == selectedMains).LastOrDefault();
                         uniqueOrderList.Selected.Remove(toRemoveSelectedMains);
                         ctx.Dishes.Remove(toRemoveSelectedMains);
                         ctx.SaveChanges();
@@ -512,8 +547,24 @@ namespace WebInterface.Controllers
                 }
             }
 
+            //based on selected button page redirects to return view (either to order overview page or else to desserts page)
 
-            return RedirectToAction("Desserts", "MenuCard", new { guestCode = GuestCode });
+            string selectedChoice = "";
+
+            if (orderName != null)
+            {
+                selectedChoice = orderName;
+            }
+            else if (proceedName != null)
+            {
+                selectedChoice = proceedName;
+            }
+            else if (goBack != null)
+            {
+                selectedChoice = goBack;
+            }
+
+            return RedirectToAction(selectedChoice, "MenuCard", new { guestCode = GuestCode });
         }
 
         public async Task<IActionResult> Desserts(string guestCode)
@@ -575,7 +626,7 @@ namespace WebInterface.Controllers
         }
 
         [HttpPost]
-        public IActionResult Desserts(IFormCollection col, string GuestCode)
+        public IActionResult Desserts(IFormCollection col, string GuestCode, string proceedName, string goBack)
         {
             List<DishType> desserts = ctx.DishTypes.Where(x => x.Course == CourseType.DESSERT).ToList();
 
@@ -650,7 +701,7 @@ namespace WebInterface.Controllers
                             uniqueOrderList.Selected = new List<Dish>();
                         }
 
-                        var toRemoveSelectedDesserts = ctx.Dishes.Where(x => x.Course == selectedDesserts).FirstOrDefault();
+                        var toRemoveSelectedDesserts = ctx.Dishes.Where(x => x.Course == selectedDesserts).LastOrDefault();
                         uniqueOrderList.Selected.Remove(toRemoveSelectedDesserts);
                         ctx.Dishes.Remove(toRemoveSelectedDesserts);
                         ctx.SaveChanges();
@@ -661,7 +712,20 @@ namespace WebInterface.Controllers
 
             }
 
-            return RedirectToAction("OrderOverview", "MenuCard", new { guestCode = GuestCode });
+            string selectedChoice = "";
+
+            if (proceedName != null)
+            {
+                selectedChoice = proceedName;
+            }
+
+            else if (goBack != null)
+            {
+                selectedChoice = goBack;
+
+            }
+
+            return RedirectToAction(selectedChoice, "MenuCard", new { guestCode = GuestCode });
 
         }
 
