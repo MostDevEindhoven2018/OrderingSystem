@@ -36,9 +36,14 @@
         width: 30%;
     }
 
+    .Price {
+        float: left;
+        width: 20%;
+    }
+
     .quantity {
         float: left;
-        width: 60%;
+        width: 40%;
     }
 
     #theInput {
@@ -67,6 +72,7 @@
         var uniqueDesserts = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.DESSERT).GroupBy(x => x.Course.Name).Select(x => x.FirstOrDefault()).ToList();
 
         int orderQuantity = 0;
+        double price = 0;
     }
 
     @if (Model.Model.orderDishes.Count <= 0)
@@ -92,8 +98,12 @@
                     }
 
                 }
-                <div class="quantity"><input type="number" value="@orderQuantity" min="0"/></div>
+
+                price = orderQuantity * (double)uniqueDrinks[i].Course.Price;
+                <div class="Price">&euro; @price</div>
+                <div class="quantity"><input type="number" value="@orderQuantity" min="0" /></div>
                 orderQuantity = 0;
+                price = 0;
             }
             <hr />
         }
@@ -116,8 +126,11 @@
                     }
 
                 }
-                <div class="quantity"><input type="number" value="@orderQuantity" min="0"/></div>
+                price = orderQuantity * (double)uniqueStarters[i].Course.Price;
+                <div class="Price">&euro; @price</div>
+                <div class="quantity"><input type="number" value="@orderQuantity" min="0" /></div>
                 orderQuantity = 0;
+                price = 0;
             }
             <hr />
 
@@ -140,8 +153,11 @@
                     }
 
                 }
-                <div class="quantity"><input type="number" value="@orderQuantity" min="0"/></div>
+                price = orderQuantity * (double)uniqueMains[i].Course.Price;
+                <div class="Price">&euro; @price</div>
+                <div class="quantity"><input type="number" value="@orderQuantity" min="0" /></div>
                 orderQuantity = 0;
+                price = 0;
             }
             <hr />
 
@@ -164,8 +180,11 @@
                     }
 
                 }
-                <div class="quantity"><input type="number" value="@orderQuantity" min="0"/></div>
+                price = orderQuantity * (double)uniqueDesserts[i].Course.Price;
+                <div class="Price">&euro; @price</div>
+                <div class="quantity"><input type="number" value="@orderQuantity" min="0" /></div>
                 orderQuantity = 0;
+                price = 0;
             }
             <hr />
 

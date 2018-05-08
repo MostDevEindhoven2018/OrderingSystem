@@ -146,8 +146,9 @@
 
     <input type="button" value="Go Back to Starters" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
 
-    <input type="button" value="Proceed to Dessert" onclick="location.href='@Url.Action("Desserts", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+    <input type="button" value="Orders overview" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />
 
-    <input type="submit" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />
+    <input type="submit" value="Proceed to Dessert" onclick="location.href='@Url.Action("Desserts", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+
 
 </form>
