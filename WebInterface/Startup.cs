@@ -26,6 +26,7 @@ namespace WebInterface
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<MenuCardDBContext>(option => option.UseSqlServer(Configuration.GetConnectionString("MenuCardDatabase")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                .AddEntityFrameworkStores<MenuCardDBContext>()
@@ -37,8 +38,6 @@ namespace WebInterface
             services.AddMvc();
 
             services.RegisterDataTables();
-
-            services.AddDbContext<MenuCardDBContext>(option => option.UseSqlServer(Configuration.GetConnectionString("MenuCardDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
