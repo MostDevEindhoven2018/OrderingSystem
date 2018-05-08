@@ -19,7 +19,7 @@ namespace WebInterface.Models
         public SubDishType SubDishType { get; set; }
 
         [Required]
-        [RegularExpression("([0-9 .]*)", ErrorMessage = "This Field only accepts numbers")]
+        [RegularExpression("([0-9 .]{1,9})", ErrorMessage = "This Field only accepts numbers and must not exceed 9 characters")]
         public double? Price { get; set; }
 
         [Required]
