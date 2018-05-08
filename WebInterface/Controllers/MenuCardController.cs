@@ -92,8 +92,6 @@ namespace WebInterface.Controllers
 
         public async Task<IActionResult> Drinks(string guestCode)
         {
-
-
             if (guestCode == null)
             {
                 return RedirectToAction("ErrorView");
@@ -106,13 +104,40 @@ namespace WebInterface.Controllers
             var subDrinks = drinks.Where(x => x.SubDishType != null).Select(x => x.SubDishType).ToList();
             List<SubDishType> uniqueSubDrinks = subDrinks.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToList();
 
+            Dictionary<DishType, int> output = new Dictionary<DishType, int>();
+
+            foreach (DishType d in drinks)
+            {
+                output.Add(d, 0);
+            }
+
+            ctx.Orders.ToList();
+
+            Order order = ctx.Orders.Where(x => x.Owner.Code == guestCode).FirstOrDefault();
+            ctx.Dishes.ToList();
+
+            if (order.Selected != null)
+            {
+                ctx.DishTypes.ToList();
+                List<Dish> a = order.Selected.Where(x => x.Course.Course == CourseType.DRINK).ToList();
+
+                var b = a.GroupBy(x => x.Course.Name).Select(x => new { type = x.FirstOrDefault().Course, quantity = x.Count() }).ToList();
+
+                foreach (var item in b)
+                {
+                    output[item.type] = item.quantity;
+                }
+            }
 
             //drinks contains all drinks defined in the CLASS DISHTYPE
 
-            DishTypeViewModel dishTypeViewModel = new DishTypeViewModel();
-            dishTypeViewModel.DishTypes = drinks;
-            dishTypeViewModel.SubDishTypes = uniqueSubDrinks;
+            DishTypeViewModel dishTypeViewModel = new DishTypeViewModel()
+            {
+                DishTypes = drinks,
+                SubDishTypes = uniqueSubDrinks,
+                quantityDictionary = output
 
+            };
 
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
         }
@@ -130,8 +155,8 @@ namespace WebInterface.Controllers
 
             foreach (var selectedDrinks in drinks)
             {
+                
                 int quantity = Convert.ToInt32(col[selectedDrinks.Name]);
-
                 var uniqueOrderList = orderList.Where(x => x.Owner.Code == GuestCode).FirstOrDefault();
 
                 if (uniqueOrderList == null)
@@ -149,27 +174,9 @@ namespace WebInterface.Controllers
                     uniqueOrderList.Selected.Add(dish);
                     ctx.Dishes.Add(dish);
                     ctx.SaveChanges();
-
                 }
 
             }
-
-            //Order order = ctx.Orders.Where(x => x.Owner.Code == GuestCode).FirstOrDefault();
-            //var a = order.Selected.Where(x => x.Course.Course == CourseType.DRINK).ToList();
-
-            //Dictionary<DishType, int> output = new Dictionary<DishType, int>();
-
-            //foreach (Dish d in a)
-            //{
-            //    bool check;
-            //    check = output.ContainsKey(d.Course);
-
-            //    if (check==false)
-            //    {
-            //        output[d.Course]++;
-            //    }
-
-            //}
 
             return RedirectToAction("OrderOverview", "MenuCard", new { guestCode = GuestCode });
         }
@@ -191,9 +198,37 @@ namespace WebInterface.Controllers
             var subStarters = starters.Where(x => x.SubDishType != null).Select(x => x.SubDishType).ToList();
             List<SubDishType> uniqueSubStarters = subStarters.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToList();
 
-            DishTypeViewModel dishTypeViewModel = new DishTypeViewModel();
-            dishTypeViewModel.DishTypes = starters;
-            dishTypeViewModel.SubDishTypes = uniqueSubStarters;
+            Dictionary<DishType, int> output = new Dictionary<DishType, int>();
+
+            foreach (DishType d in starters)
+            {
+                output.Add(d, 0);
+            }
+
+            ctx.Orders.ToList();
+
+            Order order = ctx.Orders.Where(x => x.Owner.Code == guestCode).FirstOrDefault();
+            ctx.Dishes.ToList();
+
+            if (order.Selected != null)
+            {
+                ctx.DishTypes.ToList();
+                List<Dish> a = order.Selected.Where(x => x.Course.Course == CourseType.STARTER).ToList();
+
+                var b = a.GroupBy(x => x.Course.Name).Select(x => new { type = x.FirstOrDefault().Course, quantity = x.Count() }).ToList();
+
+                foreach (var item in b)
+                {
+                    output[item.type] = item.quantity;
+                }
+            }
+
+            DishTypeViewModel dishTypeViewModel = new DishTypeViewModel()
+            {
+                DishTypes = starters,
+                SubDishTypes = uniqueSubStarters,
+                quantityDictionary = output
+            };
 
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
 
@@ -202,7 +237,7 @@ namespace WebInterface.Controllers
         [HttpPost]
         public IActionResult Starters(IFormCollection col, string GuestCode)
         {
-            List<DishType> starters = ctx.DishTypes.Where(x => x.Course == CourseType.STARTER).ToList();
+            List<DishType> mains = ctx.DishTypes.Where(x => x.Course == CourseType.STARTER).ToList();
 
             ctx.Guests.ToList();
             ctx.Dishes.ToList();
@@ -210,7 +245,7 @@ namespace WebInterface.Controllers
 
             var orderList = ctx.Orders.ToList();
 
-            foreach (var selectedStarters in starters)
+            foreach (var selectedStarters in mains)
             {
                 int quantity = Convert.ToInt32(col[selectedStarters.Name]);
 
@@ -231,11 +266,9 @@ namespace WebInterface.Controllers
                     uniqueOrderList.Selected.Add(dish);
                     ctx.Dishes.Add(dish);
                     ctx.SaveChanges();
-
                 }
 
             }
-
             return RedirectToAction("OrderOverview", "MenuCard", new { guestCode = GuestCode });
         }
 
@@ -245,6 +278,7 @@ namespace WebInterface.Controllers
             {
                 return RedirectToAction("ErrorView");
             }
+
             await DBCreationTask;
 
             //The (var test) fills the Entity Framework cache with subdishtypes,
@@ -256,10 +290,37 @@ namespace WebInterface.Controllers
             var subMains = mains.Where(x => x.SubDishType != null).Select(x => x.SubDishType).ToList();
             var uniqueSubMains = subMains.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToList();
 
+            Dictionary<DishType, int> output = new Dictionary<DishType, int>();
 
-            DishTypeViewModel dishTypeViewModel = new DishTypeViewModel();
-            dishTypeViewModel.DishTypes = mains;
-            dishTypeViewModel.SubDishTypes = uniqueSubMains;
+            foreach (DishType d in mains)
+            {
+                output.Add(d, 0);
+            }
+
+            ctx.Orders.ToList();
+
+            Order order = ctx.Orders.Where(x => x.Owner.Code == guestCode).FirstOrDefault();
+            ctx.Dishes.ToList();
+
+            if (order.Selected != null)
+            {
+                ctx.DishTypes.ToList();
+                List<Dish> a = order.Selected.Where(x => x.Course.Course == CourseType.MAINCOURSE).ToList();
+
+                var b = a.GroupBy(x => x.Course.Name).Select(x => new { type = x.FirstOrDefault().Course, quantity = x.Count() }).ToList();
+
+                foreach (var item in b)
+                {
+                    output[item.type] = item.quantity;
+                }
+            }
+
+            DishTypeViewModel dishTypeViewModel = new DishTypeViewModel()
+            {
+                DishTypes = mains,
+                SubDishTypes = uniqueSubMains,
+                quantityDictionary = output
+            };
 
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
         }
@@ -323,10 +384,37 @@ namespace WebInterface.Controllers
             var subDesserts = desserts.Where(x => x.SubDishType != null).Select(x => x.SubDishType).ToList();
             List<SubDishType> uniqueDesserts = subDesserts.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToList();
 
+            Dictionary<DishType, int> output = new Dictionary<DishType, int>();
 
-            DishTypeViewModel dishTypeViewModel = new DishTypeViewModel();
-            dishTypeViewModel.DishTypes = desserts;
-            dishTypeViewModel.SubDishTypes = uniqueDesserts;
+            foreach (DishType d in desserts)
+            {
+                output.Add(d, 0);
+            }
+
+            ctx.Orders.ToList();
+
+            Order order = ctx.Orders.Where(x => x.Owner.Code == guestCode).FirstOrDefault();
+            ctx.Dishes.ToList();
+
+            if (order.Selected != null)
+            {
+                ctx.DishTypes.ToList();
+                List<Dish> a = order.Selected.Where(x => x.Course.Course == CourseType.DESSERT).ToList();
+
+                var b = a.GroupBy(x => x.Course.Name).Select(x => new { type = x.FirstOrDefault().Course, quantity = x.Count() }).ToList();
+
+                foreach (var item in b)
+                {
+                    output[item.type] = item.quantity;
+                }
+            }
+
+            DishTypeViewModel dishTypeViewModel = new DishTypeViewModel()
+            {
+                DishTypes = desserts,
+                SubDishTypes = uniqueDesserts,
+                quantityDictionary = output
+            };
 
             //var desserts = ctx.DishTypes.ToList();           
 

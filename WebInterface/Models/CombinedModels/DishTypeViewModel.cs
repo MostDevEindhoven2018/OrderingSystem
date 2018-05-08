@@ -9,5 +9,6 @@ namespace WebInterface.Models.CombinedModels
     {        
         public List<DishType> DishTypes { get; set; }
         public List<SubDishType> SubDishTypes { get; set; }
+        public Dictionary<DishType, int> quantityDictionary { get; set; }
     }
 }

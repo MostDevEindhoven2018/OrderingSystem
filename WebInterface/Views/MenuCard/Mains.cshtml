@@ -6,6 +6,10 @@
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
 }
 
+@{
+    int quantity = 0;
+}
+
 <h2>Main Courses</h2>
 <hr />
 
@@ -49,6 +53,8 @@
 
 <form asp-action="Mains">
 
+    <input type="hidden" name="GuestCode" value="@Model.GuestCode" />
+
     <div class="Mains">
         @if (Model.Model.DishTypes.Count() <= 0)
         {
@@ -67,7 +73,12 @@
                         <div class="SubMains">@Model.Model.DishTypes[j].Name</div>
                         <div class="customize">[Customize]</div>
                         <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
-                        <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
+
+                        if (Model.Model.quantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
+                        {
+                            quantity = Model.Model.quantityDictionary[Model.Model.DishTypes[j]];
+                        }
+                        <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
                     }
                 }
 
@@ -88,7 +99,12 @@
                                 <div class="SubMains">@Model.Model.DishTypes[j].Name</div>
                                 <div class="customize">[Customize]</div>
                                 <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
-                                <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="0" name="@Model.Model.DishTypes[j].Name"></div>
+                                if (Model.Model.quantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
+                                {
+                                    quantity = Model.Model.quantityDictionary[Model.Model.DishTypes[j]];
+
+                                }
+                                <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
                             }
 
                         }
