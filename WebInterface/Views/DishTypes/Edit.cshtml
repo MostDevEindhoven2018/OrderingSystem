@@ -36,9 +36,9 @@
 
             <div class="form-group">
                 @{
-            string data = "SubDishTypeID";
-            string name = "SubType";
-            string dropDownName = "SubTypeID";
+                    string data = "SubDishTypeID";
+                    string name = "SubType";
+                    string dropDownName = "SubTypeID";
                 }
                 <label asp-for="Dish.SubDishType" class="control-label">Category</label>
                 @Html.DropDownList(dropDownName, new SelectList(Model.SubTypeList, data, name), new { @class = "form-control" })
@@ -62,6 +62,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
 
 <table class="table" id="AddedIngredients">
     <thead>
@@ -90,9 +91,13 @@
                         @Html.DisplayFor(modelItem => item.Type.Name)
                     </td>
                     <td>
-                        <input name="quantityingredient" id="quantityingredient" value="@Html.DisplayFor(modelItem => item.Quantity)" />
+                        <form asp-route-IngredientID="@item.IngredientID" asp-route-DishTypeID="@Model.Dish.DishTypeID" asp-action="SaveQuantity">
+                            <input type="text" name="Quantity" value="@item.Quantity" />
+                            <input type="submit" value="Save" />
+                        </form>
                     </td>
-                    <td>
+                    <td width="15%">
+                        
                         @if (item.Quantity <= 1)
                         {
                             <text> @item.Type.UnitSingular</text>
@@ -107,11 +112,15 @@
                         <a asp-action="RemoveIngredient" asp-route-IngredientID="@item.IngredientID" asp-route-DishTypeID="@Model.Dish.DishTypeID">Remove ingredient</a>
                     </td>
                 </tr>
+
             }
         }
     </tbody>
 </table>
 
+
+<br />
+<br />
 <br />
 <br />
 
