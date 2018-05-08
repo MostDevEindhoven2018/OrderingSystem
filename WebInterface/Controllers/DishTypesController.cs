@@ -91,6 +91,19 @@ namespace WebInterface.Controllers
             return RedirectToAction("Edit", new { id = DishTypeID });
         }
 
+        public IActionResult SaveQuantity (int DishTypeID, int IngredientID, int Quantity)
+        {
+            
+            var ingredientQuery = _context.Ingredients.Where(x => x.IngredientID == IngredientID);
+
+            Ingredient ingredient = ingredientQuery.FirstOrDefault();
+
+            ingredient.Quantity = Quantity;
+            _context.SaveChanges();
+
+            return RedirectToAction("Edit", new { id = DishTypeID });
+        }
+
         // GET: DishTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
