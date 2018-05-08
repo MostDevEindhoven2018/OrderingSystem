@@ -3,23 +3,27 @@
 @{
     ViewData["Title"] = "Index";
 }
+<style>
+    td {
+        border-bottom: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
 
 <div id="finalizedOrders">
     <h1>Orders</h1>
 
     <table id="fOrders">
         <thead>
-            @foreach (var element in Model)
-            {
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(m => element.OrderID)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(m => element.TableID)
-                    </th>
-                </tr>
-            }
+            <tr>
+                <th>
+                    Order &emsp;
+                </th>
+                <th>
+                    Table &emsp;
+                </th>
+            </tr>
+   
         </thead>
         <tbody>
             @foreach (var element in Model)
