@@ -66,7 +66,7 @@
         var desserts = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.DESSERT).ToList();
         var uniqueDesserts = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.DESSERT).GroupBy(x => x.Course.Name).Select(x => x.FirstOrDefault()).ToList();
 
-        int a = 0;
+        int orderQuantity = 0;
     }
 
     @if (Model.Model.orderDishes.Count <= 0)
@@ -88,12 +88,12 @@
                 {
                     if (drinks[j].Course.Name == uniqueDrinks[i].Course.Name)
                     {
-                        a++;
+                        orderQuantity++;
                     }
 
                 }
-                <div class="quantity"><input type="number" value="@a" /></div>
-                a = 0;
+                <div class="quantity"><input type="number" value="@orderQuantity" min="0"/></div>
+                orderQuantity = 0;
             }
             <hr />
         }
@@ -112,12 +112,12 @@
                 {
                     if (starters[j].Course.Name == uniqueStarters[i].Course.Name)
                     {
-                        a++;
+                        orderQuantity++;
                     }
 
                 }
-                <div class="quantity"><input type="number" value="@a" /></div>
-                a = 0;
+                <div class="quantity"><input type="number" value="@orderQuantity" min="0"/></div>
+                orderQuantity = 0;
             }
             <hr />
 
@@ -136,12 +136,12 @@
                 {
                     if (mains[j].Course.Name == uniqueMains[i].Course.Name)
                     {
-                        a++;
+                        orderQuantity++;
                     }
 
                 }
-                <div class="quantity"><input type="number" value="@a" /></div>
-                a = 0;
+                <div class="quantity"><input type="number" value="@orderQuantity" min="0"/></div>
+                orderQuantity = 0;
             }
             <hr />
 
@@ -160,12 +160,12 @@
                 {
                     if (desserts[j].Course.Name == uniqueDesserts[i].Course.Name)
                     {
-                        a++;
+                        orderQuantity++;
                     }
 
                 }
-                <div class="quantity"><input type="number" value="@a" /></div>
-                a = 0;
+                <div class="quantity"><input type="number" value="@orderQuantity" min="0"/></div>
+                orderQuantity = 0;
             }
             <hr />
 
