@@ -26,18 +26,18 @@ namespace WebInterface.Controllers
         // GET: DishTypes
         public async Task<IActionResult> Index()
         {
-            var model = await repo.GetDishes();
-        
-            await repo.GetSubDishes();
+            var model = await repo.GetDishTypes();
+
+            await repo.GetSubDishTypesList();
 
             return View(model);
         }
         //async or not??
         public async Task<IActionResult> PageData(IDataTablesRequest request)
         {
-            var model = await repo.GetIngredients();
+            var model = await repo.GetIngredientTypes();
 
-            return Json(model);                  
+            return Json(model);
         }
 
         // Add ingredients to the dish
@@ -47,24 +47,24 @@ namespace WebInterface.Controllers
             Ingredient ingredient = new Ingredient();
 
 
-            DishType P = repo.GetDishTypeID(DishTypeID);
+            DishType P = await repo.GetDishTypeID(DishTypeID);
 
             if (P == null)
             {
                 return NotFound();
             }
 
-            IngredientType T = _context.IngredientTypes.Where(x => x.IngredientTypeID == IngredientTypeID).FirstOrDefault();
+            IngredientType T = await repo.GetIngredientTypeID(IngredientTypeID);
 
             if (T == null)
             {
                 return NotFound();
             }
 
-            _context.Ingredients.ToList();
+            await repo.GetIngredients();
 
             ingredient.Type = T;
-            
+
             if (P.DefaultIngredients == null)
             {
                 P.DefaultIngredients = new List<Ingredient>();
@@ -72,17 +72,26 @@ namespace WebInterface.Controllers
 
             P.DefaultIngredients.Add(ingredient);
 
-            _context.SaveChanges();
+            repo.Save();
 
-            return RedirectToAction("Edit", new { id=DishTypeID });
+            return RedirectToAction("Edit", new { id = DishTypeID });
         }
 
         // Remove ingredients from the dish
-        public IActionResult RemoveIngredient (int DishTypeID, int IngredientID)
+        public IActionResult RemoveIngredient(int? DishTypeID, int? IngredientID)
         {
-            var ingredientID = _context.Ingredients.SingleOrDefault(x => x.IngredientID == IngredientID);
-            _context.Ingredients.Remove(ingredientID);
-            _context.SaveChanges();
+            if (IngredientID == null)
+            {
+                return NotFound();
+            }
+
+            if (DishTypeID == null)
+            {
+                return NotFound();
+            }
+
+            repo.RemoveIngredientID(IngredientID);
+            repo.Save();
 
             return RedirectToAction("Edit", new { id = DishTypeID });
         }
@@ -108,27 +117,24 @@ namespace WebInterface.Controllers
                 return NotFound();
             }
 
-            var model = await _context.DishTypes
-                .SingleOrDefaultAsync(m => m.DishTypeID == id);
+            var model = await repo.GetDishTypeID(id);
             if (model == null)
             {
                 return NotFound();
             }
-            await _context.SubDishTypes.ToListAsync();
+            await repo.GetSubDishTypesList();
 
             return View(model);
         }
 
         // GET: DishTypes/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            _context.Database.EnsureCreated();
-
-            var ListOfSubDishTypes = _context.SubDishTypes;
-
+            repo.EnsureCreated();
+            
             DishTypesViewModel model = new DishTypesViewModel
             {
-                SubTypeList = ListOfSubDishTypes.ToList()
+                SubTypeList = await repo.GetSubDishTypesList()
             };
 
             return View(model);
@@ -139,7 +145,7 @@ namespace WebInterface.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create ([Bind("Dish, Dish.Name, Dish.Course, Ingredients, Dish.DishTypeID, SubTypeID, Dish.Recipe, Dish.Price")]DishTypesViewModel dishTypeViewModel)
+        public async Task<IActionResult> Create([Bind("Dish, Dish.Name, Dish.Course, Ingredients, Dish.DishTypeID, SubTypeID, Dish.Recipe, Dish.Price")]DishTypesViewModel dishTypeViewModel)
         {
             //HEAD
             if (ModelState.IsValid)
@@ -153,10 +159,8 @@ namespace WebInterface.Controllers
                     Price = dishTypeViewModel.Dish.Price
                 };
 
-                DbSet<SubDishType> subDishTypes = _context.SubDishTypes;
+                var sdt = repo.GetSubDishTypeID(dishTypeViewModel);               
 
-                var query = subDishTypes.Where(s => dishTypeViewModel.SubTypeID == s.SubDishTypeID);
-                SubDishType sdt = query.FirstOrDefault();
 
                 if (sdt == null)
                 {
@@ -165,12 +169,12 @@ namespace WebInterface.Controllers
 
                 model.SubDishType = sdt;
 
-                _context.Add(model);
-                await _context.SaveChangesAsync();
+                repo.InsertDishType(model);
+                repo.Save();
 
                 int id = model.DishTypeID;
                 return RedirectToAction(nameof(Edit), new { id = id });
-            }            
+            }
 
             return View(dishTypeViewModel);
         }
@@ -185,24 +189,24 @@ namespace WebInterface.Controllers
                 return NotFound();
             }
 
-            var dishType = await _context.DishTypes.SingleOrDefaultAsync(m => m.DishTypeID == id);
+            var dishType = await repo.GetDishTypeID(id);
 
-            _context.Ingredients.ToList();
+            await repo.GetIngredients();
 
             if (dishType == null)
             {
                 return NotFound();
             }
 
-            var ingredientType = await _context.IngredientTypes.ToListAsync();
+            var ingredientType = await repo.GetIngredientTypes();
 
-            var subDishType = await _context.SubDishTypes.ToListAsync();
+            var subDishType = await repo.GetSubDishTypesList();
 
             dishTypesViewModel.Dish = dishType;
             dishTypesViewModel.Ingredients = ingredientType;
             dishTypesViewModel.SubTypeList = subDishType;
 
-            return View("Edit",dishTypesViewModel);
+            return View("Edit", dishTypesViewModel);
         }
 
         // POST: DishTypes/Edit/5
@@ -216,8 +220,8 @@ namespace WebInterface.Controllers
             {
                 try
                 {
-                    _context.Update(dishType.Dish);
-                    await _context.SaveChangesAsync();
+                    repo.UpdateDish(dishType);
+                    repo.Save();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -245,11 +249,10 @@ namespace WebInterface.Controllers
 
             var dishTypesViewModel = new DishTypesViewModel();
 
-            var model = await _context.DishTypes
-                .SingleOrDefaultAsync(m => m.DishTypeID == id);
+            var model = await repo.GetDishTypeID(id);
 
-            var subDishType = await _context.SubDishTypes.ToListAsync();
-            dishTypesViewModel.SubTypeList = subDishType;
+
+            dishTypesViewModel.SubTypeList = await repo.GetSubDishTypesList();
 
             if (model == null)
             {
@@ -262,17 +265,21 @@ namespace WebInterface.Controllers
         // POST: DishTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            var dishType = await _context.DishTypes.SingleOrDefaultAsync(m => m.DishTypeID == id);
-            _context.DishTypes.Remove(dishType);
-            await _context.SaveChangesAsync();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            repo.RemoveDish(id);
+            repo.Save();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DishTypeExists(int id)
         {
-            return _context.DishTypes.Any(e => e.DishTypeID == id);
+            return repo.Exists(id);
         }
     }
 }
