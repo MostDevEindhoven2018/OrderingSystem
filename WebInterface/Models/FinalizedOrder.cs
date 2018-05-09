@@ -7,8 +7,9 @@ namespace WebInterface.Models
 {
     public class FinalizedOrder
     {
-        public int OrderID { get; set; }
-        public int TableID { get; set; }
+        public int Order { get; set; }
+        public int Table { get; set; }
         public string Name { get; set; }
+
     }
 }
