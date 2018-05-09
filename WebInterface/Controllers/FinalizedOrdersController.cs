@@ -20,7 +20,7 @@ namespace WebInterface.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //await DBCreationTask;
+            await DBCreationTask;
 
             return View();
         }
@@ -28,17 +28,24 @@ namespace WebInterface.Controllers
         public async Task<IActionResult> Kitchen()
         {
             await DBCreationTask;
+
+            
+
             //retrive from database
             var q = from o in ctx.Orders
+
                     select new FinalizedOrder
                     {
                         Order = o.OrderID,
                         Name = o.Owner.Name,
                         Table = o.Owner.Group.Table.TableID
-
+                        
                     };
 
             var finalOrders = q.ToList();
+
+        
+
 
             return View(finalOrders);
         }
