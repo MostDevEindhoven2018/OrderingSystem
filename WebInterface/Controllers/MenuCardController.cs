@@ -50,31 +50,6 @@ namespace WebInterface.Controllers
             ctx.SaveChanges();
 
             ctx.Orders.ToList();
-
-            //List<Group> listOfGroups = new List<Group>();
-
-            //for (int i = 0; i < listOfGroups.Count; i++)
-            //{
-            //    for (int j = 0; j < listOfGroups[i].GroupSize; j++)
-            //    {
-            //        ctx.Guests.Add(new Guest() { Code=Guest.GenerateGuestCode()});
-            //        ctx.SaveChanges;
-            //    }
-
-            //}
-
-
-            //var guests = ctx.Guests.ToList();
-            //for (int i = 0; i < guests.Count; i++)
-            //{
-            //    listOfGuests.Add(new Guest() { Code = Guest.GenerateGuestCode(guests[i].GuestID) });
-            //    //Guest guest = new Guest() { Code = Guest.GenerateGuestCode(guests[i].GuestID) };
-            //}
-
-            //for (int i = 0; i < listOfGuests.Count; i++)
-            //{
-            //    return RedirectToAction("Index", new GuestCodeWithModel<object>(null, listOfGuests[i].Code));
-            //}
             return RedirectToAction("Index", new { guestCode = guestCode });
             //return RedirectToAction("Index", new GuestCodeWithModel<object>(null, guestCode));
 
@@ -100,28 +75,50 @@ namespace WebInterface.Controllers
 
             var test = ctx.SubDishTypes.ToList();
 
+            //collects all drinks DishType
             List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();
+
+            //collects the drinks SubDishType
             var subDrinks = drinks.Where(x => x.SubDishType != null).Select(x => x.SubDishType).ToList();
+
+            //collects unique drinks from all drinks SubDishType
             List<SubDishType> uniqueSubDrinks = subDrinks.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToList();
 
+            //Dictionary that maps DishType and the quantity (DishType->int)
+
             Dictionary<DishType, int> output = new Dictionary<DishType, int>();
+
+            //assigning all the drinks keyvalues to zero first
 
             foreach (DishType d in drinks)
             {
                 output.Add(d, 0);
             }
 
+            //Loading the orders table because of lazy entity framework
+
             ctx.Orders.ToList();
 
+            //Selects all orders belongs to unique guest
+
             Order order = ctx.Orders.Where(x => x.Owner.Code == guestCode).FirstOrDefault();
+
+            //Loading the Dishes table because of lazy entity framework
+
             ctx.Dishes.ToList();
+
+            //If the selected orders by the guest is not null, then assign each drink value to guests order quantity using dictionary
 
             if (order.Selected != null)
             {
+                //Loading the DisheTypes table because of lazy entity framework
+
                 ctx.DishTypes.ToList();
                 List<Dish> a = order.Selected.Where(x => x.Course.Course == CourseType.DRINK).ToList();
 
                 var b = a.GroupBy(x => x.Course.Name).Select(x => new { type = x.FirstOrDefault().Course, quantity = x.Count() }).ToList();
+
+                //assigning the drinks values (this replaces previous assigned zero values by guests order quantity for each drink)
 
                 foreach (var item in b)
                 {
@@ -141,6 +138,16 @@ namespace WebInterface.Controllers
 
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
         }
+
+        /// <summary>
+        /// orderName contains the string (view name) to view order overview page: in this Drinks case its "OrderOverview"
+        /// proceedName contains the string (view name) to proceed: in this Drinks case its "Starters"
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="GuestCode"></param>
+        /// <param name="orderName"></param>
+        /// <param name="proceedName"></param>
+        /// <returns></returns>
 
         [HttpPost]
         public IActionResult Drinks(IFormCollection col, string GuestCode, string orderName, string proceedName)
@@ -302,6 +309,19 @@ namespace WebInterface.Controllers
 
         }
 
+        /// <summary>
+        /// GuestCode contains the unique guestcode
+        /// orderName contains the string (view name) to view order overview page: in this Starters case its "OrderOverview"
+        /// proceedName contains the string (view name) to proceed: in this Starters case its "Mains"
+        /// goBack contains the string (view name) to go back: in this Starters case its "Drinks"
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="GuestCode"></param>
+        /// <param name="orderName"></param>
+        /// <param name="proceedName"></param>
+        /// <param name="goBack"></param>
+        /// <returns></returns>
+
         [HttpPost]
         public IActionResult Starters(IFormCollection col, string GuestCode, string orderName, string proceedName, string goBack)
         {
@@ -461,6 +481,20 @@ namespace WebInterface.Controllers
 
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
         }
+
+        /// <summary>
+        /// col is a Icollection that contains all the Mains data entered by the guest
+        /// GuestCode contains the unique guestcode
+        /// orderName contains the string (view name) to view order overview page: in this mains case its "OrderOverview"
+        /// proceedName contains the string (view name) to proceed: in this mains case its "Desserts"
+        /// goBack contains the string (view name) to go back: in this mains case its "Starters"
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="GuestCode"></param>
+        /// <param name="orderName"></param>
+        /// <param name="proceedName"></param>
+        /// <param name="goBack"></param>
+        /// <returns></returns>
 
         [HttpPost]
         public IActionResult Mains(IFormCollection col, string GuestCode, string orderName, string proceedName, string goBack)
@@ -624,6 +658,18 @@ namespace WebInterface.Controllers
             //var result = dessert.ToList();
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
         }
+
+        /// <summary>
+        /// col is a Icollection that contains all the desserts data entered by the guest
+        /// GuestCode contains the unique guestcode
+        /// proceedName contains the string (view name) to proceed: in this desserts case its "OrderOverview"
+        /// goBack contains the string (view name) to go back: in this desserts case its "Mains"
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="GuestCode"></param>
+        /// <param name="proceedName"></param>
+        /// <param name="goBack"></param>
+        /// <returns></returns>
 
         [HttpPost]
         public IActionResult Desserts(IFormCollection col, string GuestCode, string proceedName, string goBack)
