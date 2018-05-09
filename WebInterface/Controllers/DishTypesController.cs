@@ -25,6 +25,13 @@ namespace WebInterface.Controllers
 
         private DishTypeRepository repo = null;
 
+        //public DishTypesController(MenuCardDBContext context)
+        //{
+        //    repo = new Repository<(context);
+        //}
+
+        //private Repository repo = null;
+
         // GET: DishTypes
         public async Task<IActionResult> Index()
         {
@@ -34,7 +41,7 @@ namespace WebInterface.Controllers
 
             return View(model);
         }
-        //async or not??
+        
         public async Task<IActionResult> PageData(IDataTablesRequest request)
         {
             var model = await repo.GetIngredientTypes();
@@ -74,7 +81,7 @@ namespace WebInterface.Controllers
 
             P.DefaultIngredients.Add(ingredient);
 
-            repo.Save();
+            await repo.Save();
 
             return RedirectToAction("Edit", new { id = DishTypeID });
         }
@@ -172,10 +179,10 @@ namespace WebInterface.Controllers
                 model.SubDishType = sdt;
 
                 repo.InsertDishType(model);
-                repo.Save();
+                await repo.Save();
 
                 int id = model.DishTypeID;
-                return RedirectToAction(nameof(Edit), new { id = id });
+                return RedirectToAction(nameof(Edit), new { id });
             }
 
             return View(dishTypeViewModel);
@@ -223,7 +230,7 @@ namespace WebInterface.Controllers
                 try
                 {
                     repo.UpdateDish(dishType);
-                    repo.Save();
+                    await repo.Save();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -275,7 +282,7 @@ namespace WebInterface.Controllers
             }
 
             repo.RemoveDish(id);
-            repo.Save();
+            await repo.Save();
             return RedirectToAction(nameof(Index));
         }
 

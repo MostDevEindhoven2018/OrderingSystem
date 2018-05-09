@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebInterface.Models;
 using WebInterface.ViewModel;
-using Microsoft.AspNetCore.Http;
-using DataTables.AspNet.AspNetCore;
-using DataTables.AspNet.Core;
-using WebInterface.Repositories;
+
 
 
 namespace WebInterface.Repositories
@@ -85,9 +80,9 @@ namespace WebInterface.Repositories
             return id;
         }
 
-        public void Save()
+        public Task Save()
         {
-            _context.SaveChanges();
+            return _context.SaveChangesAsync();
         }
 
         public void EnsureCreated()
