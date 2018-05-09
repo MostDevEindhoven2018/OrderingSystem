@@ -11,6 +11,7 @@ namespace WebInterface.Controllers
     {
         MenuCardDBContext ctx;
         Task DBCreationTask;
+
         public FinalizedOrdersController(MenuCardDBContext context)
         {
             ctx = context;
@@ -19,15 +20,21 @@ namespace WebInterface.Controllers
 
         public async Task<IActionResult> Index()
         {
-            await DBCreationTask;
+            //await DBCreationTask;
 
+            return View();
+        }
+
+        public async Task<IActionResult> Kitchen()
+        {
+            await DBCreationTask;
             //retrive from database
             var q = from o in ctx.Orders
                     select new FinalizedOrder
                     {
-                        OrderID = o.OrderID,
+                        Order = o.OrderID,
                         Name = o.Owner.Name,
-                        TableID = o.Owner.Group.Table.TableID
+                        Table = o.Owner.Group.Table.TableID
 
                     };
 
@@ -35,6 +42,14 @@ namespace WebInterface.Controllers
 
             return View(finalOrders);
         }
+
+        public async Task<IActionResult> Bar()
+        {
+            await DBCreationTask;
+            return View();
+        }
+
+
 
     }
 }
