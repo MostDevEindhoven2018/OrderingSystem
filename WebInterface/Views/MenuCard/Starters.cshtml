@@ -24,12 +24,7 @@
     .SubStarters {
         float: left;
         width: 45%;
-    }
-
-    .customize {
-        float: left;
-        width: 20%;
-    }
+    }    
 
     .Price {
         float: left;
@@ -37,6 +32,11 @@
     }
 
     .quantity {
+        float: left;
+        width: 20%;
+    }
+
+    .customize {
         float: left;
         width: 20%;
     }
@@ -66,7 +66,7 @@
                     if (Model.Model.DishTypes[j].SubDishType == null)
                     {
                         <div class="SubStarters">@Model.Model.DishTypes[j].Name</div>
-                        <div class="customize">[Customize]</div>
+                        @*<div class="customize">[Customize]</div>*@
                         <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
 
                         if (Model.Model.quantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
@@ -74,7 +74,9 @@
                             quantity = Model.Model.quantityDictionary[Model.Model.DishTypes[j]];
                         }
 
-                        <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
+                        <div class="quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
+                        <div class="customize"><input type="text" placeholder="Custom Note" /></div>
+
                     }
                 }
 
@@ -93,7 +95,7 @@
                             if (Model.Model.DishTypes[j].SubDishType.SubType == Model.Model.SubDishTypes[i].SubType)
                             {
                                 <div class="SubStarters">@Model.Model.DishTypes[j].Name</div>
-                                <div class="customize">[Customize]</div>
+                                @*<div class="customize">[Customize]</div>*@
                                 <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
 
                                 if (Model.Model.quantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
@@ -101,7 +103,9 @@
                                     quantity = Model.Model.quantityDictionary[Model.Model.DishTypes[j]];
                                 }
 
-                                <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
+                                <div class="quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
+                                <div class="customize"><input type="text" placeholder="Custom Note" /></div>
+
                             }
 
                         }

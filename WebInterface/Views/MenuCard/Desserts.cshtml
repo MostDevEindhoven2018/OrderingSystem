@@ -77,7 +77,7 @@
                         if (Model.Model.DishTypes[j].SubDishType == null)
                         {
                             <div class="SubDessert">@Model.Model.DishTypes[j].Name</div>
-                            <div class="customize">[Customize]</div>
+                            @*<div class="customize">[Customize]</div>*@
                             <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
 
                             if (Model.Model.quantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
@@ -86,6 +86,8 @@
                             }
 
                             <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
+                            <div class="customize"><input type="text" placeholder="Custom Note" /></div>
+
                         }
                     }
 
@@ -104,7 +106,7 @@
                                 if (Model.Model.DishTypes[j].SubDishType.SubType == Model.Model.SubDishTypes[i].SubType)
                                 {
                                     <div class="SubDessert">@Model.Model.DishTypes[j].Name</div>
-                                    <div class="customize">[Customize]</div>
+                                    @*<div class="customize">[Customize]</div>*@
                                     <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
 
                                     if (Model.Model.quantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
@@ -113,6 +115,8 @@
                                     }
 
                                     <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
+                                    <div class="customize"><input type="text" placeholder="Custom Note" /></div>
+
                                 }
 
                             }
