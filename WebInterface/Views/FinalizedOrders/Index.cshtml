@@ -1,10 +1,31 @@
 ﻿@model List<FinalizedOrder>
 
+
 @{
     ViewData["Title"] = "Index";
 }
 
-<form>
-    <button asp-action="Kitchen">Kitchen Orders</button>
-</form>
+
+<h1>Orders Overview</h1>
+
+<br />
+<br />
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <form>
+                <button asp-action="Kitchen" class="btn-primary">Kitchen Orders</button>
+            </form>
+        </div>
+        <div class="col-sm">
+            <form>
+                <button asp-action="Kitchen" class="btn-primary">Bar Orders</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 
