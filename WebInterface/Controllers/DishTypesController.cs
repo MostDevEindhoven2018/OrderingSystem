@@ -10,46 +10,44 @@ using WebInterface.ViewModel;
 using Microsoft.AspNetCore.Http;
 using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
+using WebInterface.Repositories;
 
 namespace WebInterface.Controllers
 {
     public class DishTypesController : Controller
     {
-        private readonly MenuCardDBContext _context;
-
         public DishTypesController(MenuCardDBContext context)
         {
-            _context = context;
+            repo = new DishTypeRepository(context);
         }
+
+        private DishTypeRepository repo = null;
 
         // GET: DishTypes
         public async Task<IActionResult> Index()
         {
-            var model = await _context.DishTypes.ToListAsync();
-            await _context.SubDishTypes.ToListAsync();
+            var model = await repo.GetDishes();
+        
+            await repo.GetSubDishes();
 
             return View(model);
         }
-
+        //async or not??
         public async Task<IActionResult> PageData(IDataTablesRequest request)
         {
-            var ingredients = await _context.IngredientTypes.Where(x => x.IngredientTypeID <100).ToListAsync();
-            var totalRecords = await _context.IngredientTypes.CountAsync();
+            var model = await repo.GetIngredients();
 
-            return Json(ingredients);
-
-            //var totalRecordsFiltered = ingredients.Count;
-
+            return Json(model);                  
         }
 
         // Add ingredients to the dish
         [HttpPost]
-        public IActionResult AddIngredientToDish(int IngredientTypeID, int DishTypeID)
+        public async Task<IActionResult> AddIngredientToDish(int IngredientTypeID, int DishTypeID)
         {
             Ingredient ingredient = new Ingredient();
 
 
-            DishType P = _context.DishTypes.Where(x => x.DishTypeID == DishTypeID).FirstOrDefault();
+            DishType P = repo.GetDishTypeID(DishTypeID);
 
             if (P == null)
             {
@@ -110,15 +108,15 @@ namespace WebInterface.Controllers
                 return NotFound();
             }
 
-            var dishType = await _context.DishTypes
+            var model = await _context.DishTypes
                 .SingleOrDefaultAsync(m => m.DishTypeID == id);
-            if (dishType == null)
+            if (model == null)
             {
                 return NotFound();
             }
             await _context.SubDishTypes.ToListAsync();
 
-            return View(dishType);
+            return View(model);
         }
 
         // GET: DishTypes/Create
@@ -146,7 +144,7 @@ namespace WebInterface.Controllers
             //HEAD
             if (ModelState.IsValid)
             {
-                //
+                // Create new Dishtype and assign properties
                 DishType model = new DishType
                 {
                     Name = dishTypeViewModel.Dish.Name,
