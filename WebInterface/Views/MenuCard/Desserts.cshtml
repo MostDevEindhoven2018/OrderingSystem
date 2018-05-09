@@ -56,7 +56,7 @@
 </style>
 
 
-<form asp-action="Desserts">
+<form id="menuForm" asp-action="Desserts">
 
     <body>
 
@@ -85,7 +85,7 @@
                                 quantity = Model.Model.quantityDictionary[Model.Model.DishTypes[j]];
                             }
 
-                            <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
+                            <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input class="submitOnChange" type="number" min="0" max="99" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
                             <div class="customize"><input type="text" placeholder="Custom Note" /></div>
 
                         }
@@ -114,7 +114,7 @@
                                         quantity = Model.Model.quantityDictionary[Model.Model.DishTypes[j]];
                                     }
 
-                                    <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
+                                    <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input class="submitOnChange" type="number" min="0" max="99" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
                                     <div class="customize"><input type="text" placeholder="Custom Note" /></div>
 
                                 }
@@ -151,14 +151,28 @@
             }
         </div>
 
-        <br />
-        <br />
+        <hr /><hr />
 
-        <button type="submit" name="goBack" value="Mains">Go to Main Course</button>
-        <button type="submit" name="proceedName" value="OrderOverview">Place Order</button>
 
+        @*<button type="submit" name="goBack" value="Mains">Go to Main Course</button>
+        <button type="submit" name="proceedName" value="OrderOverview">Place Order</button>*@
+
+        <a class="btn btn-default" href=' @Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode })'>Go Back to Main Courses</a>
+        <a class="btn btn-default" href=' @Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode })'>Orders overview</a>
 
         @*<input type="button" value="Go Back to Main courses" onclick="location.href='@Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
-        <input type="submit" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode} )'" />*@
+        <input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode} )'" />*@
     </body>
 </form>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".submitOnChange").on("input", function (e) {
+                //document.getElementById("menuForm").submit();
+                $.post('UpdateDesserts', $('#menuForm').serialize())
+            });
+        });
+    </script>
+}

@@ -149,15 +149,21 @@ namespace WebInterface.Controllers
         /// <param name="proceedName"></param>
         /// <returns></returns>
 
-        [HttpPost]
-        public IActionResult Drinks(IFormCollection col, string GuestCode, string orderName, string proceedName)
-        {
-            List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();
 
+
+        //[HttpPost]
+        //public IActionResult Drinks(IFormCollection col, string GuestCode, string orderName, string proceedName)
+        //{
+
+        [HttpPost]
+        public void UpdateDrinks(IFormCollection col, string GuestCode)
+        {
             ctx.Guests.ToList();
             ctx.Dishes.ToList();
             ctx.SubDishTypes.ToList();
+            ctx.SaveChanges();
 
+            List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();
 
             //contains the data of ordered drinks
 
@@ -186,9 +192,7 @@ namespace WebInterface.Controllers
                 }
             }
 
-
-            var orderList = ctx.Orders.ToList();
-            var uniqueOrderList = orderList.Where(x => x.Owner.Code == GuestCode).FirstOrDefault();
+            var uniqueOrderList = ctx.Orders.Where(x => x.Owner.Code == GuestCode).FirstOrDefault();
 
             foreach (var selectedDrinks in drinks)
             {
@@ -209,9 +213,11 @@ namespace WebInterface.Controllers
                         Dish dish = new Dish() { Course = selectedDrinks };
                         uniqueOrderList.Selected.Add(dish);
                         ctx.Dishes.Add(dish);
-                        ctx.SaveChanges();
                     }
+                    ctx.SaveChanges();
                 }
+
+
                 else if (quantity < output[selectedDrinks])
                 {
                     if (uniqueOrderList == null)
@@ -231,29 +237,28 @@ namespace WebInterface.Controllers
                         uniqueOrderList.Selected.Remove(toRemoveSelectedDrink);
                         ctx.Dishes.Remove(toRemoveSelectedDrink);
                         ctx.SaveChanges();
-                        var a = ctx.Dishes.ToList().Count();
-
                     }
 
                 }
+
 
             }
 
             //based on selected button page redirects to return view (either to order overview page or else to Starters page)
 
 
-            string selectedChoice = "";
+            //string selectedChoice = "";
 
-            if (orderName == null)
-            {
-                selectedChoice = proceedName;
-            }
-            else
-            {
-                selectedChoice = orderName;
-            }
+            //if (orderName == null)
+            //{
+            //    selectedChoice = proceedName;
+            //}
+            //else
+            //{
+            //    selectedChoice = orderName;
+            //}
 
-            return RedirectToAction(selectedChoice, "MenuCard", new { guestCode = GuestCode });
+            //return RedirectToAction(selectedChoice, "MenuCard", new { guestCode = GuestCode });
         }
 
         public async Task<IActionResult> Starters(string guestCode)
@@ -322,8 +327,12 @@ namespace WebInterface.Controllers
         /// <param name="goBack"></param>
         /// <returns></returns>
 
+        //[HttpPost]
+        //public IActionResult Starters(IFormCollection col, string GuestCode, string orderName, string proceedName, string goBack)
+        //{
+
         [HttpPost]
-        public IActionResult Starters(IFormCollection col, string GuestCode, string orderName, string proceedName, string goBack)
+        public void UpdateStarters(IFormCollection col, string GuestCode)
         {
             List<DishType> starters = ctx.DishTypes.Where(x => x.Course == CourseType.STARTER).ToList();
 
@@ -380,8 +389,9 @@ namespace WebInterface.Controllers
                         Dish dish = new Dish() { Course = selectedStarters };
                         uniqueOrderList.Selected.Add(dish);
                         ctx.Dishes.Add(dish);
-                        ctx.SaveChanges();
                     }
+
+
                 }
                 else if (quantity < output[selectedStarters])
                 {
@@ -400,33 +410,36 @@ namespace WebInterface.Controllers
                         var toRemoveSelectedStarter = ctx.Dishes.Where(x => x.Course == selectedStarters).LastOrDefault();
                         uniqueOrderList.Selected.Remove(toRemoveSelectedStarter);
                         ctx.Dishes.Remove(toRemoveSelectedStarter);
-                        ctx.SaveChanges();
-
                     }
 
                 }
 
+
             }
+
+            ctx.SaveChanges();
 
             //based on selected button page redirects to return view (either to order overview page or else to Main course page)
 
 
-            string selectedChoice = "";
+            //string selectedChoice = "";
 
-            if (orderName != null)
-            {
-                selectedChoice = orderName;
-            }
-            else if (proceedName != null)
-            {
-                selectedChoice = proceedName;
-            }
-            else if (goBack != null)
-            {
-                selectedChoice = goBack;
-            }
+            //if (orderName != null)
+            //{
+            //    selectedChoice = orderName;
+            //}
+            //else if (proceedName != null)
+            //{
+            //    selectedChoice = proceedName;
+            //}
+            //else if (goBack != null)
+            //{
+            //    selectedChoice = goBack;
+            //}
 
-            return RedirectToAction(selectedChoice, "MenuCard", new { guestCode = GuestCode });
+            //var test1 = selectedChoice;
+
+            //return RedirectToAction(selectedChoice, "MenuCard", new { guestCode = GuestCode });
         }
 
         public async Task<IActionResult> Mains(string guestCode)
@@ -496,8 +509,12 @@ namespace WebInterface.Controllers
         /// <param name="goBack"></param>
         /// <returns></returns>
 
+        //[HttpPost]
+        //public IActionResult Mains(IFormCollection col, string GuestCode, string orderName, string proceedName, string goBack)
+        //{
+
         [HttpPost]
-        public IActionResult Mains(IFormCollection col, string GuestCode, string orderName, string proceedName, string goBack)
+        public void UpdateMains(IFormCollection col, string GuestCode)
         {
             List<DishType> mains = ctx.DishTypes.Where(x => x.Course == CourseType.MAINCOURSE).ToList();
 
@@ -583,22 +600,22 @@ namespace WebInterface.Controllers
 
             //based on selected button page redirects to return view (either to order overview page or else to desserts page)
 
-            string selectedChoice = "";
+            //string selectedChoice = "";
 
-            if (orderName != null)
-            {
-                selectedChoice = orderName;
-            }
-            else if (proceedName != null)
-            {
-                selectedChoice = proceedName;
-            }
-            else if (goBack != null)
-            {
-                selectedChoice = goBack;
-            }
+            //if (orderName != null)
+            //{
+            //    selectedChoice = orderName;
+            //}
+            //else if (proceedName != null)
+            //{
+            //    selectedChoice = proceedName;
+            //}
+            //else if (goBack != null)
+            //{
+            //    selectedChoice = goBack;
+            //}
 
-            return RedirectToAction(selectedChoice, "MenuCard", new { guestCode = GuestCode });
+            //return RedirectToAction(selectedChoice, "MenuCard", new { guestCode = GuestCode });
         }
 
         public async Task<IActionResult> Desserts(string guestCode)
@@ -671,8 +688,11 @@ namespace WebInterface.Controllers
         /// <param name="goBack"></param>
         /// <returns></returns>
 
+        //[HttpPost]
+        //public IActionResult Desserts(IFormCollection col, string GuestCode, string proceedName, string goBack)
+        //{
         [HttpPost]
-        public IActionResult Desserts(IFormCollection col, string GuestCode, string proceedName, string goBack)
+        public void UpdateDesserts(IFormCollection col, string GuestCode)
         {
             List<DishType> desserts = ctx.DishTypes.Where(x => x.Course == CourseType.DESSERT).ToList();
 
@@ -730,8 +750,9 @@ namespace WebInterface.Controllers
                         Dish dish = new Dish() { Course = selectedDesserts };
                         uniqueOrderList.Selected.Add(dish);
                         ctx.Dishes.Add(dish);
-                        ctx.SaveChanges();
+
                     }
+                    ctx.SaveChanges();
                 }
                 else if (quantity < output[selectedDesserts])
                 {
@@ -751,27 +772,29 @@ namespace WebInterface.Controllers
                         uniqueOrderList.Selected.Remove(toRemoveSelectedDesserts);
                         ctx.Dishes.Remove(toRemoveSelectedDesserts);
                         ctx.SaveChanges();
-
                     }
+                    
+
+
 
                 }
 
             }
 
-            string selectedChoice = "";
+            //string selectedChoice = "";
 
-            if (proceedName != null)
-            {
-                selectedChoice = proceedName;
-            }
+            //if (proceedName != null)
+            //{
+            //    selectedChoice = proceedName;
+            //}
 
-            else if (goBack != null)
-            {
-                selectedChoice = goBack;
+            //else if (goBack != null)
+            //{
+            //    selectedChoice = goBack;
 
-            }
+            //}
 
-            return RedirectToAction(selectedChoice, "MenuCard", new { guestCode = GuestCode });
+            //return RedirectToAction(selectedChoice, "MenuCard", new { guestCode = GuestCode });
 
         }
 

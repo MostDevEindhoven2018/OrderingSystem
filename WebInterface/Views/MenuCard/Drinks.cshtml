@@ -15,10 +15,6 @@
 <h2>Drinks</h2>
 <hr />
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
 <style>
 
     input[type=number]::-webkit-inner-spin-button {
@@ -28,7 +24,7 @@
     .SubDrink {
         float: left;
         width: 45%;
-    }  
+    }
 
     .Price {
         float: left;
@@ -55,7 +51,7 @@
     }
 </style>
 
-<form asp-action="Drinks">
+<form id="menuForm" asp-action="Drinks">
 
     <input type="hidden" name="GuestCode" value="@Model.GuestCode" />
 
@@ -83,7 +79,7 @@
                             quantity = Model.Model.quantityDictionary[Model.Model.DishTypes[j]];
                         }
 
-                        <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
+                        <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input class="submitOnChange" type="number" min="0" max="99" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
 
                         <div class="customize"><input type="text" placeholder="Custom Note" /></div>
 
@@ -112,7 +108,7 @@
                                 {
                                     quantity = Model.Model.quantityDictionary[Model.Model.DishTypes[j]];
                                 }
-                                <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
+                                <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input class="submitOnChange" type="number" min="0" max="99" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
                                 <div class="customize"><input type="text" placeholder="Custom Note" /></div>
 
                             }
@@ -150,18 +146,33 @@
 
     </div>
 
-    <hr />
-
-    <br />
-    <br />
-
-    <input type="button" value="Go back to home" onclick="location.href='@Url.Action("Index", "MenuCard", new { GuestCode = Model.GuestCode})'" />
-
-    <button type="submit" name="orderName" value="OrderOverview">Order Overview</button>
-    <button type="submit" name="proceedName" value="Starters">Proceed to Starters</button>
+    <hr /><hr />
 
 
-    @*<input type="submit" name="orderName" value="OrderOverview" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />
-    <input type="submit" name="proceedName" value="Starters" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />*@
+
+    @*<input type="button" value="Go back to home" onclick="location.href='@Url.Action("Index", "MenuCard", new { GuestCode = Model.GuestCode})'" />*@
+
+    @*<button type="submit" name="orderName" value="OrderOverview">Order Overview</button>
+        <button type="submit" name="proceedName" value="Starters">Proceed to Starters</button>*@
+
+    <a class="btn btn-default" href=' @Url.Action("Index", "MenuCard", new { GuestCode = Model.GuestCode })'>Go Back to Index</a>
+    <a class="btn btn-default" href=' @Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode })'>Order overview</a>
+    <a class="btn btn-default" href=' @Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode })'>Proceed to Starters</a>
+
+
+
+    @*<input type="button" name="orderName" value="OrderOverview" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />
+        <input type="button" name="proceedName" value="Starters" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />*@
 
 </form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".submitOnChange").on("input", function (e) {
+                //document.getElementById("menuForm").submit();
+                $.post('UpdateDrinks', $('#menuForm').serialize())
+            });
+        });
+    </script>
+}
