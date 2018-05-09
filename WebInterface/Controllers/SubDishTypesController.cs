@@ -16,6 +16,8 @@ namespace WebInterface.Controllers
         public SubDishTypesController(MenuCardDBContext context)
         {
             _context = context;
+
+			_context.Database.EnsureCreated();
         }
 
         // GET: SubDishTypes
@@ -116,7 +118,7 @@ namespace WebInterface.Controllers
         }
 
         // GET: SubDishTypes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, string error)
         {
             if (id == null)
             {
@@ -138,10 +140,21 @@ namespace WebInterface.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var subDishType = await _context.SubDishTypes.SingleOrDefaultAsync(m => m.SubDishTypeID == id);
-            _context.SubDishTypes.Remove(subDishType);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+			var subID = _context.DishTypes.FirstOrDefault(x => x.SubDishType.SubDishTypeID == id);
+                    
+			if(subID != null)
+			{
+				string error = "hdhakdhkaghfueoa";
+				return RedirectToAction("Delete");
+			}
+			else
+			{
+				var subDishType = await _context.SubDishTypes.SingleOrDefaultAsync(m => m.SubDishTypeID == id);
+                _context.SubDishTypes.Remove(subDishType);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+			} 
         }
 
         private bool SubDishTypeExists(int id)

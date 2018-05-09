@@ -16,6 +16,8 @@ namespace WebInterface.Controllers
         public IngredientTypesController(MenuCardDBContext context)
         {
             _context = context;
+
+			_context.Database.EnsureCreated();
         }
 
         // GET: IngredientTypes

@@ -20,6 +20,8 @@ namespace WebInterface.Controllers
         public DishTypesController(MenuCardDBContext context)
         {
             _context = context;
+
+			_context.Database.EnsureCreated();
         }
 
         // GET: DishTypes
