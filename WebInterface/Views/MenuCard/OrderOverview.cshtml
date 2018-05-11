@@ -59,7 +59,7 @@
 
 
 
-<form asp-action="OrderOverView">
+<form id="menuForm" asp-action="FinalizesdOrderButton" method="post">
 
     <input type="hidden" name="GuestCode" value="@Model.GuestCode" />
 
@@ -105,7 +105,7 @@
 
                     price = orderQuantity * (double)uniqueDrinks[i].Course.Price;
                     <div class="Price">&euro; @price</div>
-                    <div class="quantity"><input type="number" value="@orderQuantity" min="0" name="@uniqueDrinks[i].Course.Name"/></div>
+                    <div class="quantity"><input type="number" class="submitOnChange" value="@orderQuantity" min="0" name="@uniqueDrinks[i].Course.Name" /></div>
                     orderQuantity = 0;
                     price = 0;
                 }
@@ -132,7 +132,7 @@
                     }
                     price = orderQuantity * (double)uniqueStarters[i].Course.Price;
                     <div class="Price">&euro; @price</div>
-                    <div class="quantity"><input type="number" value="@orderQuantity" min="0" name="@uniqueStarters[i].Course.Name"/></div>
+                    <div class="quantity"><input type="number" class="submitOnChange" value="@orderQuantity" min="0" name="@uniqueStarters[i].Course.Name" /></div>
                     orderQuantity = 0;
                     price = 0;
                 }
@@ -159,7 +159,7 @@
                     }
                     price = orderQuantity * (double)uniqueMains[i].Course.Price;
                     <div class="Price">&euro; @price</div>
-                    <div class="quantity"><input type="number" value="@orderQuantity" min="0" name="@uniqueMains[i].Course.Name"/></div>
+                    <div class="quantity"><input type="number" class="submitOnChange" value="@orderQuantity" min="0" name="@uniqueMains[i].Course.Name" /></div>
                     orderQuantity = 0;
                     price = 0;
                 }
@@ -186,7 +186,7 @@
                     }
                     price = orderQuantity * (double)uniqueDesserts[i].Course.Price;
                     <div class="Price">&euro; @price</div>
-                    <div class="quantity"><input type="number" value="@orderQuantity" min="0" name="@uniqueDesserts[i].Course.Name"/></div>
+                    <div class="quantity"><input type="number" class="submitOnChange" value="@orderQuantity" min="0" name="@uniqueDesserts[i].Course.Name" /></div>
                     orderQuantity = 0;
                     price = 0;
                 }
@@ -204,5 +204,23 @@
 
     @*<input type="button" value="Go back" onclick="location.href='@Url.Action("Starters", "MenuCard" )'" />*@
 
-    <input type="submit" value="Finalized Order" onclick="location.href='@Url.Action("FinalizedOrder", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+    @*<a class="btn btn-default" href=' @Url.Action("Finalizedorder", "MenuCard", new { GuestCode = Model.GuestCode })'>Finalized order</a>*@
+
+    @*<a class="btn btn-default"  href='@Url.Action("FinalizedOrder", "MenuCard", new { GuestCode = Model.GuestCode} )'>Place Finalized Order</a>*@
+
+    <input type="submit" value="Finalized Order" />
 </form>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".submitOnChange").on("input", function (e) {
+                //document.getElementById("menuForm").submit();
+                $.post('updateOrderOverview', $('#menuForm').serialize())
+            });
+        });
+    </script>
+}
+
+

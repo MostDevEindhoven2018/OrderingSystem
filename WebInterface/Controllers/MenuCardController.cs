@@ -327,7 +327,7 @@ namespace WebInterface.Controllers
                 List<Dish> a = order.Selected.Where(x => x.Course.Course == CourseType.STARTER).ToList();
 
                 var b = a.GroupBy(x => x.Course.Name).Select(x => new { type = x.FirstOrDefault().Course, quantity = x.Count() }).ToList();
-
+                
                 foreach (var item in b)
                 {
                     output[item.type] = item.quantity;
@@ -340,6 +340,8 @@ namespace WebInterface.Controllers
                 SubDishTypes = uniqueSubStarters,
                 quantityDictionary = output
             };
+
+            
 
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
 
@@ -932,20 +934,18 @@ namespace WebInterface.Controllers
             return View(new GuestCodeWithModel<OrderDishTypeViewModel>(orderDishTypeViewModel, guestCode));
         }
         [HttpPost]
-        public IActionResult OrderOverView(IFormCollection col, string GuestCode, string proceedName, string goBack)
+        public void updateOrderOverview(IFormCollection col, string GuestCode)
         {
             ctx.Orders.ToList();
             ctx.Dishes.ToList();
+            ctx.Guests.ToList();
             ctx.DishTypes.ToList();
 
-            var g = ctx.Orders.Where(x => x.Owner.Code == GuestCode).ToList();
-            var a = g.Select(x => x.Selected).FirstOrDefault();
+            var a = ctx.Orders.Where(x => x.Owner.Code == GuestCode).Select(x=>x.Selected).FirstOrDefault().ToList();
+            //var a = g.Select(x => x.Selected).FirstOrDefault();
 
             //contains the data of Orderoverview
 
-            ctx.Guests.ToList();
-            ctx.Dishes.ToList();
-            ctx.SubDishTypes.ToList();
                   
             var uniqueDishes = a.GroupBy(x => x.Course.Name).ToList();
 
@@ -969,17 +969,78 @@ namespace WebInterface.Controllers
                                   
                 }
                 orderFinalized.Add(finalizedOrder);
-                ctx.SaveChanges();
 
+                foreach (var item in orderFinalized)
+                {
+                    ctx.Dishes.Add(item);
+                }  
+            //ctx.SaveChanges();
+
+            }
+
+
+
+            Order order = new Order();
+
+            if (order.Finalized==null)
+            {
+                List<Dish> dish = new List<Dish>();
+                order.Finalized = dish;
+
+                foreach (var item in orderFinalized)
+                {
+                    order.Finalized.Add(item);
+                }
+
+                
             }
 
             OrderDishTypeViewModel orderDishTypeViewModel = new OrderDishTypeViewModel()
             {
                 orderDishes = orderFinalized
-             };
-            
-             return View(new GuestCodeWithModel<OrderDishTypeViewModel>(orderDishTypeViewModel, GuestCode));
+            };
 
+            RedirectToAction("FinalizedOrder", "Menucard", new Guest() { Code = GuestCode });
+              
+
+
+
+            //var test = ctx.Orders.Where(x=>x.Owner.Code==GuestCode).Select(x => x.Finalized).ToList();
+            //int t = 2;
+
+
+            //OrderDishTypeViewModel orderDishTypeViewModel = new OrderDishTypeViewModel()
+            //{
+            //    orderDishes = orderFinalized
+            // };
+
+            //return View(new GuestCodeWithModel<OrderDishTypeViewModel>(orderDishTypeViewModel, GuestCode));
+            //RedirectToAction("FinalizedOrder", "MenuCard", new Guest() { Code = GuestCode });
+        }
+        [HttpPost]
+        public IActionResult FinalizesdOrderButton(IFormCollection col, string GuestCode)
+        {
+            Order order = ctx.Orders.Include(x => x.Selected).Include(x => x.Finalized).Where(x => x.Owner.Code == GuestCode).LastOrDefault();
+            if (order == null)
+            {
+                RedirectToAction("ErrorView");
+            }
+            if (order.Selected != null)
+            {
+                if (order.Finalized == null)
+                {
+                    order.Finalized = new List<Dish>();
+                }
+
+                var newfinalized = order.Finalized.Concat(order.Selected);
+                order.Finalized = newfinalized.ToList();
+                order.Selected.Clear();
+                ctx.Update(order);
+                ctx.SaveChanges();
+            }
+
+
+            return RedirectToAction("FinalizedOrder", "MenuCard", new { guestCode = GuestCode });
         }
 
         private IActionResult RedirectToAction(Func<string, IActionResult> finalizedOrder, string v, object p)
@@ -989,7 +1050,30 @@ namespace WebInterface.Controllers
 
         public IActionResult FinalizedOrder(string guestCode)
         {
-            return View(new GuestCodeWithModel<object>(null, guestCode));
+
+            ctx.Guests.ToList();
+            ctx.Dishes.ToList();
+            ctx.SubDishTypes.ToList();
+            ctx.Orders.ToList();
+
+            Order g = ctx.Orders.Where(x => x.Owner.Code == guestCode).FirstOrDefault();
+            var a = g.Finalized;
+
+            if (a == null)
+            {
+                a = new List<Dish>();
+
+            }
+
+            List<Dish> b = a.ToList();
+
+            OrderDishTypeViewModel c = new OrderDishTypeViewModel()
+            {
+                orderDishes = b,
+            };
+
+            //return View();
+            return View(new GuestCodeWithModel<OrderDishTypeViewModel>(c, guestCode));
         }
     }
 }
