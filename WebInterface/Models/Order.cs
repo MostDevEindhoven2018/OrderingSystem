@@ -39,6 +39,7 @@ namespace WebInterface.Models
         /// 
         public virtual ICollection<Dish> Finalized { get; set; }
 
+        
         /// <summary>
         /// The owner of an Order adds items to the Selected list, and then finalizes them.
         /// All Dishes of a single order have been selected by a single Guest. The dishes 
