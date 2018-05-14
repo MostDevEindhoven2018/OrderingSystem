@@ -31,7 +31,7 @@ namespace WebInterface.Controllers
 
             
 
-            //retrive from database
+            //retrive from database... should get it from the list I think
             var q = from o in ctx.Orders
 
                     select new FinalizedOrder
@@ -42,9 +42,7 @@ namespace WebInterface.Controllers
                         
                     };
 
-            var finalOrders = q.ToList();
-
-        
+            var finalOrders = q.ToList();       
 
 
             return View(finalOrders);
@@ -53,7 +51,24 @@ namespace WebInterface.Controllers
         public async Task<IActionResult> Bar()
         {
             await DBCreationTask;
-            return View();
+
+
+
+            //retrive from database... should get it from the list I think
+            var q = from o in ctx.Orders
+
+                    select new FinalizedOrder
+                    {
+                        Order = o.OrderID,
+                        Name = o.Owner.Name,
+                        Table = o.Owner.Group.Table.TableID
+
+                    };
+
+            var finalOrders = q.ToList();
+
+
+            return View(finalOrders);
         }
 
 
