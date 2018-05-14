@@ -87,7 +87,7 @@ namespace WebInterface.Controllers
         }
 
         // Remove ingredients from the dish
-        public IActionResult RemoveIngredient(int? DishTypeID, int? IngredientID)
+        public async Task<IActionResult> RemoveIngredient(int? DishTypeID, int? IngredientID)
         {
             if (IngredientID == null)
             {
@@ -99,21 +99,17 @@ namespace WebInterface.Controllers
                 return NotFound();
             }
 
-            repo.RemoveIngredientID(IngredientID);
-            repo.Save();
+            repo.RemoveIngredient(IngredientID);
+            await repo.Save();
 
             return RedirectToAction("Edit", new { id = DishTypeID });
         }
 
-        public IActionResult SaveQuantity (int DishTypeID, int IngredientID, int Quantity)
+        public async Task<IActionResult> SaveQuantity (int DishTypeID, int IngredientTypeID, int Quantity)
         {
-            
-            var ingredientQuery = _context.Ingredients.Where(x => x.IngredientID == IngredientID);
 
-            Ingredient ingredient = ingredientQuery.FirstOrDefault();
-
-            ingredient.Quantity = Quantity;
-            _context.SaveChanges();
+            await repo.GetIngredientTypeID(IngredientTypeID, Quantity);
+            await repo.Save();
 
             return RedirectToAction("Edit", new { id = DishTypeID });
         }
@@ -139,8 +135,6 @@ namespace WebInterface.Controllers
         // GET: DishTypes/Create
         public async Task<IActionResult> Create()
         {
-            repo.EnsureCreated();
-            
             DishTypesViewModel model = new DishTypesViewModel
             {
                 SubTypeList = await repo.GetSubDishTypesList()
@@ -168,7 +162,7 @@ namespace WebInterface.Controllers
                     Price = dishTypeViewModel.Dish.Price
                 };
 
-                var sdt = repo.GetSubDishTypeID(dishTypeViewModel);               
+                var sdt = await repo.GetSubDishTypeID(dishTypeViewModel);               
 
 
                 if (sdt == null)

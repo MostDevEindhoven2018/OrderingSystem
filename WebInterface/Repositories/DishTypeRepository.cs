@@ -13,15 +13,17 @@ namespace WebInterface.Repositories
     public class DishTypeRepository
     {
         private readonly MenuCardDBContext _context;
+        public Task CreateDB;
 
         public DishTypeRepository(MenuCardDBContext context)
         {
             _context = context;
-        }
+            CreateDB = EnsureCreated();
+        }        
 
-        public Task<List<DishType>> GetDishTypes()
+        public async Task<List<DishType>> GetDishTypes()
         {
-            return _context.DishTypes.ToListAsync();            
+            return await _context.DishTypes.ToListAsync();            
         }
 
         public Task<List<SubDishType>> GetSubDishTypesList()
@@ -49,11 +51,11 @@ namespace WebInterface.Repositories
             return id;
         }
 
-        public SubDishType GetSubDishTypeID(DishTypesViewModel dishTypesViewModel)
+        public async Task<SubDishType> GetSubDishTypeID(DishTypesViewModel dishTypesViewModel)
         {
             DbSet<SubDishType> subDishTypes = GetSubDishTypes();
-            var sdt = subDishTypes.Where(s => dishTypesViewModel.SubTypeID == s.SubDishTypeID).FirstOrDefault();
-            return sdt;
+            var sdt = subDishTypes.Where(s => dishTypesViewModel.SubTypeID == s.SubDishTypeID).FirstOrDefaultAsync();
+            return await sdt;
         }
 
         public void InsertDishType(DishType entity)
@@ -61,7 +63,7 @@ namespace WebInterface.Repositories
             _context.Add(entity);
         }
 
-        public void RemoveIngredientID(int? IngredientID)
+        public void RemoveIngredient(int? IngredientID)
         {
             var ingredientID = _context.Ingredients.SingleOrDefault(x => x.IngredientID == IngredientID);
             _context.Ingredients.Remove(ingredientID);
@@ -85,9 +87,9 @@ namespace WebInterface.Repositories
             return _context.SaveChangesAsync();
         }
 
-        public void EnsureCreated()
+        private Task<bool> EnsureCreated()
         {
-            _context.Database.EnsureCreated();
+            return _context.Database.EnsureCreatedAsync();
         }
 
         public void UpdateDish(DishTypesViewModel dishType)
