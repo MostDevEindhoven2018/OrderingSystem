@@ -29,6 +29,8 @@ namespace WebInterface.Models
 
         public int quantity {get;set;}
 
+        public string customeNote { get; set; }
+
         public virtual ICollection<Dish> Selected { get; set; }
 
         /// <summary>

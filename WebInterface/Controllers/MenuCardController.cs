@@ -197,6 +197,12 @@ namespace WebInterface.Controllers
             foreach (var selectedDrinks in drinks)
             {
                 int quantity = Convert.ToInt32(col[selectedDrinks.Name]);
+
+                //if (quantity > 99)
+                //{
+                //    quantity = 99;
+                //}
+
                 if (quantity > output[selectedDrinks])
                 {
                     if (uniqueOrderList == null)
@@ -225,19 +231,40 @@ namespace WebInterface.Controllers
                         RedirectToAction("ErrorView");
                     }
 
+                    var totalOrderedDrinks = ctx.Orders.Where(x => x.Owner.Code == GuestCode).Select(x => x.Selected).FirstOrDefault().ToList();
+
+
+                    List<Dish> uniqueTotalOrderedDrinks = new List<Dish>();
+
+                    for (int j = 0; j < totalOrderedDrinks.Count; j++)
+                    {
+                        if (totalOrderedDrinks[j].Course.Name == selectedDrinks.Name)
+                        {
+                            uniqueTotalOrderedDrinks.Add(totalOrderedDrinks[j]);
+
+                        }
+
+                    }
+
+                    List<Dish> removeSelectedDrinks = new List<Dish>();
+
                     for (int i = 0; i < (output[selectedDrinks] - quantity); i++)
                     {
-                        var test = (output[selectedDrinks] - quantity);
                         if (uniqueOrderList.Selected == null)
                         {
                             uniqueOrderList.Selected = new List<Dish>();
                         }
 
-                        var toRemoveSelectedDrink = ctx.Dishes.Where(x => x.Course == selectedDrinks).LastOrDefault();
-                        uniqueOrderList.Selected.Remove(toRemoveSelectedDrink);
-                        ctx.Dishes.Remove(toRemoveSelectedDrink);
-                        ctx.SaveChanges();
+                        for (int j = 0; j < uniqueTotalOrderedDrinks.Count; j++)
+                        {
+                            removeSelectedDrinks.Add(uniqueTotalOrderedDrinks[i]);
+
+                        }
+
                     }
+
+                    ctx.Dishes.RemoveRange(removeSelectedDrinks);
+                    ctx.SaveChanges();
 
                 }
 
@@ -400,6 +427,23 @@ namespace WebInterface.Controllers
                         RedirectToAction("ErrorView");
                     }
 
+                    var totalOrderedStarters = ctx.Orders.Where(x => x.Owner.Code == GuestCode).Select(x => x.Selected).FirstOrDefault().ToList();
+
+
+                    List<Dish> uniqueTotalOrderedStarters = new List<Dish>();
+
+                    for (int j = 0; j < totalOrderedStarters.Count; j++)
+                    {
+                        if (totalOrderedStarters[j].Course.Name == selectedStarters.Name)
+                        {
+                            uniqueTotalOrderedStarters.Add(totalOrderedStarters[j]);
+
+                        }
+
+                    }
+
+                    List<Dish> removeSelectedStarters = new List<Dish>();
+
                     for (int i = 0; i < (output[selectedStarters] - quantity); i++)
                     {
                         if (uniqueOrderList.Selected == null)
@@ -407,10 +451,16 @@ namespace WebInterface.Controllers
                             uniqueOrderList.Selected = new List<Dish>();
                         }
 
-                        var toRemoveSelectedStarter = ctx.Dishes.Where(x => x.Course == selectedStarters).LastOrDefault();
-                        uniqueOrderList.Selected.Remove(toRemoveSelectedStarter);
-                        ctx.Dishes.Remove(toRemoveSelectedStarter);
+                        for (int j = 0; j < uniqueTotalOrderedStarters.Count; j++)
+                        {
+                            removeSelectedStarters.Add(uniqueTotalOrderedStarters[i]);
+
+                        }
+
                     }
+
+                    ctx.Dishes.RemoveRange(removeSelectedStarters);
+                    ctx.SaveChanges();
 
                 }
 
@@ -581,6 +631,23 @@ namespace WebInterface.Controllers
                         RedirectToAction("ErrorView");
                     }
 
+                    var totalOrderedMains = ctx.Orders.Where(x => x.Owner.Code == GuestCode).Select(x => x.Selected).FirstOrDefault().ToList();
+
+
+                    List<Dish> uniqueTotalOrderedMains = new List<Dish>();
+
+                    for (int j = 0; j < totalOrderedMains.Count; j++)
+                    {
+                        if (totalOrderedMains[j].Course.Name == selectedMains.Name)
+                        {
+                            uniqueTotalOrderedMains.Add(totalOrderedMains[j]);
+
+                        }
+
+                    }
+
+                    List<Dish> removeSelectedMains = new List<Dish>();
+
                     for (int i = 0; i < (output[selectedMains] - quantity); i++)
                     {
                         if (uniqueOrderList.Selected == null)
@@ -588,12 +655,16 @@ namespace WebInterface.Controllers
                             uniqueOrderList.Selected = new List<Dish>();
                         }
 
-                        var toRemoveSelectedMains = ctx.Dishes.Where(x => x.Course == selectedMains).LastOrDefault();
-                        uniqueOrderList.Selected.Remove(toRemoveSelectedMains);
-                        ctx.Dishes.Remove(toRemoveSelectedMains);
-                        ctx.SaveChanges();
+                        for (int j = 0; j < uniqueTotalOrderedMains.Count; j++)
+                        {
+                            removeSelectedMains.Add(uniqueTotalOrderedMains[i]);
+
+                        }
 
                     }
+
+                    ctx.Dishes.RemoveRange(removeSelectedMains);
+                    ctx.SaveChanges();
 
                 }
             }
@@ -761,6 +832,23 @@ namespace WebInterface.Controllers
                         RedirectToAction("ErrorView");
                     }
 
+                    var totalOrderedMains = ctx.Orders.Where(x => x.Owner.Code == GuestCode).Select(x => x.Selected).FirstOrDefault().ToList();
+
+
+                    List<Dish> uniqueTotalOrderedDesserts = new List<Dish>();
+
+                    for (int j = 0; j < totalOrderedMains.Count; j++)
+                    {
+                        if (totalOrderedMains[j].Course.Name == selectedDesserts.Name)
+                        {
+                            uniqueTotalOrderedDesserts.Add(totalOrderedMains[j]);
+
+                        }
+
+                    }
+
+                    List<Dish> removeSelecteddesserts = new List<Dish>();
+
                     for (int i = 0; i < (output[selectedDesserts] - quantity); i++)
                     {
                         if (uniqueOrderList.Selected == null)
@@ -768,14 +856,16 @@ namespace WebInterface.Controllers
                             uniqueOrderList.Selected = new List<Dish>();
                         }
 
-                        var toRemoveSelectedDesserts = ctx.Dishes.Where(x => x.Course == selectedDesserts).LastOrDefault();
-                        uniqueOrderList.Selected.Remove(toRemoveSelectedDesserts);
-                        ctx.Dishes.Remove(toRemoveSelectedDesserts);
-                        ctx.SaveChanges();
+                        for (int j = 0; j < uniqueTotalOrderedDesserts.Count; j++)
+                        {
+                            removeSelecteddesserts.Add(uniqueTotalOrderedDesserts[i]);
+
+                        }
+
                     }
-                    
 
-
+                    ctx.Dishes.RemoveRange(removeSelecteddesserts);
+                    ctx.SaveChanges();
 
                 }
 
