@@ -30,6 +30,8 @@ namespace WebInterface.Controllers
                 return RedirectToAction("ErrorView");
             }
 
+            //await DBCreationTask;
+
             //
             DBCreationTask.Wait();
 
@@ -158,6 +160,8 @@ namespace WebInterface.Controllers
         [HttpPost]
         public void UpdateDrinks(IFormCollection col, string GuestCode)
         {
+            
+
             ctx.Guests.ToList();
             ctx.Dishes.ToList();
             ctx.SubDishTypes.ToList();
@@ -927,12 +931,61 @@ namespace WebInterface.Controllers
             //return View();
             return View(new GuestCodeWithModel<OrderDishTypeViewModel>(orderDishTypeViewModel, guestCode));
         }
-
-        public IActionResult ErrorView()
+        [HttpPost]
+        public IActionResult OrderOverView(IFormCollection col, string GuestCode, string proceedName, string goBack)
         {
-            return View();
+            ctx.Orders.ToList();
+            ctx.Dishes.ToList();
+            ctx.DishTypes.ToList();
+
+            var g = ctx.Orders.Where(x => x.Owner.Code == GuestCode).ToList();
+            var a = g.Select(x => x.Selected).FirstOrDefault();
+
+            //contains the data of Orderoverview
+
+            ctx.Guests.ToList();
+            ctx.Dishes.ToList();
+            ctx.SubDishTypes.ToList();
+                  
+            var uniqueDishes = a.GroupBy(x => x.Course.Name).ToList();
+
+            List<Dish> orderFinalized = new List<Dish>();
+
+            foreach (var finalizedOrder in a)
+            {
+                int quantity = Convert.ToInt32(col[finalizedOrder.Course.Name]);
+
+                if (uniqueDishes == null)
+                {
+                    RedirectToAction("ErrorView");
+                }
+
+                for (int i = 0; i < quantity; i++)
+                {
+                    if (uniqueDishes == null)
+                    {
+                        orderFinalized = new List<Dish>();
+                    }
+                                  
+                }
+                orderFinalized.Add(finalizedOrder);
+                ctx.SaveChanges();
+
+            }
+
+            OrderDishTypeViewModel orderDishTypeViewModel = new OrderDishTypeViewModel()
+            {
+                orderDishes = orderFinalized
+             };
+            
+             return View(new GuestCodeWithModel<OrderDishTypeViewModel>(orderDishTypeViewModel, GuestCode));
+
         }
 
+        private IActionResult RedirectToAction(Func<string, IActionResult> finalizedOrder, string v, object p)
+        {
+            throw new NotImplementedException();
+        }
 
         public IActionResult FinalizedOrder(string guestCode)
         {
