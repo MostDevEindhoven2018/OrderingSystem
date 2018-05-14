@@ -9,7 +9,7 @@ namespace WebInterface.Models
     {
         public int Order { get; set; }
         public int Table { get; set; }
-        public string Name { get; set; }
+        public string DishName { get; set; }
 
     }
 }

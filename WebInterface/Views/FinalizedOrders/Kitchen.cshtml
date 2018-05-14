@@ -1,4 +1,5 @@
 ﻿@model List<FinalizedOrder>
+@*@model IEnumerable<Order>*@
 
 @{
     ViewData["Title"] = "Kitchen";
@@ -27,7 +28,7 @@
                     Table &emsp;
                 </th>
                 <th>
-                    Dish Name &emsp;
+                    Dish &emsp;
                 </th>
             </tr>
         </thead>
@@ -42,8 +43,9 @@
                         @Html.DisplayFor(m => element.Table)
                     </td>
                     <td>
-                        @Html.DisplayFor(m => element.Name)
+                        @Html.DisplayFor(m => element.DishName)
                     </td>
+                    
                 </tr>
             }
         </tbody>
