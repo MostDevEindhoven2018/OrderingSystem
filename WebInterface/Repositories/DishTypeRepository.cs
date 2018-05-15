@@ -58,6 +58,15 @@ namespace WebInterface.Repositories
             return await sdt;
         }
 
+        public async Task<int> GetIngredientTypeID(int? IngredientTypeID, int Quantity)
+        {
+            var ingredientQuery = _context.Ingredients.Where(x => x.IngredientID == IngredientTypeID);
+            Ingredient ingredient = await ingredientQuery.FirstOrDefaultAsync();
+
+            ingredient.Quantity = Quantity;
+            return Quantity;
+        }
+
         public void InsertDishType(DishType entity)
         {
             _context.Add(entity);
