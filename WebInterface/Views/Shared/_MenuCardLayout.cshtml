@@ -30,17 +30,24 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="MenuCard" asp-action="Index"  asp-all-route-data=argument class="navbar-brand">Home</a>
+                <a asp-area="" asp-controller="MenuCard" asp-action="Index" asp-all-route-data=argument class="navbar-brand">Home</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
 
-                    <li><a asp-area="" asp-controller="MenuCard" asp-action="Drinks" asp-all-route-data=argument>Drinks</a></li>
-                    <li><a asp-area="" asp-controller="MenuCard" asp-action="Starters" asp-all-route-data=argument>Starters</a></li>
-                    <li><a asp-area="" asp-controller="MenuCard" asp-action="Mains" asp-all-route-data=argument>Main Courses</a></li>
-                    <li><a asp-area="" asp-controller="MenuCard" asp-action="Desserts" asp-all-route-data=argument>Desserts</a></li>
-                    <li><a asp-area="" asp-controller="MenuCard" asp-action="OrderOverview" asp-all-route-data=argument>Order Overview</a></li>
-                    <li><a asp-area="" asp-controller="MenuCard" asp-action="FinalizedOrder" asp-all-route-data=argument>Finalized Order </a></li>
+                    @*<li><a onclick="event.preventDefault();document.getElementById('menuForm').submit();" class="submitButton" asp-area="" asp-controller="MenuCard" asp-action="Drinks" asp-all-route-data=argument>Drinks</a></li>
+                        <li><a class="submitButton" onclick="event.preventDefault();document.getElementById('menuForm').submit();" asp-area="" asp-controller="MenuCard" asp-action="Starters" asp-all-route-data=argument>Starters</a></li>
+                        <li><a class="submitButton" onclick="event.preventDefault();document.getElementById('menuForm').submit();" asp-area="" asp-controller="MenuCard" asp-action="Mains" asp-all-route-data=argument>Main Courses</a></li>
+                        <li><a class="submitButton" onclick="event.preventDefault();document.getElementById('menuForm').submit();" asp-area="" asp-controller="MenuCard" asp-action="Desserts" asp-all-route-data=argument>Desserts</a></li>
+                        <li><a class="submitButton" onclick="event.preventDefault();document.getElementById('menuForm').submit();" asp-area="" asp-controller="MenuCard" asp-action="OrderOverview" asp-all-route-data=argument>Order Overview</a></li>
+                        <li><a class="submitButton"onclick="event.preventDefault();document.getElementById('menuForm').submit();" asp-area="" asp-controller="MenuCard" asp-action="FinalizedOrder" asp-all-route-data=argument>Finalized Order </a></li>*@
+                    
+                    <li><a  asp-area="" asp-controller="MenuCard" asp-action="Drinks" asp-all-route-data=argument>Drinks</a></li>
+                    <li><a  asp-area="" asp-controller="MenuCard" asp-action="Starters" asp-all-route-data=argument>Starters</a></li>
+                    <li><a  asp-area="" asp-controller="MenuCard" asp-action="Mains" asp-all-route-data=argument>Main Courses</a></li>
+                    <li><a  asp-area="" asp-controller="MenuCard" asp-action="Desserts" asp-all-route-data=argument>Desserts</a></li>
+                    <li><a  asp-area="" asp-controller="MenuCard" asp-action="OrderOverview" asp-all-route-data=argument>Order Overview</a></li>
+                    <li><a  asp-area="" asp-controller="MenuCard" asp-action="FinalizedOrder" asp-all-route-data=argument>Finalized Order </a></li>
                 </ul>
             </div>
         </div>

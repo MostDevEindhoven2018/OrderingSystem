@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebInterface.Models.CombinedModels;
 
 namespace WebInterface.Models
 {
@@ -24,5 +25,6 @@ namespace WebInterface.Models
         public DbSet<Bill> Bills { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<IngredientType> IngredientTypes { get; set; }
+        //public DbSet<DishTypeViewModel> DishTypeViewModels { get; set; }
     }
 }

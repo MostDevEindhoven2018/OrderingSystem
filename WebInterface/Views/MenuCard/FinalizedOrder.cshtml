@@ -1,5 +1,6 @@
-﻿@model GuestCodeWithModel<object>
+﻿@using WebInterface.Models.CombinedModels;
 
+@model GuestCodeWithModel<OrderDishTypeViewModel>
 @{
     ViewData["Title"] = "FinalizedOrder";
     Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
@@ -11,6 +12,284 @@
 <h2>FinalizedOrder</h2>
 
 <hr />
+
+
+@*@for (int i = 0; i < @Model.Model.orderDishes.Count(); i++)
+    {
+        <div>@Model.Model.orderDishes[i].Course.Name</div>
+    }*@
+
+@*@foreach (var item in Model.Model.orderDishes)
+{
+    <div>@item.Course.Name</div>
+}*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+
+    input[type=number]::-webkit-inner-spin-button {
+        opacity: 1
+    }
+
+    .uniqueDishes {
+        float: left;
+        width: 40%;
+    }
+
+    .customize {
+        float: left;
+        width: 30%;
+    }
+
+    .Price {
+        float: left;
+        width: 20%;
+    }
+
+    .quantity {
+        float: left;
+        width: 40%;
+    }
+
+    #theInput {
+        width: 20%;
+    }
+
+    .Quantity {
+        float: left;
+        width: 20%;
+    }
+
+    #totalPrice {
+        float: left;
+        width: 40%;
+    }
+
+    #totalPriceDisplay {
+        float: left;
+        width: 20%;
+    }
+</style>
+
+
+
+
+@*<form id="menuForm" asp-action="FinalizesdOrderButton" method="post">*@
+
+    <input type="hidden" name="GuestCode" value="@Model.GuestCode" />
+
+    <div class="OrderOverview">
+
+        @{
+            var drinks = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.DRINK).ToList();
+            var uniqueDrinks = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.DRINK).GroupBy(x => x.Course.Name).Select(x => x.LastOrDefault()).ToList();
+            var starters = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.STARTER).ToList();
+            var uniqueStarters = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.STARTER).GroupBy(x => x.Course.Name).Select(x => x.LastOrDefault()).ToList();
+            var mains = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.MAINCOURSE).ToList();
+            var uniqueMains = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.MAINCOURSE).GroupBy(x => x.Course.Name).Select(x => x.LastOrDefault()).ToList();
+            var desserts = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.DESSERT).ToList();
+            var uniqueDesserts = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.DESSERT).GroupBy(x => x.Course.Name).Select(x => x.LastOrDefault()).ToList();
+
+            int orderQuantity = 0;
+            double price = 0;
+            double totalPrice = 0;
+        }
+
+        @if (Model.Model.orderDishes.Count <= 0)
+        {
+            <div>No Finalized orders to display</div>
+        }
+
+
+        else if (Model.Model.orderDishes.Count > 0)
+        {
+            if (drinks.Count > 0)
+            {
+                <div><h3>Drinks</h3></div>
+                for (int i = 0; i < uniqueDrinks.Count; i++)
+                {
+                    <div class="uniqueDishes">@uniqueDrinks[i].Course.Name</div>
+
+                        for (int j = 0; j < drinks.Count; j++)
+                        {
+                            if (drinks[j].Course.Name == uniqueDrinks[i].Course.Name)
+                            {
+                                orderQuantity++;
+                            }
+
+                        }
+
+                        price = orderQuantity * (double)uniqueDrinks[i].Course.Price;
+                        totalPrice = totalPrice + price;
+                    <div class="Price">&euro; @price</div>
+                    <div class="quantity">@orderQuantity</div>
+                    @*<div class="quantity"><input type="text" value="@orderQuantity" name="@uniqueDrinks[i].Course.Name" /></div>*@
+                    orderQuantity = 0;
+                    price = 0;
+                }
+                <hr />
+            }
+
+
+
+
+            if (starters.Count > 0)
+            {
+                <div><h3>Starters</h3></div>
+                for (int i = 0; i < uniqueStarters.Count; i++)
+                {
+                    <div class="uniqueDishes">@uniqueStarters[i].Course.Name</div>
+
+                    for (int j = 0; j < starters.Count; j++)
+                    {
+                        if (starters[j].Course.Name == uniqueStarters[i].Course.Name)
+                        {
+                            orderQuantity++;
+                        }
+
+                    }
+                    price = orderQuantity * (double)uniqueStarters[i].Course.Price;
+                    totalPrice = totalPrice + price;
+                    <div class="Price">&euro; @price</div>
+                    <div class="quantity">@orderQuantity</div>
+                    @*<div class="quantity"><input type="text" value="@orderQuantity" name="@uniqueStarters[i].Course.Name" /></div>*@
+                    orderQuantity = 0;
+                    price = 0;
+                }
+                <hr />
+
+            }
+
+
+
+            if (mains.Count > 0)
+            {
+                <div><h3>Mains</h3></div>
+                for (int i = 0; i < uniqueMains.Count; i++)
+                {
+                    <div class="uniqueDishes">@uniqueMains[i].Course.Name</div>
+
+                    for (int j = 0; j < mains.Count; j++)
+                    {
+                        if (mains[j].Course.Name == uniqueMains[i].Course.Name)
+                        {
+                            orderQuantity++;
+                        }
+
+                    }
+                    price = orderQuantity * (double)uniqueMains[i].Course.Price;
+                    totalPrice = totalPrice + price;
+                    <div class="Price">&euro; @price</div>
+                    <div class="quantity">@orderQuantity</div>
+                    @*<div class="quantity"><input type="number" value="@orderQuantity" name="@uniqueMains[i].Course.Name" /></div>*@
+                    orderQuantity = 0;
+                    price = 0;
+                }
+                <hr />
+
+            }
+
+
+
+            if (desserts.Count > 0)
+            {
+                <div><h3>Desserts</h3></div>
+                for (int i = 0; i < uniqueDesserts.Count; i++)
+                {
+                    <div class="uniqueDishes">@uniqueDesserts[i].Course.Name</div>
+
+                    for (int j = 0; j < desserts.Count; j++)
+                    {
+                        if (desserts[j].Course.Name == uniqueDesserts[i].Course.Name)
+                        {
+                            orderQuantity++;
+                        }
+
+                    }
+                    price = orderQuantity * (double)uniqueDesserts[i].Course.Price;
+                    totalPrice = totalPrice + price;
+                    <div class="Price">&euro; @price</div>
+                    <div class="quantity">@orderQuantity</div>
+                    @*<div class="quantity"><input type="number" value="@orderQuantity" name="@uniqueDesserts[i].Course.Name" /></div>*@
+                    orderQuantity = 0;
+                    price = 0;
+                }
+                <hr />
+
+            }
+
+            <hr />
+                <div id="totalPrice"><h4><b>Total Pice</b></h4></div>
+                <div id="totalPriceDisplay">&euro; @totalPrice</div>
+        }
+
+
+    </div>
+
+    <br />
+    <br />
+
+    @*<input type="button" value="Go back" onclick="location.href='@Url.Action("Starters", "MenuCard" )'" />*@
+
+    @*<a class="btn btn-default" href=' @Url.Action("Finalizedorder", "MenuCard", new { GuestCode = Model.GuestCode })'>Finalized order</a>*@
+
+    @*<a class="btn btn-default"  href='@Url.Action("FinalizedOrder", "MenuCard", new { GuestCode = Model.GuestCode} )'>Place Finalized Order</a>*@
+
+    @*<input type="submit" value="Finalized Order" />*@
+
+
+@*</form>*@
+
+
+@*@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".submitOnChange").on("input", function (e) {
+                //document.getElementById("menuForm").submit();
+                $.post('updateOrderOverview', $('#menuForm').serialize())
+            });
+        });
+    </script>
+}*@
+
+
+
+
+
+
+
 
 
 

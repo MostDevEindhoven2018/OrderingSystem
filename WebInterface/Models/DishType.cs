@@ -13,6 +13,7 @@ namespace WebInterface.Models
         public string Name { get; set; }
 
         public int DishTypeID { get; set; }
+
         public virtual CourseType Course { get; set; }
 
         public SubDishType SubDishType { get; set; }
