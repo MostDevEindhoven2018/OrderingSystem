@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebInterface.Models;
+using WebInterface.ViewModel;
 
 namespace WebInterface.Controllers
 {
@@ -131,8 +132,11 @@ namespace WebInterface.Controllers
             {
                 return NotFound();
             }
+            
+			SubDishTypesErrorViewModel subDishTypesErrorViewModel = new SubDishTypesErrorViewModel();
+            
 
-            return View(subDishType);
+			return View(subDishTypesErrorViewModel);
         }
 
         // POST: SubDishTypes/Delete/5
