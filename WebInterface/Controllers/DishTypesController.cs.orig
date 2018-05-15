@@ -19,12 +19,16 @@ namespace WebInterface.Controllers
         public DishTypesController(MenuCardDBContext context)
         {
             repo = new DishTypeRepository(context);
+<<<<<<< HEAD
 
 			_context.Database.EnsureCreated();
+=======
+>>>>>>> feature/DeleteDishWithIngredients
         }
 
         private DishTypeRepository repo = null;
 
+<<<<<<< HEAD
         //public DishTypesController(MenuCardDBContext context)
         //{
         //    repo = new Repository<(context);
@@ -32,6 +36,8 @@ namespace WebInterface.Controllers
 
         //private Repository repo = null;
 
+=======
+>>>>>>> feature/DeleteDishWithIngredients
         // GET: DishTypes
         public async Task<IActionResult> Index()
         {
@@ -105,10 +111,16 @@ namespace WebInterface.Controllers
             return RedirectToAction("Edit", new { id = DishTypeID });
         }
 
+<<<<<<< HEAD
+        public async Task<IActionResult> SaveQuantity (int DishTypeID, int IngredientTypeID, int Quantity)
+        {
+
+            await repo.GetIngredientTypeID(IngredientTypeID, Quantity);
+=======
         public async Task<IActionResult> SaveQuantity (int DishTypeID, int IngredientID, int Quantity)
         {
             await repo.GetIngredientTypeID(IngredientID, Quantity);
-            await repo.Save();
+>>>>>>> feature/DeleteDishWithIngredients
             await repo.Save();
 
             return RedirectToAction("Edit", new { id = DishTypeID });
@@ -171,6 +183,10 @@ namespace WebInterface.Controllers
                 }
 
                 model.SubDishType = sdt;
+<<<<<<< HEAD
+
+=======
+>>>>>>> feature/DeleteDishWithIngredients
                 repo.InsertDishType(model);
                 await repo.Save();
 
@@ -201,7 +217,13 @@ namespace WebInterface.Controllers
             }
 
             var ingredientType = await repo.GetIngredientTypes();
+<<<<<<< HEAD
+
             var subDishType = await repo.GetSubDishTypesList();
+
+=======
+            var subDishType = await repo.GetSubDishTypesList();
+>>>>>>> feature/DeleteDishWithIngredients
             dishTypesViewModel.Dish = dishType;
             dishTypesViewModel.Ingredients = ingredientType;
             dishTypesViewModel.SubTypeList = subDishType;
@@ -247,7 +269,16 @@ namespace WebInterface.Controllers
                 return NotFound();
             }
 
+<<<<<<< HEAD
+            var dishTypesViewModel = new DishTypesViewModel();
+
+            var model = await repo.GetDishTypeID(id);
+
+
+            dishTypesViewModel.SubTypeList = await repo.GetSubDishTypesList();
+=======
             DishType model = await repo.GetDishTypeID(id);
+>>>>>>> feature/DeleteDishWithIngredients
 
             if (model == null)
             {

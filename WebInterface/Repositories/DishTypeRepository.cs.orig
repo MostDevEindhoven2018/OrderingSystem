@@ -47,7 +47,11 @@ namespace WebInterface.Repositories
 
         public Task<DishType> GetDishTypeID(int? DishTypeID)
         {
+<<<<<<< HEAD
+            var id = _context.DishTypes.Where(x => x.DishTypeID == DishTypeID).FirstOrDefaultAsync();
+=======
             var id = _context.DishTypes.Include(x => x.DefaultIngredients).Include(x => x.SubDishType).Where(x => x.DishTypeID == DishTypeID).FirstOrDefaultAsync();
+>>>>>>> feature/DeleteDishWithIngredients
             return id;
         }
 
@@ -58,6 +62,15 @@ namespace WebInterface.Repositories
             return await sdt;
         }
 
+<<<<<<< HEAD
+        public async Task<int> GetIngredientTypeID(int? IngredientTypeID, int Quantity)
+        {
+            var ingredientQuery = _context.Ingredients.Where(x => x.IngredientID == IngredientTypeID);
+            Ingredient ingredient = await ingredientQuery.FirstOrDefaultAsync();
+
+            ingredient.Quantity = Quantity;
+            return Quantity;
+=======
 
         public async Task<Ingredient> GetIngredientTypeID(int? IngredientID, int Quantity)
         {
@@ -65,6 +78,7 @@ namespace WebInterface.Repositories
             Ingredient ingredient = await ingredientQuery.FirstOrDefaultAsync();
             ingredient.Quantity = Quantity;
             return ingredient;
+>>>>>>> feature/DeleteDishWithIngredients
         }
 
         public void InsertDishType(DishType entity)
@@ -80,6 +94,9 @@ namespace WebInterface.Repositories
 
         public void RemoveDish(int? id)
         {
+<<<<<<< HEAD
+            var dishType = _context.DishTypes.SingleOrDefault(x => x.DishTypeID == id);
+=======
             DishType dishType = _context.DishTypes.Include(x => x.DefaultIngredients).Include(x => x.SubDishType).Where(x => x.DishTypeID == id).FirstOrDefault();
             ICollection<Ingredient> ingredients = dishType.DefaultIngredients;
             dishType.DefaultIngredients = null;
@@ -89,6 +106,7 @@ namespace WebInterface.Repositories
             {
                 _context.Ingredients.Remove(i);
             }
+>>>>>>> feature/DeleteDishWithIngredients
 
             _context.DishTypes.Remove(dishType);
         }
@@ -112,7 +130,10 @@ namespace WebInterface.Repositories
         public void UpdateDish(DishTypesViewModel dishType)
         {
             _context.Update(dishType.Dish);
+<<<<<<< HEAD
+=======
             _context.Update(dishType.Ingredients);
+>>>>>>> feature/DeleteDishWithIngredients
         }
 
         public bool Exists(int? id)

@@ -1,18 +1,9 @@
-<<<<<<< HEAD
 ﻿{
   "ConnectionStrings": {
-    "MenuCardDatabase": "Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=MenuCardDB1; Integrated Security=True; MultipleActiveResultSets=true"
-    //"MenuCardDatabase": "Server=tcp:mostdev2018.database.windows.net,1433; Database=MostDevKirsten; Persist Security Info=False; User ID=MostAdmin; Password=T#c^&1HqKR&X3PZ&FfXsa#j%vS; MultipleActiveResultSets=False; Encrypt=True; TrustServerCertificate=False; Connection Timeout=30;"
-    //"MenuCardDatabase": "Server=tcp:mostdev2018.database.windows.net,1433;; Database=MostDevDb; Initial Catalog:; Persist Security Info=False; User ID=MostAdmin; Password=T#c^&1HqKR&X3PZ&FfXsa#j%vS; MultipleActiveResultSets=False; Encrypt=True; TrustServerCertificate=False; Connection Timeout=30"
-  },
-=======
-{
-    "ConnectionStrings": {
         "MenuCardDatabase": "Data Source=.; Initial Catalog=MenuCardDB3; MultipleActiveResultSets=True; Integrated Security=True"
    //"MenuCardDatabase": "Server=tcp:mostdev2018.database.windows.net,1433; Database=MostDevDb2; Persist Security Info=False; User ID=MostAdmin; Password=T#c^&1HqKR&X3PZ&FfXsa#j%vS; MultipleActiveResultSets=False; Encrypt=True; TrustServerCertificate=False; Connection Timeout=30;"
         //"MenuCardDatabase": "Server=tcp:mostdev2018.database.windows.net,1433;; Database=MostDevDb; Initial Catalog:; Persist Security Info=False; User ID=MostAdmin; Password=T#c^&1HqKR&X3PZ&FfXsa#j%vS; MultipleActiveResultSets=False; Encrypt=True; TrustServerCertificate=False; Connection Timeout=30"
-    },
->>>>>>> Moved database functions to repository.
+  },
   "Logging": {
     "IncludeScopes": false,
     "LogLevel": {
