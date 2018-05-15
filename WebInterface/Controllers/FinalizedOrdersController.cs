@@ -28,62 +28,46 @@ namespace WebInterface.Controllers
 
         public async Task<IActionResult> Kitchen()
         {
+            ctx.Orders.ToList();
+            ctx.DishTypes.ToList();
+            ctx.SubDishTypes.ToList();
+            ctx.Dishes.ToList();
+
+
             await DBCreationTask;
 
-            
+            //List<DishType> drinks = ctx.DishTypes.Where(x => x.Course != CourseType.DRINK).ToList(); 
 
-            List<DishType> drinks = ctx.DishTypes.Where(x => x.Course != CourseType.DRINK).ToList();
-
-
-            var q = ctx.Orders
-                .Include(guest => guest.Owner)
-                .Include(table => table.Owner.Group.Table)
-                .Include(final => final.Finalized).ToList();
-
+            var a = ctx.Orders.Include(x => x.Finalized);
             
 
 
-            var finalOrders = new List<FinalizedOrder>();
-
-            foreach (var elem in q)
-            {
-                var order = new FinalizedOrder
-                {
-                    Order = elem.OrderID,
-                    Table = elem.Owner.Group.Table.TableID,
-                    DishName = "food"
-                    };
-
-                    finalOrders.Add(order);                
-            }
-
-            var finalDishes = new List<FinalizedOrder>();
-                           
-
-            return View(finalOrders);
+            return View(a.ToList());
         }
 
         public async Task<IActionResult> Bar()
         {
+            
+
+            
+
             await DBCreationTask;
 
-            List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();
-
-            //retrive from database... should get it from the list I think
-            var q = from o in ctx.Orders
-
-                    select new FinalizedOrder
-                    {
-                        Order = o.OrderID,
-                        DishName = "beer",
-                        Table = o.Owner.Group.Table.TableID
-
-                    };
-
-            var finalOrders = q.ToList();
+            ctx.Orders.ToList();
+            ctx.DishTypes.ToList();
+            ctx.SubDishTypes.ToList();
+            ctx.Dishes.ToList();
 
 
-            return View(finalOrders);
+            await DBCreationTask;
+
+            //List<DishType> drinks = ctx.DishTypes.Where(x => x.Course != CourseType.DRINK).ToList(); 
+
+            var a = ctx.Orders.Include(x => x.Finalized);
+
+
+
+            return View(a.ToList());
         }
 
 

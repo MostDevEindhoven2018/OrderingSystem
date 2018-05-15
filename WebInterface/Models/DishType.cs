@@ -16,6 +16,7 @@ namespace WebInterface.Models
 
         public virtual CourseType Course { get; set; }
 
+        
         public SubDishType SubDishType { get; set; }
 
         [Required]
