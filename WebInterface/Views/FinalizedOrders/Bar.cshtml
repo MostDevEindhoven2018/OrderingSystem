@@ -15,32 +15,33 @@
 </style>
 
 
+
 <div id="finalizedOrders">
-@foreach (Order item in Model)
-{
-
-    @if (item.Finalized != null)
+    @foreach (Order item in Model)
     {
-        @foreach (var a in item.Finalized)
-        {
-            if (a.Course.Course == CourseType.DRINK)
-            {
-                <h2>Order no: @item.OrderID</h2>
-                break;
-            }
-        }
 
-        foreach (Dish d in item.Finalized)
+        @if (item.Finalized != null)
         {
-            if (d.Course.Course == CourseType.DRINK)
+            @foreach (var a in item.Finalized)
             {
-                <div>@d.Course.Name</div>
-
+                if (a.Course.Course == CourseType.DRINK)
+                {
+                    <h2>Order no: @item.OrderID</h2>
+                    break;
+                }
             }
 
+            foreach (Dish d in item.Finalized)
+            {
+                if (d.Course.Course == CourseType.DRINK)
+                {
+                    <div>@d.Course.Name</div>
+
+                }
+
+            }
         }
     }
-}
 </div>
 
 @*<div id="finalizedOrders">
