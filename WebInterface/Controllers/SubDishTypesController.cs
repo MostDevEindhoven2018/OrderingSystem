@@ -134,6 +134,8 @@ namespace WebInterface.Controllers
             }
             
 			SubDishTypesErrorViewModel subDishTypesErrorViewModel = new SubDishTypesErrorViewModel();
+            subDishTypesErrorViewModel.error = error;
+            subDishTypesErrorViewModel.subDishType = subDishType;
             
 
 			return View(subDishTypesErrorViewModel);
@@ -149,8 +151,8 @@ namespace WebInterface.Controllers
                     
 			if(subID != null)
 			{
-				string error = "hdhakdhkaghfueoa";
-				return RedirectToAction("Delete");
+				string error = "This catogorie is used within a dish. Please delete the catogorie from the dish(es).";
+				return RedirectToAction("Delete", "SubDishTypes", new { id = id, error = error });
 			}
 			else
 			{
