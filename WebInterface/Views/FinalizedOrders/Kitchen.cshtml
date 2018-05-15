@@ -1,11 +1,11 @@
-﻿@model List<FinalizedOrder>
+﻿@model List<Order>
 @*@model IEnumerable<Order>*@
 
 @{
     ViewData["Title"] = "Kitchen";
 }
 
-<h2>Kitchen</h2>
+<h2>Kitchen Orders</h2>
 
 <style>
     td {
@@ -14,44 +14,49 @@
     }
 </style>
 
+
 <div id="finalizedOrders">
+    @foreach (Order item in Model)
+    {
+
+        @if (item.Finalized != null)
+        {
+            @foreach (var a in item.Finalized)
+            {
+                if (a.Course.Course != CourseType.DRINK)
+                {
+                    <h2>Order no: @item.OrderID</h2>
+                    break;
+                }
+            }
+
+
+
+            foreach (Dish d in item.Finalized)
+            {
+                if (d.Course.Course != CourseType.DRINK)
+                {
+                    <div>@d.Course.Name</div>
+
+                }
+
+            }
+        }
+
+
+
+
+    }
+</div>
+
+@*<div id="finalizedOrders">
     <h1>Orders</h1>
 
     <table id="fOrders">
         <thead>
 
-            <tr>
-                <th>
-                    Order &emsp;
-                </th>
-                <th>
-                    Table &emsp;
-                </th>
-                <th>
-                    Dish &emsp;
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var element in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(m => element.Order)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => element.Table)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => element.DishName)
-                    </td>
-                    
-                </tr>
-            }
-        </tbody>
-    </table>
 
-</div>
+</div>*@
 <br />
 <br />
 

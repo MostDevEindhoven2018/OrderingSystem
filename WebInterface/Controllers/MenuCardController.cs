@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 =======
 >>>>>>> view for orders
 
+
 namespace WebInterface.Controllers
 {
     public class MenuCardController : Controller
