@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebInterface.Models;
+using WebInterface.ViewModel;
 
 namespace WebInterface.Controllers
 {
@@ -118,7 +119,7 @@ namespace WebInterface.Controllers
         }
 
         // GET: IngredientTypes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, string error)
         {
             if (id == null)
             {
@@ -132,7 +133,11 @@ namespace WebInterface.Controllers
                 return NotFound();
             }
 
-            return View(ingredientType);
+            IngredientTypesErrorViewModel ingredientTypesErrorViewModel = new IngredientTypesErrorViewModel();
+            ingredientTypesErrorViewModel.error = error;
+            ingredientTypesErrorViewModel.ingredientType = ingredientType;
+
+            return View(ingredientTypesErrorViewModel);
         }
 
         // POST: IngredientTypes/Delete/5
@@ -140,6 +145,15 @@ namespace WebInterface.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
+            var dishID = _context.Ingredients.FirstOrDefault(x => x.Type.IngredientTypeID == id);
+
+            if(dishID != null)
+            {
+                string error = "This ingredient is still used within a dish. Please delete this ingredient from the dish(es) first.";
+                return RedirectToAction("Delete", "IngredientTypes", new { id = id, error = error });
+            }
+
             var ingredientType = await _context.IngredientTypes.SingleOrDefaultAsync(m => m.IngredientTypeID == id);
             _context.IngredientTypes.Remove(ingredientType);
             await _context.SaveChangesAsync();

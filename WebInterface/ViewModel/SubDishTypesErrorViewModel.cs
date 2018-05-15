@@ -8,11 +8,5 @@ namespace WebInterface.ViewModel
 		public SubDishType subDishType { get; set; }
 
 		public string error { get; set; }
-
-
-        public SubDishTypesErrorViewModel()
-        {
-			
-        }
     }
 }
