@@ -47,7 +47,7 @@ namespace WebInterface.Repositories
 
         public Task<DishType> GetDishTypeID(int? DishTypeID)
         {
-            var id = _context.DishTypes.Where(x => x.DishTypeID == DishTypeID).FirstOrDefaultAsync();
+            var id = _context.DishTypes.Include(x => x.DefaultIngredients).Include(x => x.SubDishType).Where(x => x.DishTypeID == DishTypeID).FirstOrDefaultAsync();
             return id;
         }
 
@@ -58,13 +58,13 @@ namespace WebInterface.Repositories
             return await sdt;
         }
 
-        public async Task<int> GetIngredientTypeID(int? IngredientTypeID, int Quantity)
-        {
-            var ingredientQuery = _context.Ingredients.Where(x => x.IngredientID == IngredientTypeID);
-            Ingredient ingredient = await ingredientQuery.FirstOrDefaultAsync();
 
+        public async Task<Ingredient> GetIngredientTypeID(int? IngredientID, int Quantity)
+        {
+            var ingredientQuery = _context.Ingredients.Where(x => x.IngredientID == IngredientID);
+            Ingredient ingredient = await ingredientQuery.FirstOrDefaultAsync();
             ingredient.Quantity = Quantity;
-            return Quantity;
+            return ingredient;
         }
 
         public void InsertDishType(DishType entity)
@@ -80,7 +80,15 @@ namespace WebInterface.Repositories
 
         public void RemoveDish(int? id)
         {
-            var dishType = _context.DishTypes.SingleOrDefault(x => x.DishTypeID == id);
+            DishType dishType = _context.DishTypes.Include(x => x.DefaultIngredients).Include(x => x.SubDishType).Where(x => x.DishTypeID == id).FirstOrDefault();
+            ICollection<Ingredient> ingredients = dishType.DefaultIngredients;
+            dishType.DefaultIngredients = null;
+            _context.Update(dishType);
+
+            foreach (Ingredient i in ingredients)
+            {
+                _context.Ingredients.Remove(i);
+            }
 
             _context.DishTypes.Remove(dishType);
         }
@@ -104,6 +112,7 @@ namespace WebInterface.Repositories
         public void UpdateDish(DishTypesViewModel dishType)
         {
             _context.Update(dishType.Dish);
+            _context.Update(dishType.Ingredients);
         }
 
         public bool Exists(int? id)

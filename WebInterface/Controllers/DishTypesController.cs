@@ -23,13 +23,6 @@ namespace WebInterface.Controllers
 
         private DishTypeRepository repo = null;
 
-        //public DishTypesController(MenuCardDBContext context)
-        //{
-        //    repo = new Repository<(context);
-        //}
-
-        //private Repository repo = null;
-
         // GET: DishTypes
         public async Task<IActionResult> Index()
         {
@@ -103,10 +96,9 @@ namespace WebInterface.Controllers
             return RedirectToAction("Edit", new { id = DishTypeID });
         }
 
-        public async Task<IActionResult> SaveQuantity (int DishTypeID, int IngredientTypeID, int Quantity)
+        public async Task<IActionResult> SaveQuantity (int DishTypeID, int IngredientID, int Quantity)
         {
-
-            await repo.GetIngredientTypeID(IngredientTypeID, Quantity);
+            await repo.GetIngredientTypeID(IngredientID, Quantity);
             await repo.Save();
 
             return RedirectToAction("Edit", new { id = DishTypeID });
@@ -169,7 +161,6 @@ namespace WebInterface.Controllers
                 }
 
                 model.SubDishType = sdt;
-
                 repo.InsertDishType(model);
                 await repo.Save();
 
@@ -200,9 +191,7 @@ namespace WebInterface.Controllers
             }
 
             var ingredientType = await repo.GetIngredientTypes();
-
             var subDishType = await repo.GetSubDishTypesList();
-
             dishTypesViewModel.Dish = dishType;
             dishTypesViewModel.Ingredients = ingredientType;
             dishTypesViewModel.SubTypeList = subDishType;
@@ -248,12 +237,7 @@ namespace WebInterface.Controllers
                 return NotFound();
             }
 
-            var dishTypesViewModel = new DishTypesViewModel();
-
-            var model = await repo.GetDishTypeID(id);
-
-
-            dishTypesViewModel.SubTypeList = await repo.GetSubDishTypesList();
+            DishType model = await repo.GetDishTypeID(id);
 
             if (model == null)
             {
