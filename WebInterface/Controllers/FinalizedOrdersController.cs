@@ -30,30 +30,18 @@ namespace WebInterface.Controllers
         {
             await DBCreationTask;
 
+            
 
-
-            //retrive from database... should get it from the list I think
-            //var q = from o in ctx.Orders
-
-            //        select new FinalizedOrder
-            //        {
-            //            Order = o.OrderID,
-            //            Name = o.Owner.Name,
-            //            Table = o.Owner.Group.Table.TableID
-
-            //        };
-
-            //var finalOrders = q.ToList();     
-
+            List<DishType> drinks = ctx.DishTypes.Where(x => x.Course != CourseType.DRINK).ToList();
 
 
             var q = ctx.Orders
                 .Include(guest => guest.Owner)
                 .Include(table => table.Owner.Group.Table)
                 .Include(final => final.Finalized).ToList();
-              
 
             
+
 
             var finalOrders = new List<FinalizedOrder>();
 
@@ -63,7 +51,7 @@ namespace WebInterface.Controllers
                 {
                     Order = elem.OrderID,
                     Table = elem.Owner.Group.Table.TableID,
-                    DishName = "poop"
+                    DishName = "food"
                     };
 
                     finalOrders.Add(order);                
@@ -79,7 +67,7 @@ namespace WebInterface.Controllers
         {
             await DBCreationTask;
 
-
+            List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();
 
             //retrive from database... should get it from the list I think
             var q = from o in ctx.Orders
@@ -87,7 +75,7 @@ namespace WebInterface.Controllers
                     select new FinalizedOrder
                     {
                         Order = o.OrderID,
-                        DishName = o.Owner.Name,
+                        DishName = "beer",
                         Table = o.Owner.Group.Table.TableID
 
                     };
