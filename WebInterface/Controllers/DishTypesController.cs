@@ -19,18 +19,9 @@ namespace WebInterface.Controllers
         public DishTypesController(MenuCardDBContext context)
         {
             repo = new DishTypeRepository(context);
-
-			_context.Database.EnsureCreated();
         }
 
-        private DishTypeRepository repo = null;
-
-        //public DishTypesController(MenuCardDBContext context)
-        //{
-        //    repo = new Repository<(context);
-        //}
-
-        //private Repository repo = null;
+        private DishTypeRepository repo = null;        
 
         // GET: DishTypes
         public async Task<IActionResult> Index()

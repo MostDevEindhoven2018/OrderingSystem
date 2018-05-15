@@ -112,7 +112,6 @@ namespace WebInterface.Repositories
         public void UpdateDish(DishTypesViewModel dishType)
         {
             _context.Update(dishType.Dish);
-            _context.Update(dishType.Ingredients);
         }
 
         public bool Exists(int? id)
