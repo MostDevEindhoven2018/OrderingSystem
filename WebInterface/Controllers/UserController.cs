@@ -40,23 +40,14 @@ namespace WebInterface.Controllers
 
         public IActionResult Create()
         {
-            
-            //var Course = Enum.GetValues(typeof(CourseType));
-
-            //var list = new List<string>();
-
-            //foreach (string course in Course)
-            //{
-            //    list.Add($"{course}");
-            //}
-                return View();
+            return View();
         }
 
         [HttpPost]
         public IActionResult Create(DishType newDishType)
         {
             newDishType.DefaultIngredients = new List<Ingredient>();
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 ctx.DishTypes.Add(newDishType);
                 ctx.SaveChanges();

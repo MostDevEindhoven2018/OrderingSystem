@@ -33,6 +33,11 @@ namespace WebInterface.Controllers
             return View(model);
         }
         
+        /// <summary>
+        /// Used by the client to retrieve the IngredientTypes.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>A JSon representation of the IngredientTypes from teh database</returns>
         public async Task<IActionResult> PageData(IDataTablesRequest request)
         {
             var model = await repo.GetIngredientTypes();
@@ -44,33 +49,32 @@ namespace WebInterface.Controllers
         [HttpPost]
         public async Task<IActionResult> AddIngredientToDish(int IngredientTypeID, int DishTypeID)
         {
-            Ingredient ingredient = new Ingredient();
+            // This is the dishtype where we need to add an ingredient to
+            DishType dishType = await repo.GetDishTypeID(DishTypeID);
 
-
-            DishType P = await repo.GetDishTypeID(DishTypeID);
-
-            if (P == null)
+            if (dishType == null)
             {
                 return NotFound();
             }
 
-            IngredientType T = await repo.GetIngredientTypeID(IngredientTypeID);
+            IngredientType type = await repo.GetIngredientTypeID(IngredientTypeID);
 
-            if (T == null)
+            if (type == null)
             {
                 return NotFound();
             }
 
             await repo.GetIngredients();
 
-            ingredient.Type = T;
+            Ingredient ingredient = new Ingredient();
+            ingredient.Type = type;
 
-            if (P.DefaultIngredients == null)
+            if (dishType.DefaultIngredients == null)
             {
-                P.DefaultIngredients = new List<Ingredient>();
+                dishType.DefaultIngredients = new List<Ingredient>();
             }
 
-            P.DefaultIngredients.Add(ingredient);
+            dishType.DefaultIngredients.Add(ingredient);
 
             await repo.Save();
 
@@ -80,12 +84,7 @@ namespace WebInterface.Controllers
         // Remove ingredients from the dish
         public async Task<IActionResult> RemoveIngredient(int? DishTypeID, int? IngredientID)
         {
-            if (IngredientID == null)
-            {
-                return NotFound();
-            }
-
-            if (DishTypeID == null)
+            if (IngredientID == null || DishTypeID == null)
             {
                 return NotFound();
             }
@@ -99,7 +98,6 @@ namespace WebInterface.Controllers
         public async Task<IActionResult> SaveQuantity (int DishTypeID, int IngredientID, int Quantity)
         {
             await repo.GetIngredientTypeID(IngredientID, Quantity);
-            await repo.Save();
             await repo.Save();
 
             return RedirectToAction("Edit", new { id = DishTypeID });
@@ -118,7 +116,6 @@ namespace WebInterface.Controllers
             {
                 return NotFound();
             }
-            await repo.GetSubDishTypesList();
 
             return View(model);
         }
@@ -153,8 +150,7 @@ namespace WebInterface.Controllers
                     Price = dishTypeViewModel.Dish.Price
                 };
 
-                var sdt = await repo.GetSubDishTypeID(dishTypeViewModel);               
-
+                SubDishType sdt = await repo.GetSubDishTypeID(dishTypeViewModel.SubTypeID);
 
                 if (sdt == null)
                 {
@@ -175,16 +171,12 @@ namespace WebInterface.Controllers
         // GET: DishTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            var dishTypesViewModel = new DishTypesViewModel();
-
             if (id == null)
             {
                 return NotFound();
             }
 
             var dishType = await repo.GetDishTypeID(id);
-
-            await repo.GetIngredients();
 
             if (dishType == null)
             {
@@ -193,9 +185,13 @@ namespace WebInterface.Controllers
 
             var ingredientType = await repo.GetIngredientTypes();
             var subDishType = await repo.GetSubDishTypesList();
-            dishTypesViewModel.Dish = dishType;
-            dishTypesViewModel.Ingredients = ingredientType;
-            dishTypesViewModel.SubTypeList = subDishType;
+
+            var dishTypesViewModel = new DishTypesViewModel
+            {
+                Dish = dishType,
+                Ingredients = ingredientType,
+                SubTypeList = subDishType
+            };
 
             return View("Edit", dishTypesViewModel);
         }

@@ -15,7 +15,6 @@ namespace WebInterface.Controllers
     {
         private readonly MenuCardDBContext _context;
 
-
         public TablesController(MenuCardDBContext context)
         {
             _context = context;
@@ -184,7 +183,5 @@ namespace WebInterface.Controllers
             //Downloads QR jpeg to user's computer
             return File(stream, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
-
-        
     }
 }

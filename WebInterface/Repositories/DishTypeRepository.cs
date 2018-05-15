@@ -51,10 +51,10 @@ namespace WebInterface.Repositories
             return id;
         }
 
-        public async Task<SubDishType> GetSubDishTypeID(DishTypesViewModel dishTypesViewModel)
+        public async Task<SubDishType> GetSubDishTypeID(int subTypeID)
         {
             DbSet<SubDishType> subDishTypes = GetSubDishTypes();
-            var sdt = subDishTypes.Where(s => dishTypesViewModel.SubTypeID == s.SubDishTypeID).FirstOrDefaultAsync();
+            var sdt = subDishTypes.Where(s => subTypeID == s.SubDishTypeID).FirstOrDefaultAsync();
             return await sdt;
         }
 
