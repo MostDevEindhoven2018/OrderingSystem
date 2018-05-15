@@ -5,14 +5,20 @@
     ViewData["Title"] = "Kitchen";
 }
 
-<h2>Kitchen Orders</h2>
 
 <style>
-    td {
-        border-bottom: 1px solid black;
-        border-collapse: collapse;
+
+    hr {
+        border: 1px solid #000;
     }
+
 </style>
+
+<h2>All Kitchen Orders <button onclick="printPDF('finalizedOrders')">Print all Orders</button></h2>
+
+
+<hr />
+
 
 
 <div id="finalizedOrders">
@@ -27,6 +33,12 @@
         @foreach (Order item in Model)
         {
 
+            var allStarters = item.Finalized.Where(x => x.Course.Course == CourseType.STARTER);
+            var allMains = item.Finalized.Where(x => x.Course.Course == CourseType.MAINCOURSE);
+            var allDesserts = item.Finalized.Where(x => x.Course.Course == CourseType.DESSERT);
+
+
+
 
             @if (item.Finalized != null)
             {
@@ -40,15 +52,81 @@
                 }
 
 
-
-                foreach (Dish d in item.Finalized)
+                @if (allStarters.Count() > 0)
                 {
-                    if (d.Course.Course != CourseType.DRINK)
+                    <h3>Starters</h3>
+
+                    Dictionary<Dish, int> output = new Dictionary<Dish, int>();
+
+
+                    var uniqueStarters = allStarters.GroupBy(x => x.Course.Name).Select(y => new { type = y.FirstOrDefault(), quantity = y.Count() });
+
+                    @foreach (var items in uniqueStarters)
                     {
-                        <div>@d.Course.Name</div>
+                        output[items.type] = items.quantity;
+                    }
+
+                    @foreach (var dic in output)
+                    {
+                        <div>@dic.Key.Course.Name --> @dic.Value</div>
 
                     }
 
+
+                }
+
+
+                @if (allMains.Count() > 0)
+                {
+                    <h3>Mains</h3>
+
+                    Dictionary<Dish, int> output = new Dictionary<Dish, int>();
+
+
+                    var uniqueMains = allMains.GroupBy(x => x.Course.Name).Select(y => new { type = y.FirstOrDefault(), quantity = y.Count() });
+
+                    @foreach (var items in uniqueMains)
+                    {
+                        output[items.type] = items.quantity;
+                    }
+
+                    @foreach (var dic in output)
+                    {
+                        <div>@dic.Key.Course.Name --> @dic.Value</div>
+
+                    }
+
+                }
+
+                @if (allDesserts.Count() > 0)
+                {
+                    <h3>Desserts</h3>
+
+                    Dictionary<Dish, int> output = new Dictionary<Dish, int>();
+
+
+                    var uniqueDesserts = allDesserts.GroupBy(x => x.Course.Name).Select(y => new { type = y.FirstOrDefault(), quantity = y.Count() });
+
+                    @foreach (var items in uniqueDesserts)
+                    {
+                        output[items.type] = items.quantity;
+                    }
+
+                    @foreach (var dic in output)
+                    {
+                        <div>@dic.Key.Course.Name --> @dic.Value</div>
+
+                    }
+                }
+
+
+                @foreach (var a in item.Finalized)
+                {
+                    if (a.Course.Course != CourseType.DRINK)
+                    {
+                        <hr />
+                        break;
+                    }
                 }
             }
         }
@@ -56,15 +134,13 @@
 </div>
 
 
-<br />
-<br />
+<button onclick="printPDF('finalizedOrders')">Print all Orders</button>
 
-<button onclick="printPDF('finalizedOrders')">Print Orders</button>
 
 <br />
 <br />
 
-<a asp-action="Index">Back to Index</a>
+<a class="btn btn-default" asp-action="Index">Back to Index</a>
 
 
 

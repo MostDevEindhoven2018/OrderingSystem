@@ -5,16 +5,17 @@
     ViewData["Title"] = "Bar";
 }
 
-<h2>Bar Orders</h2>
+
 
 <style>
-    td {
-        border-bottom: 1px solid black;
-        border-collapse: collapse;
+    hr {
+        border: 1px solid #000;
     }
 </style>
 
+<h2>Bar Orders</h2>
 
+<hr />
 
 <div id="finalizedOrders">
     @if (Model.Count == 0)
@@ -27,6 +28,8 @@
 
         @foreach (Order item in Model)
         {
+            var allDrinks = item.Finalized.Where(x => x.Course.Course == CourseType.DRINK);
+
 
             @if (item.Finalized != null)
             {
@@ -39,29 +42,46 @@
                     }
                 }
 
-                foreach (Dish d in item.Finalized)
+                @if (allDrinks.Count() > 0)
                 {
-                    if (d.Course.Course == CourseType.DRINK)
+                    <h3>Drinks</h3>
+
+                    Dictionary<Dish, int> output = new Dictionary<Dish, int>();
+
+
+                    var uniqueDrinks = allDrinks.GroupBy(x => x.Course.Name).Select(y => new { type = y.FirstOrDefault(), quantity = y.Count() });
+
+                    @foreach (var items in uniqueDrinks)
                     {
-                        <div>@d.Course.Name</div>
+                        output[items.type] = items.quantity;
+                    }
+
+                    @foreach (var dic in output)
+                    {
+                        <div>@dic.Key.Course.Name --> @dic.Value</div>
 
                     }
 
-                }
-            }
 
-            else
-            {
-                <div>No Finalized Drinks to Display</div>
+                }
+
+                @foreach (var a in item.Finalized)
+                {
+                    if (a.Course.Course == CourseType.DRINK)
+                    {
+                        <hr />
+                        break;
+                    }
+                }
             }
         }
     }
-    </div>
-  
+</div>
 
 
 
-<a asp-action="Index">Back to Index</a>
+
+<a class="btn btn-default" asp-action="Index">Back to Index</a>
 
 
 
