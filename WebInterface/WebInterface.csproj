@@ -13,6 +13,7 @@
     <EmbeddedResource Remove="Controllers\NewFolder\**" />
     <None Remove="Controllers\NewFolder1\**" />
     <None Remove="Controllers\NewFolder\**" />
+    <Compile Remove="ViewModel\EmptyClass.cs" />
   </ItemGroup>
 
   <ItemGroup>

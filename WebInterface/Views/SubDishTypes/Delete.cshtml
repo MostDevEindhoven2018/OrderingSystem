@@ -1,4 +1,4 @@
-﻿@model WebInterface.Models.SubDishType
+﻿@model WebInterface.ViewModel.SubDishTypesErrorViewModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -13,16 +13,22 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.SubType)
+            @Html.DisplayNameFor(model => model.subDishType)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.SubType)
+            @Html.DisplayFor(model => model.subDishType)
         </dd>
     </dl>
-    
+
+
     <form asp-action="Delete">
-        <input type="hidden" asp-for="SubDishTypeID" />
+        <input type="hidden" asp-for="subDishType.SubDishTypeID" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
+
+@if (Model.error != null)
+{
+    <script>alert('@Model.error')</script>
+}

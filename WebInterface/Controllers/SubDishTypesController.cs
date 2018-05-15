@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebInterface.Models;
+using WebInterface.ViewModel;
 
 namespace WebInterface.Controllers
 {
@@ -16,6 +17,8 @@ namespace WebInterface.Controllers
         public SubDishTypesController(MenuCardDBContext context)
         {
             _context = context;
+
+			_context.Database.EnsureCreated();
         }
 
         // GET: SubDishTypes
@@ -116,7 +119,7 @@ namespace WebInterface.Controllers
         }
 
         // GET: SubDishTypes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, string error)
         {
             if (id == null)
             {
@@ -129,8 +132,13 @@ namespace WebInterface.Controllers
             {
                 return NotFound();
             }
+            
+			SubDishTypesErrorViewModel subDishTypesErrorViewModel = new SubDishTypesErrorViewModel();
+            subDishTypesErrorViewModel.error = error;
+            subDishTypesErrorViewModel.subDishType = subDishType;
+            
 
-            return View(subDishType);
+			return View(subDishTypesErrorViewModel);
         }
 
         // POST: SubDishTypes/Delete/5
@@ -138,10 +146,21 @@ namespace WebInterface.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var subDishType = await _context.SubDishTypes.SingleOrDefaultAsync(m => m.SubDishTypeID == id);
-            _context.SubDishTypes.Remove(subDishType);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+			var subID = _context.DishTypes.FirstOrDefault(x => x.SubDishType.SubDishTypeID == id);
+                    
+			if(subID != null)
+			{
+				string error = "This catogorie is used within a dish. Please delete the catogorie from the dish(es).";
+				return RedirectToAction("Delete", "SubDishTypes", new { id = id, error = error });
+			}
+			else
+			{
+				var subDishType = await _context.SubDishTypes.SingleOrDefaultAsync(m => m.SubDishTypeID == id);
+                _context.SubDishTypes.Remove(subDishType);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+			} 
         }
 
         private bool SubDishTypeExists(int id)
