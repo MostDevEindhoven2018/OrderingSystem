@@ -53,7 +53,6 @@
     </table>
 </div>
 
-<button onclick="printPDF('export')">Print</button>
 
 @section Scripts {
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
@@ -65,23 +64,5 @@
         });
     </script>
 
-    <script>
-        function printPDF(elem) {
-            var mywindow = window.open('', 'PRINT', 'height=400,width=600');
 
-            
-            mywindow.document.write(document.getElementById(elem).innerHTML);
-            
-
-            mywindow.document.close(); // necessary for IE >= 10
-            mywindow.focus(); // necessary for IE >= 10*/
-
-            mywindow.print();
-            mywindow.close();
-
-            return true;
-        }
-    </script>
-
-    @*https://github.com/MrRio/jsPDF/blob/master/jspdf.js*@
 }

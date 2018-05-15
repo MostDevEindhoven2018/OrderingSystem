@@ -16,47 +16,46 @@
 
 
 <div id="finalizedOrders">
-    @foreach (Order item in Model)
+
+    @if (Model.Count == 0)
     {
+        <div> No Finalized orders to Display</div>
+    }
 
-        @if (item.Finalized != null)
+    else
+    {
+        @foreach (Order item in Model)
         {
-            @foreach (var a in item.Finalized)
+
+
+            @if (item.Finalized != null)
             {
-                if (a.Course.Course != CourseType.DRINK)
+                @foreach (var a in item.Finalized)
                 {
-                    <h2>Order no: @item.OrderID</h2>
-                    break;
-                }
-            }
-
-
-
-            foreach (Dish d in item.Finalized)
-            {
-                if (d.Course.Course != CourseType.DRINK)
-                {
-                    <div>@d.Course.Name</div>
-
+                    if (a.Course.Course != CourseType.DRINK)
+                    {
+                        <h2>Order no: @item.OrderID</h2>
+                        break;
+                    }
                 }
 
+
+
+                foreach (Dish d in item.Finalized)
+                {
+                    if (d.Course.Course != CourseType.DRINK)
+                    {
+                        <div>@d.Course.Name</div>
+
+                    }
+
+                }
             }
         }
-
-
-
-
     }
 </div>
 
-@*<div id="finalizedOrders">
-    <h1>Orders</h1>
 
-    <table id="fOrders">
-        <thead>
-
-
-</div>*@
 <br />
 <br />
 

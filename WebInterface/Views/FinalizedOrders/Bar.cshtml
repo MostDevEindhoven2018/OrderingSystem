@@ -17,80 +17,49 @@
 
 
 <div id="finalizedOrders">
-    @foreach (Order item in Model)
+    @if (Model.Count == 0)
+    {
+        <div> No Finalized orders to Display</div>
+    }
+
+    else
     {
 
-        @if (item.Finalized != null)
+        @foreach (Order item in Model)
         {
-            @foreach (var a in item.Finalized)
+
+            @if (item.Finalized != null)
             {
-                if (a.Course.Course == CourseType.DRINK)
+                @foreach (var a in item.Finalized)
                 {
-                    <h2>Order no: @item.OrderID</h2>
-                    break;
+                    if (a.Course.Course == CourseType.DRINK)
+                    {
+                        <h2>Order no: @item.OrderID</h2>
+                        break;
+                    }
+                }
+
+                foreach (Dish d in item.Finalized)
+                {
+                    if (d.Course.Course == CourseType.DRINK)
+                    {
+                        <div>@d.Course.Name</div>
+
+                    }
+
                 }
             }
 
-            foreach (Dish d in item.Finalized)
+            else
             {
-                if (d.Course.Course == CourseType.DRINK)
-                {
-                    <div>@d.Course.Name</div>
-
-                }
-
+                <div>No Finalized Drinks to Display</div>
             }
         }
     }
-</div>
-
-@*<div id="finalizedOrders">
-    <h1>Orders</h1>
-
-    <table id="fOrders">
-        <thead>
-
-            <tr>
-                <th>
-                    Order &emsp;
-                </th>
-                <th>
-                    Table &emsp;
-                </th>
-                <th>
-                    Dish &emsp;
-                </th>
-                @*<th>
-                    Quantity &emsp;
-                </th>*@
-@*</tr>
-    </thead>
-    <tbody>
-        @foreach (var element in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(m => element.Order)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => element.Table)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => element.DishName)
-                </td>*@
-@*<td>
-        @Html.DisplayFor(m => element.Quantity)
-    </td>*@
+    </div>
+  
 
 
-    </div>*@
-@*<br />
-    <br />
-
-    <button onclick="printPDF('finalizedOrders')">Print Orders</button>
-
-    <br />
-    <br />*@
 
 <a asp-action="Index">Back to Index</a>
 
@@ -99,10 +68,6 @@
 @section Scripts {
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-
-    <script>
-
-    </script>
 
     <script>
         function printPDF(elem) {

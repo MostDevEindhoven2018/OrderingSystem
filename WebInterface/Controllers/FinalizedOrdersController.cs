@@ -28,13 +28,12 @@ namespace WebInterface.Controllers
 
         public async Task<IActionResult> Kitchen()
         {
+            await DBCreationTask;
+
             ctx.Orders.ToList();
             ctx.DishTypes.ToList();
             ctx.SubDishTypes.ToList();
             ctx.Dishes.ToList();
-
-
-            await DBCreationTask;
 
             //List<DishType> drinks = ctx.DishTypes.Where(x => x.Course != CourseType.DRINK).ToList(); 
 
@@ -46,10 +45,7 @@ namespace WebInterface.Controllers
         }
 
         public async Task<IActionResult> Bar()
-        {
-            
-
-            
+        {          
 
             await DBCreationTask;
 
@@ -59,7 +55,7 @@ namespace WebInterface.Controllers
             ctx.Dishes.ToList();
 
 
-            await DBCreationTask;
+            
 
             //List<DishType> drinks = ctx.DishTypes.Where(x => x.Course != CourseType.DRINK).ToList(); 
 
@@ -69,12 +65,5 @@ namespace WebInterface.Controllers
 
             return View(a.ToList());
         }
-
-
-
-        }
-
-
-
     }
 }
