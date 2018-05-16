@@ -25,6 +25,5 @@ namespace WebInterface.Models
         public DbSet<Bill> Bills { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<IngredientType> IngredientTypes { get; set; }
-        //public DbSet<DishTypeViewModel> DishTypeViewModels { get; set; }
     }
 }
