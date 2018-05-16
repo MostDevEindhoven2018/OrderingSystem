@@ -18,47 +18,5 @@ namespace WebInterface.Controllers
         {
             return View();
         }
-
-        public UserController(MenuCardDBContext _context)
-        {
-            ctx = _context;
-        }
-
-        MenuCardDBContext ctx = null;
-
-        public IActionResult Customize()
-        {
-            ctx.Database.EnsureCreated();
-
-            var query = from dt in ctx.DishTypes
-                        select dt;
-
-            List<DishType> results = query.ToList();
-
-            return View(results);
-        }
-
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Create(DishType newDishType)
-        {
-            newDishType.DefaultIngredients = new List<Ingredient>();
-            if (ModelState.IsValid)
-            {
-                ctx.DishTypes.Add(newDishType);
-                ctx.SaveChanges();
-
-                return RedirectToAction("Customize");
-            }
-            else
-            {
-                return View(newDishType);
-            }
-        }
-
     }
 }
