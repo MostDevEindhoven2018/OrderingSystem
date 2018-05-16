@@ -166,7 +166,7 @@
         $(document).ready(function () {
             $(".submitOnChange").on("input", function (e) {
                 //document.getElementById("menuForm").submit();
-                $.post('UpdateStarters', $('#menuForm').serialize())
+                $.post('UpdateSelectedDishes', $('#menuForm').serialize())
             });
         });
     </script>

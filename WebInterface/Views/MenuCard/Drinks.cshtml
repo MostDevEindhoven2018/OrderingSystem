@@ -188,7 +188,7 @@
         $(document).ready(function () {
             $(".submitOnChange").on("input", function (e) {
                 //document.getElementById("menuForm").submit();
-                $.post('UpdateDrinks', $('#menuForm').serialize())
+                $.post('UpdateSelectedDishes', $('#menuForm').serialize())
             });
         });
     </script>
