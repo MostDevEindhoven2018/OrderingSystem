@@ -16,45 +16,33 @@ namespace WebInterface.Controllers
         MenuCardDBContext ctx;
         Task DBCreationTask;
 
-
         public MenuCardController(MenuCardDBContext context)
         {
             ctx = context;
             DBCreationTask = ctx.Database.EnsureCreatedAsync();
         }
 
-        public IActionResult AddGuest(int? tableNo)
+        public async Task<IActionResult> AddGuest(int? tableNo)
         {
             if (tableNo == null)
             {
                 return RedirectToAction("ErrorView");
             }
 
-            //await DBCreationTask;
-
-            //
-            DBCreationTask.Wait();
-
-            //TODO: add guest here
-
-            //Created new object for a guest
+            await DBCreationTask;
 
             Guest g = new Guest();
             ctx.Guests.Add(g);
-            ctx.SaveChanges();
+            // Save changes to obtain a GuestID
+            await ctx.SaveChangesAsync();
             string guestCode = Guest.GenerateGuestCode(g.GuestID);
             g.Code = guestCode;
 
-            ctx.Guests.ToList();
-
             //created new order object that has a owner for above guest object
             ctx.Orders.Add(new Order() { Owner = g });
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
 
-            ctx.Orders.ToList();
-            return RedirectToAction("Index", new { guestCode = guestCode });
-            //return RedirectToAction("Index", new GuestCodeWithModel<object>(null, guestCode));
-
+            return RedirectToAction("Index", new { guestCode });
         }
 
         public async Task<IActionResult> Index(string guestCode)
@@ -75,50 +63,40 @@ namespace WebInterface.Controllers
             }
             await DBCreationTask;
 
-            var test = ctx.SubDishTypes.ToList();
-
             //collects all drinks DishType
-            List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();
+            var drinks = ctx.DishTypes.Include(x => x.SubDishType).Where(x => x.Course == CourseType.DRINK);
 
             //collects the drinks SubDishType
-            var subDrinks = drinks.Where(x => x.SubDishType != null).Select(x => x.SubDishType).ToList();
+            var subDrinks = drinks.Where(x => x.SubDishType != null).Select(x => x.SubDishType);
 
             //collects unique drinks from all drinks SubDishType
-            List<SubDishType> uniqueSubDrinks = subDrinks.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToList();
+            List<SubDishType> uniqueSubDrinks = await subDrinks.GroupBy(x => x.SubType).Select(x => x.FirstOrDefault()).ToListAsync();
 
             //Dictionary that maps DishType and the quantity (DishType->int)
 
             Dictionary<DishType, int> output = new Dictionary<DishType, int>();
 
             //assigning all the drinks keyvalues to zero first
-
             foreach (DishType d in drinks)
             {
                 output.Add(d, 0);
             }
 
-            //Loading the orders table because of lazy entity framework
-
-            ctx.Orders.ToList();
-
             //Selects all orders belongs to unique guest
-
-            Order order = ctx.Orders.Where(x => x.Owner.Code == guestCode).FirstOrDefault();
-
-            //Loading the Dishes table because of lazy entity framework
-
-            ctx.Dishes.ToList();
+            Order order = await ctx.Orders.Include(x => x.Owner).Include(x => x.Selected).Where(x => x.Owner.Code == guestCode).FirstOrDefaultAsync();
 
             //If the selected orders by the guest is not null, then assign each drink value to guests order quantity using dictionary
 
             if (order.Selected != null)
             {
-                //Loading the DisheTypes table because of lazy entity framework
-
+                //Loading the DishTypes table because of lazy entity framework
+                //Include only works on single items. We dont know how to include fields of items in a list.
+                //In this case: order.Selected.Course, Where Selected is a list of items that each contains a Course
                 ctx.DishTypes.ToList();
-                List<Dish> a = order.Selected.Where(x => x.Course.Course == CourseType.DRINK).ToList();
 
-                var b = a.GroupBy(x => x.Course.Name).Select(x => new { type = x.FirstOrDefault().Course, quantity = x.Count() }).ToList();
+                var a = order.Selected.Where(x => x.Course.Course == CourseType.DRINK);
+
+                var b = a.GroupBy(x => x.Course.Name).Select(x => new { type = x.FirstOrDefault().Course, quantity = x.Count() });
 
                 //assigning the drinks values (this replaces previous assigned zero values by guests order quantity for each drink)
 
@@ -128,46 +106,23 @@ namespace WebInterface.Controllers
                 }
             }
 
-            var test1 = output;
-
             //drinks contains all drinks defined in the CLASS DISHTYPE
-
             DishTypeViewModel dishTypeViewModel = new DishTypeViewModel()
             {
-                DishTypes = drinks,
+                DishTypes = await drinks.ToListAsync(),
                 SubDishTypes = uniqueSubDrinks,
                 quantityDictionary = output
-
             };
 
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
         }
-
-        /// <summary>
-        /// orderName contains the string (view name) to view order overview page: in this Drinks case its "OrderOverview"
-        /// proceedName contains the string (view name) to proceed: in this Drinks case its "Starters"
-        /// </summary>
-        /// <param name="col"></param>
-        /// <param name="GuestCode"></param>
-        /// <param name="orderName"></param>
-        /// <param name="proceedName"></param>
-        /// <returns></returns>
-
-
-
-        //[HttpPost]
-        //public IActionResult Drinks(IFormCollection col, string GuestCode, string orderName, string proceedName)
-        //{
-
+        
         [HttpPost]
         public void UpdateDrinks(IFormCollection col, string GuestCode)
         {
-            
-
             ctx.Guests.ToList();
             ctx.Dishes.ToList();
             ctx.SubDishTypes.ToList();
-            ctx.SaveChanges();
 
             List<DishType> drinks = ctx.DishTypes.Where(x => x.Course == CourseType.DRINK).ToList();
 
@@ -205,11 +160,6 @@ namespace WebInterface.Controllers
             foreach (var selectedDrinks in drinks)
             {
                 int quantity = Convert.ToInt32(col[selectedDrinks.Name]);
-
-                //if (quantity > 99)
-                //{
-                //    quantity = 99;
-                //}
 
                 if (quantity > output[selectedDrinks])
                 {
@@ -273,27 +223,8 @@ namespace WebInterface.Controllers
 
                     ctx.Dishes.RemoveRange(removeSelectedDrinks);
                     ctx.SaveChanges();
-
                 }
-
-
             }
-
-            //based on selected button page redirects to return view (either to order overview page or else to Starters page)
-
-
-            //string selectedChoice = "";
-
-            //if (orderName == null)
-            //{
-            //    selectedChoice = proceedName;
-            //}
-            //else
-            //{
-            //    selectedChoice = orderName;
-            //}
-
-            //return RedirectToAction(selectedChoice, "MenuCard", new { guestCode = GuestCode });
         }
 
         public async Task<IActionResult> Starters(string guestCode)
@@ -363,11 +294,6 @@ namespace WebInterface.Controllers
         /// <param name="proceedName"></param>
         /// <param name="goBack"></param>
         /// <returns></returns>
-
-        //[HttpPost]
-        //public IActionResult Starters(IFormCollection col, string GuestCode, string orderName, string proceedName, string goBack)
-        //{
-
         [HttpPost]
         public void UpdateStarters(IFormCollection col, string GuestCode)
         {

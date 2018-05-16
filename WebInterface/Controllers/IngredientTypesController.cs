@@ -17,7 +17,6 @@ namespace WebInterface.Controllers
         public IngredientTypesController(MenuCardDBContext context)
         {
             _context = context;
-
 			_context.Database.EnsureCreated();
         }
 
@@ -35,7 +34,7 @@ namespace WebInterface.Controllers
                 return NotFound();
             }
 
-            var ingredientType = await _context.IngredientTypes
+            IngredientType ingredientType = await _context.IngredientTypes
                 .SingleOrDefaultAsync(m => m.IngredientTypeID == id);
             if (ingredientType == null)
             {
@@ -75,7 +74,7 @@ namespace WebInterface.Controllers
                 return NotFound();
             }
 
-            var ingredientType = await _context.IngredientTypes.SingleOrDefaultAsync(m => m.IngredientTypeID == id);
+            IngredientType ingredientType = await _context.IngredientTypes.SingleOrDefaultAsync(m => m.IngredientTypeID == id);
             if (ingredientType == null)
             {
                 return NotFound();
