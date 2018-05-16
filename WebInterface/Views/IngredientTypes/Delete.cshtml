@@ -13,35 +13,35 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ingredientType.Name):
+            @Html.DisplayNameFor(model => model.IngredientType.Name):
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ingredientType.Name)
+            @Html.DisplayFor(model => model.IngredientType.Name)
         </dd>
         <dt>
             @*@Html.DisplayNameFor(model => model.ingredientType.UnitSingular)*@
             Unit Singular:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ingredientType.UnitSingular)
+            @Html.DisplayFor(model => model.IngredientType.UnitSingular)
         </dd>
         <dt>
             @*@Html.DisplayNameFor(model => model.ingredientType.UnitPlural)*@
             Unit Plural:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ingredientType.UnitPlural)
+            @Html.DisplayFor(model => model.IngredientType.UnitPlural)
         </dd>
     </dl>
 
     <form asp-action="Delete">
-        <input type="hidden" asp-for="ingredientType.IngredientTypeID" />
+        <input type="hidden" asp-for="IngredientType.IngredientTypeID" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
 
-@if (Model.error != null)
+@if (Model.Error != null)
 {
-    <script>alert('@Model.error')</script>
+    <script>alert('@Model.Error')</script>
 }
