@@ -19,6 +19,8 @@ namespace WebInterface.Repositories
         {
             _context = context;
             CreateDB = EnsureCreated();
+            //TODO await this task in the other methods of the repo
+            CreateDB.Wait();
         }        
 
         public async Task<List<DishType>> GetDishTypes()
