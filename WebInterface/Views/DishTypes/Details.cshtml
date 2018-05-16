@@ -1,52 +1,75 @@
-﻿@model WebInterface.Models.DishType
+﻿@*@model WebInterface.Models.DishType*@
+
+@model WebInterface.ViewModel.DishTypesViewModel
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<h2>Details</h2>
+<h2> Dish Details</h2>
 
 <div>
-    <h4>DishType</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Dish.Name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Dish.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.Dish.Price)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Price)
+            @Html.DisplayFor(model => model.Dish.Price)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Course)
+            @Html.DisplayNameFor(model => model.Dish.Course)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Course)
+            @Html.DisplayFor(model => model.Dish.Course)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.SubDishType.SubType)
+            @Html.DisplayNameFor(model => model.Dish.SubDishType.SubType)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.SubDishType.SubType)
+            @Html.DisplayFor(model => model.Dish.SubDishType.SubType)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Recipe)
+            @Html.DisplayNameFor(model => model.Dish.Recipe)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Recipe)
+            @Html.DisplayFor(model => model.Dish.Recipe)
         </dd>
+        <dt>
+            @*@Html.DisplayNameFor(model => model.Dish.DefaultIngredients)*@
+            Ingredients:
+        </dt>
+        <dd>
+            @foreach (var item in Model.Dish.DefaultIngredients)
+            {
+
+                if (@item.Quantity > 1)
+                {
+                    <div>@item.Type.Name - @item.Quantity @item.Type.UnitPlural</div>
+                }
+
+                else if (@item.Quantity == 1)
+                {
+                    <div>@item.Type.Name - @item.Quantity @item.Type.UnitSingular</div>
+                }
+
+            }
+            @* @Html.DisplayFor(model => model.Ingredients)*@
+        </dd>
+
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.DishTypeID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Dish.DishTypeID">Edit</a> |
+    <a asp-action="Index">Go Back to Dishes Overview</a>
 </div>

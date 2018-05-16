@@ -7,25 +7,27 @@
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete this Ingredient?</h3>
 <div>
-    <h4>IngredientType</h4>
+    @*<h4>IngredientType</h4>*@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ingredientType.Name)
+            @Html.DisplayNameFor(model => model.ingredientType.Name):
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ingredientType.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ingredientType.UnitSingular)
+            @*@Html.DisplayNameFor(model => model.ingredientType.UnitSingular)*@
+            Unit Singular:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ingredientType.UnitSingular)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ingredientType.UnitPlural)
+            @*@Html.DisplayNameFor(model => model.ingredientType.UnitPlural)*@
+            Unit Plural:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ingredientType.UnitPlural)

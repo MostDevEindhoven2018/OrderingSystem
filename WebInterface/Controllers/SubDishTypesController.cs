@@ -151,7 +151,7 @@ namespace WebInterface.Controllers
                     
 			if(subID != null)
 			{
-				string error = "This catogorie is used within a dish. Please delete the catogorie from the dish(es).";
+				string error = "This Categories is used within a dish. Please delete the Categories from the dish(es).";
 				return RedirectToAction("Delete", "SubDishTypes", new { id = id, error = error });
 			}
 			else
