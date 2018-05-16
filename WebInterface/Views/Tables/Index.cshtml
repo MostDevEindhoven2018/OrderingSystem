@@ -1,0 +1,75 @@
+﻿@model IEnumerable<WebInterface.Models.Table>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+
+
+
+<h2>Tables Overview</h2>
+
+
+
+<p>
+    <a asp-action="Create">Create New Table</a>
+</p>
+<div id="export">
+    <table class="table" id="qr">
+        <thead>
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.TableID)*@
+                    Table ID
+
+                </th>
+                <th>
+                   @Html.DisplayNameFor(model => model.Capacity)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TableID)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Capacity)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.TableID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.TableID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.TableID">Delete</a> |
+                        <a asp-action="PrintQR" asp-route-id="@item.TableID">PrintQR</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+
+<body>
+    <a asp-controller="User" asp-action="Index">Go back to Management Index</a>
+</body>
+
+
+@section Scripts {
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#qr').DataTable();
+        });
+    </script>
+
+
+}

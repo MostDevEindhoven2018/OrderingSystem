@@ -1,0 +1,195 @@
+﻿@using WebInterface.Models.CombinedModels
+@model GuestCodeWithModel<DishTypeViewModel>
+
+@{
+    ViewData["Title"] = "Drinks";
+    Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
+}
+
+@{
+    int quantity = 0;
+}
+
+
+
+<h2>Drinks</h2>
+<hr />
+
+<style>
+
+    input[type=number]::-webkit-inner-spin-button {
+        opacity: 1
+    }
+
+    .SubDrink {
+        float: left;
+        width: 45%;
+    }
+
+    .Price {
+        float: left;
+        width: 20%;
+    }
+
+    .quantity {
+        float: left;
+        width: 20%;
+    }
+
+    .customize {
+        float: left;
+        width: 15%;
+    }
+
+    #theInput {
+        width: 20%;
+    }
+
+    .Quantity {
+        float: left;
+        width: 20%;
+    }
+</style>
+
+<form id="menuForm" asp-action="Drinks">
+
+    <input type="hidden" name="GuestCode" value="@Model.GuestCode" />
+
+    <div class="Drinks">
+
+        @if (Model.Model.DishTypes.Count() <= 0)
+        {
+            <div>No Drinks to display</div>
+        }
+
+        else if (Model.Model.DishTypes.Count() > 0)
+        {
+            if (Model.Model.SubDishTypes.Count() == 0)
+            {
+                @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
+                {
+                    if (Model.Model.DishTypes[j].SubDishType == null)
+                    {
+                        <div class="SubDrink">@Model.Model.DishTypes[j].Name</div>
+                        @*<div class="customize">[Customize]</div>*@
+                        <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
+
+                        if (Model.Model.quantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
+                        {
+                            quantity = Model.Model.quantityDictionary[Model.Model.DishTypes[j]];
+                        }
+
+                        @*if (quantity > 99)
+                            {
+                                <script>
+                                    alert("Hello");
+                                </script>
+
+                            }*@
+
+                        <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input class="submitOnChange" type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
+
+                        <div class="customize"><input type="text" placeholder="Custom Note" /></div>
+
+                    }
+                }
+
+            }
+
+            else if (Model.Model.SubDishTypes.Count() > 0)
+            {
+                @for (int i = 0; i < Model.Model.SubDishTypes.Count(); i++)
+                {
+                    <h3>@Model.Model.SubDishTypes[i].SubType</h3>
+
+                    @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
+                    {
+                        if (Model.Model.DishTypes[j].SubDishType != null)
+                        {
+                            if (Model.Model.DishTypes[j].SubDishType.SubType == Model.Model.SubDishTypes[i].SubType)
+                            {
+                                <div class="SubDrink">@Model.Model.DishTypes[j].Name</div>
+                                @*<div class="customize">[Customize]</div>*@
+
+                                <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
+                                if (Model.Model.quantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
+                                {
+                                    quantity = Model.Model.quantityDictionary[Model.Model.DishTypes[j]];
+                                }
+
+                                @*if (quantity > 99)
+                                    {
+                                        <script>
+                                            alert("Each drink max 99");
+                                        </script>
+
+                                    }*@
+
+                                <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input class="submitOnChange" type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
+                                <div class="customize"><input type="text" placeholder="Custom Note" /></div>
+
+                            }
+
+                        }
+                    }
+                }
+
+
+
+                @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
+                {
+
+                    if (Model.Model.DishTypes[j].SubDishType == null)
+                    {
+                        <h3> Others </h3>
+                        break;
+
+                    }
+                }
+
+                @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
+                {
+
+                    if (Model.Model.DishTypes[j].SubDishType == null)
+                    {
+                        <div>@Model.Model.DishTypes[j].Name</div>
+                    }
+                }
+
+            }
+
+
+        }
+
+    </div>
+
+    <hr /><hr />
+
+
+
+    @*<input type="button" value="Go back to home" onclick="location.href='@Url.Action("Index", "MenuCard", new { GuestCode = Model.GuestCode})'" />*@
+
+    @*<button type="submit" name="orderName" value="OrderOverview">Order Overview</button>
+        <button type="submit" name="proceedName" value="Starters">Proceed to Starters</button>*@
+
+    <a class="btn btn-default" href=' @Url.Action("Index", "MenuCard", new { GuestCode = Model.GuestCode })'>Go Back to Index</a>
+    <a class="btn btn-default" href=' @Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode })'>Order overview</a>
+    <a class="btn btn-default" href=' @Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode })'>Proceed to Starters</a>
+
+
+
+    @*<input type="button" name="orderName" value="OrderOverview" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />
+        <input type="button" name="proceedName" value="Starters" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />*@
+
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".submitOnChange").on("input", function (e) {
+                //document.getElementById("menuForm").submit();
+                $.post('UpdateDrinks', $('#menuForm').serialize())
+            });
+        });
+    </script>
+}

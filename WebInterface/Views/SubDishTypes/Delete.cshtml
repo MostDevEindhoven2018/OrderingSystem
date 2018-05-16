@@ -1,0 +1,33 @@
+﻿@model WebInterface.ViewModel.SubDishTypesErrorViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+<h3>Are you sure you want to delete the @Model.subDishType.SubType?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @*@Html.DisplayNameFor(model => model.subDishType.SubType)*@
+            Subcategory:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.subDishType.SubType)
+        </dd>
+    </dl>
+
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="subDishType.SubDishTypeID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Go Back to Subcategories Overview</a>
+    </form>
+</div>
+
+@if (Model.error != null)
+{
+    <script>alert('@Model.error')</script>
+}

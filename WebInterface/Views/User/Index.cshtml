@@ -1,0 +1,24 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<body>
+    <h2>Management Index</h2>
+
+    <ul>
+        <li><a asp-controller="IngredientTypes" asp-action="Index">Ingredients Overview</a></li>
+        <li><a asp-controller="SubDishTypes" asp-action="Index">Subcategories Overview</a></li>
+        <li><a asp-controller="DishTypes" asp-action="Index">Dishes Overview</a></li>
+        <li><a asp-controller="Tables" asp-action="Index">Tables Overview</a></li>
+        <li><a asp-controller="Finalizedorders" asp-action="Index">Finalized Orders Overview</a></li>
+
+    </ul>
+    
+    
+
+</body>
+
+

@@ -1,0 +1,21 @@
+﻿@model GuestCodeWithModel<object>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_MenuCardLayout.cshtml";
+}
+
+<h2>Welcome to the Molveno Restaurant</h2>
+
+<hr />
+
+<p>
+    <input type="button" value="Show Menu Card" onclick="location.href='@Url.Action("Drinks", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
+</p>
+<p>
+    <input type="button" value="Feedback" onclick="location.href='@Url.Action("Index", "Home" )'" />
+</p>
+<p>
+    <input type="button" value="Reserve table for your next visit" onclick="location.href='@Url.Action("Index", "Home" )'" />
+</p>
+

@@ -1,0 +1,24 @@
+﻿@model WebInterface.Models.Table
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>Table @Model.TableID Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Capacity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Capacity)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" class="btn btn-default" asp-route-id="@Model.TableID">Edit</a> |
+    <a asp-action="Index">Go Back to Tables Overview</a>
+</div>

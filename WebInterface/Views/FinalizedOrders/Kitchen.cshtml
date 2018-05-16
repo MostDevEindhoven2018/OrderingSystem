@@ -1,0 +1,219 @@
+﻿@model List<Order>
+
+
+@{
+    ViewData["Title"] = "Kitchen";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+    int finalizedCount = 0;
+
+    int p = 0;
+
+    @foreach (var item in Model)
+    {
+
+        var allStarters = item.Finalized.Where(x => x.Course.Course == CourseType.STARTER);
+        var allMains = item.Finalized.Where(x => x.Course.Course == CourseType.MAINCOURSE);
+        var allDesserts = item.Finalized.Where(x => x.Course.Course == CourseType.DESSERT);
+
+        var kitchenCount = allStarters.Count() + allMains.Count() + allDesserts.Count();
+
+        p = p + kitchenCount;
+    }
+
+
+}
+
+
+<style>
+
+    hr {
+        border: 1px solid #000;
+    }
+</style>
+
+<div>
+    <h2>All Kitchen Orders </h2>
+</div>
+
+
+<div id="finalizedOrders">
+
+    @foreach (var item in Model)
+    {
+        @if (@item.Finalized.Count() > 0)
+        {
+            finalizedCount++;
+        }
+    }
+
+    @if (finalizedCount == 0)
+    {
+        <div> No Finalized orders to Display</div>
+    }
+
+    else if (p > 0)
+    {
+        <button onclick="printPDF('finalizedOrders')">Print all Orders</button>
+        <hr />
+
+    }
+
+    @if (finalizedCount > 0)
+    {
+
+        @foreach (Order item in Model)
+        {
+            var allStarters = item.Finalized.Where(x => x.Course.Course == CourseType.STARTER);
+            var allMains = item.Finalized.Where(x => x.Course.Course == CourseType.MAINCOURSE);
+            var allDesserts = item.Finalized.Where(x => x.Course.Course == CourseType.DESSERT);
+
+            var kitchenCount = allStarters.Count() + allMains.Count() + allDesserts.Count();
+
+
+
+
+            @if (item.Finalized != null)
+            {
+
+                @if (kitchenCount>0)
+                {
+                    <button onclick="printPDF(@item.OrderID.ToString())">Print Order @item.OrderID.ToString()</button>
+                }
+
+
+                <div id=@item.OrderID.ToString()>
+
+                    @foreach (var a in item.Finalized)
+                    {
+                        if (a.Course.Course != CourseType.DRINK)
+                        {
+                            <h2>Order no: @item.OrderID</h2>
+                            break;
+                        }
+                    }
+
+
+                    @if (allStarters.Count() > 0)
+                    {
+                        <h3>Starters</h3>
+
+                        Dictionary<Dish, int> output = new Dictionary<Dish, int>();
+
+
+                        var uniqueStarters = allStarters.GroupBy(x => x.Course.Name).Select(y => new { type = y.FirstOrDefault(), quantity = y.Count() });
+
+                        @foreach (var items in uniqueStarters)
+                        {
+                            output[items.type] = items.quantity;
+                        }
+
+                        @foreach (var dic in output)
+                        {
+                            <div>@dic.Key.Course.Name --> @dic.Value</div>
+
+                        }
+
+
+                    }
+
+
+                    @if (allMains.Count() > 0)
+                    {
+                        <h3>Mains</h3>
+
+                        Dictionary<Dish, int> output = new Dictionary<Dish, int>();
+
+
+                        var uniqueMains = allMains.GroupBy(x => x.Course.Name).Select(y => new { type = y.FirstOrDefault(), quantity = y.Count() });
+
+                        @foreach (var items in uniqueMains)
+                        {
+                            output[items.type] = items.quantity;
+                        }
+
+                        @foreach (var dic in output)
+                        {
+                            <div>@dic.Key.Course.Name --> @dic.Value</div>
+
+                        }
+
+                    }
+
+                    @if (allDesserts.Count() > 0)
+                    {
+                        <h3>Desserts</h3>
+
+                        Dictionary<Dish, int> output = new Dictionary<Dish, int>();
+
+
+                        var uniqueDesserts = allDesserts.GroupBy(x => x.Course.Name).Select(y => new { type = y.FirstOrDefault(), quantity = y.Count() });
+
+                        @foreach (var items in uniqueDesserts)
+                        {
+                            output[items.type] = items.quantity;
+                        }
+
+                        @foreach (var dic in output)
+                        {
+                            <div>@dic.Key.Course.Name --> @dic.Value</div>
+
+                        }
+                    }
+
+
+                    @foreach (var a in item.Finalized)
+                    {
+                        if (a.Course.Course != CourseType.DRINK)
+                        {
+                            <hr />
+                            break;
+                        }
+                    }
+                </div>
+            }
+
+        }
+
+    }
+
+    @if (p != 0)
+    {
+        <button onclick="printPDF('finalizedOrders')">Print all Orders</button>
+
+
+    }
+
+</div>
+
+<br />
+
+<a asp-action="Index">Back to Index</a>
+
+
+
+@section Scripts {
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+
+    <script>
+
+    </script>
+
+    <script>
+        function printPDF(elem) {
+            var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+            mywindow.document.write(document.getElementById(elem).innerHTML);
+
+
+            mywindow.document.close(); // necessary for IE >= 10
+            mywindow.focus(); // necessary for IE >= 10*/
+
+            mywindow.print();
+            mywindow.close();
+
+            return true;
+        }
+    </script>
+}

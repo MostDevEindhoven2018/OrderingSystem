@@ -1,0 +1,39 @@
+﻿@model WebInterface.Models.IngredientType
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>Details of @Model.Name</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name):
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @*@Html.DisplayNameFor(model => model.UnitSingular)*@
+
+            Unit Singular:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UnitSingular)
+        </dd>
+        <dt>
+            @*@Html.DisplayNameFor(model => model.UnitPlural)*@
+            Unit Plural:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UnitPlural)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IngredientTypeID">Edit</a> |
+    <a asp-action="Index">Go Back to Ingredients Overview</a>
+</div>

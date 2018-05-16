@@ -1,0 +1,45 @@
+﻿@model WebInterface.ViewModel.IngredientTypesErrorViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h3>Are you sure you want to delete the @Model.ingredientType.Name?</h3>
+<div>
+    @*<h4>IngredientType</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ingredientType.Name):
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ingredientType.Name)
+        </dd>
+        <dt>
+            @*@Html.DisplayNameFor(model => model.ingredientType.UnitSingular)*@
+            Unit Singular:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ingredientType.UnitSingular)
+        </dd>
+        <dt>
+            @*@Html.DisplayNameFor(model => model.ingredientType.UnitPlural)*@
+            Unit Plural:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ingredientType.UnitPlural)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ingredientType.IngredientTypeID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Go Back to Ingredients Overview</a>
+    </form>
+</div>
+
+@if (Model.error != null)
+{
+    <script>alert('@Model.error')</script>
+}

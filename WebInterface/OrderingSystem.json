@@ -1,0 +1,5 @@
+﻿{
+  "Microsoft.AspNetCore.Session": "1.0.0l",
+  "Microsoft.Extensions.Caching.Memory": "1.0.0"
+}
+

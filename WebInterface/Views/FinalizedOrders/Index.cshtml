@@ -1,0 +1,33 @@
+﻿@model List<FinalizedOrder>
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+<h1>Finalized Orders Overview</h1>
+
+<br />
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form>
+                <button asp-action="Kitchen" class="btn btn-default">Kitchen Orders</button>
+            </form>
+        </div>
+        <br />
+
+        <div class="col">
+            <form>
+                <button asp-action="Bar" class="btn btn-default">Bar Orders</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
