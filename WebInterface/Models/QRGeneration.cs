@@ -18,19 +18,5 @@ namespace WebInterface.Models
 
         // This property will hold all available tables for selection
         public IEnumerable<SelectListItem> Tables { get; set; }
-
-        /// <summary>
-        /// Generate QR JPEG for selected Table
-        /// Saves it to the path provided by the USER
-        /// </summary>
-        /// <param name="table">Table selected by user </param>
-        
-        public QRGeneration()
-        {
-
-        }
-
-
-
     }
 }

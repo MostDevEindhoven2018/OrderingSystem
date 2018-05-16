@@ -77,7 +77,6 @@
                         if (Model.Model.DishTypes[j].SubDishType == null)
                         {
                             <div class="SubDessert">@Model.Model.DishTypes[j].Name</div>
-                            @*<div class="customize">[Customize]</div>*@
                             <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
 
                             if (Model.Model.quantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
@@ -106,7 +105,6 @@
                                 if (Model.Model.DishTypes[j].SubDishType.SubType == Model.Model.SubDishTypes[i].SubType)
                                 {
                                     <div class="SubDessert">@Model.Model.DishTypes[j].Name</div>
-                                    @*<div class="customize">[Customize]</div>*@
                                     <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
 
                                     if (Model.Model.quantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
@@ -122,9 +120,7 @@
                             }
                         }
                     }
-
-
-
+                    
                     @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
                     {
 
@@ -153,15 +149,9 @@
 
         <hr /><hr />
 
-
-        @*<button type="submit" name="goBack" value="Mains">Go to Main Course</button>
-        <button type="submit" name="proceedName" value="OrderOverview">Place Order</button>*@
-
         <a class="btn btn-default" href=' @Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode })'>Go Back to Main Courses</a>
         <a class="btn btn-default" href=' @Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode })'>Orders overview</a>
 
-        @*<input type="button" value="Go Back to Main courses" onclick="location.href='@Url.Action("Mains", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
-        <input type="button" value="Place Order" onclick="location.href='@Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode} )'" />*@
     </body>
 </form>
 
@@ -170,7 +160,6 @@
     <script>
         $(document).ready(function () {
             $(".submitOnChange").on("input", function (e) {
-                //document.getElementById("menuForm").submit();
                 $.post('UpdateSelectedDishes', $('#menuForm').serialize())
             });
         });

@@ -10,6 +10,5 @@ namespace WebInterface.Models
         public int Order { get; set; }
         public int Table { get; set; }
         public int Quantity { get; set; }
-
     }
 }

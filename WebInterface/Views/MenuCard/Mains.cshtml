@@ -71,7 +71,6 @@
                     if (Model.Model.DishTypes[j].SubDishType == null)
                     {
                         <div class="SubMains">@Model.Model.DishTypes[j].Name</div>
-                        @*<div class="customize">[Customize]</div>*@
                         <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
 
                         if (Model.Model.quantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
@@ -99,7 +98,6 @@
                             if (Model.Model.DishTypes[j].SubDishType.SubType == Model.Model.SubDishTypes[i].SubType)
                             {
                                 <div class="SubMains">@Model.Model.DishTypes[j].Name</div>
-                                @*<div class="customize">[Customize]</div>*@
                                 <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
                                 if (Model.Model.quantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
                                 {
@@ -114,8 +112,6 @@
                         }
                     }
                 }
-
-
 
                 @for (int j = 0; j < Model.Model.DishTypes.Count(); j++)
                 {
@@ -145,27 +141,15 @@
 
     <hr /><hr />
 
-
-    @*<button type="submit" name="goBack" value="Starters">Go to Starters</button>
-        <button type="submit" name="orderName" value="OrderOverview">Order Overview</button>
-        <button type="submit" name="proceedName" value="Desserts">Proceed to Desserts</button>*@
-
     <a class="btn btn-default" href=' @Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode })'>Go Back to Starters</a>
     <a class="btn btn-default" href=' @Url.Action("OrderOverview", "MenuCard", new { GuestCode = Model.GuestCode })'>Orders overview</a>
     <a class="btn btn-default" href=' @Url.Action("Desserts", "MenuCard", new { GuestCode = Model.GuestCode })'>Proceed to Desserts</a>
-
-    @*<input type="button" value="Go Back to Starters" onclick="location.href='@Url.Action("Starters", "MenuCard", new { GuestCode = Model.GuestCode} )'" />
-    <input type="button" value="Orders overview" onclick="location.href='@Url.Action("OrderOverview", "MenuCard",new { GuestCode = Model.GuestCode} )'" />
-    <input type="submit" value="Proceed to Dessert" onclick="location.href='@Url.Action("Desserts", "MenuCard", new { GuestCode = Model.GuestCode} )'" />*@
-
-
 </form>
 
 @section Scripts {
     <script>
         $(document).ready(function () {
             $(".submitOnChange").on("input", function (e) {
-                //document.getElementById("menuForm").submit();
                 $.post('UpdateSelectedDishes', $('#menuForm').serialize())
             });
         });

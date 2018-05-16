@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebInterface.Models
-{ 
+{
 
-/// <summary>
-/// Type of the Drink: Hot Beverage (or) Cold Beverage (or) Hard Drink
-/// </summary>
-/// 
+    /// <summary>
+    /// Type of the Drink: Hot Beverage (or) Cold Beverage (or) Hard Drink
+    /// </summary>
+    /// 
     public class SubDishType
     {
         public int SubDishTypeID { get; set; }

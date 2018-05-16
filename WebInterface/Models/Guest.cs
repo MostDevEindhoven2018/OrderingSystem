@@ -35,6 +35,7 @@ namespace WebInterface.Models
         /// </summary>
         public virtual Group Group { get; set; }
 
+        #region helpers
         private static Random rand = new Random();
 
         /// <summary>
@@ -58,5 +59,7 @@ namespace WebInterface.Models
 
             return str.ToString();
         }
+
+        #endregion
     }
 }
