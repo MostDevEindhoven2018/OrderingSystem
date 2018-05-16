@@ -9,6 +9,7 @@ using System.Dynamic;
 using WebInterface.Models.CombinedModels;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace WebInterface.Controllers
 {
     public class MenuCardController : Controller

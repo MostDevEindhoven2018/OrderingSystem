@@ -170,7 +170,7 @@ namespace WebInterface.Controllers
             QRCodeData qrCodeData =
                 qrGenerator.CreateQrCode
                 //TODO make link dynamic
-                ("http://molvanogroup1.azurewebsites.net/menucard?guestcode=" + id, QRCodeGenerator.ECCLevel.Q);
+                ("http://molvanogroup1.azurewebsites.net/menucard/Addguest?tableno=" + id, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
             Bitmap qrCodeImage = qrCode.GetGraphic(5);
             string fileName = "QRTable_" + id + ".jpeg";

@@ -21,6 +21,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180509120105_init.cs" />
+    <Compile Remove="Migrations\20180509120105_init.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DataTables.AspNet.AspNetCore" Version="2.0.2" />
     <PackageReference Include="DataTables.AspNet.Core" Version="2.0.2" />
     <PackageReference Include="jQuery" Version="3.3.1" />

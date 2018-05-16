@@ -27,7 +27,7 @@ namespace WebInterface.Models
 
         //public IEnumerable<OrderDetails> DetailsOfOrder { get; set; }
 
-        public int quantity {get;set;}
+        //public int quantity {get;set;}
 
         public string customeNote { get; set; }
 
@@ -39,6 +39,7 @@ namespace WebInterface.Models
         /// 
         public virtual ICollection<Dish> Finalized { get; set; }
 
+        
         /// <summary>
         /// The owner of an Order adds items to the Selected list, and then finalizes them.
         /// All Dishes of a single order have been selected by a single Guest. The dishes 
@@ -47,4 +48,5 @@ namespace WebInterface.Models
         /// 
         public Guest Owner { get; set; }
     }
+    
 }

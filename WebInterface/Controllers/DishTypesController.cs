@@ -112,12 +112,21 @@ namespace WebInterface.Controllers
             }
 
             var model = await repo.GetDishTypeID(id);
+            var model2 = await repo.GetIngredientTypes();
             if (model == null)
             {
                 return NotFound();
             }
 
-            return View(model);
+            DishTypesViewModel a = new DishTypesViewModel() {
+
+                Dish=model,
+                Ingredients=model2
+            };
+
+
+
+            return View(a);
         }
 
         // GET: DishTypes/Create
