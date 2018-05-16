@@ -23,7 +23,7 @@
 
     .SubDrink {
         float: left;
-        width: 45%;
+        width: 40%;
     }
 
     .Price {
@@ -47,7 +47,7 @@
 
     .Quantity {
         float: left;
-        width: 20%;
+        width: 40%;
     }
 </style>
 
@@ -89,7 +89,7 @@
 
                         <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input class="submitOnChange" type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
 
-                        <div class="customize"><input type="text" placeholder="Custom Note" /></div>
+                        @*<div class="customize"><input type="text" placeholder="Custom Note" /></div>*@
 
                     }
                 }
@@ -126,7 +126,7 @@
                                     }*@
 
                                 <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input class="submitOnChange" type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
-                                <div class="customize"><input type="text" placeholder="Custom Note" /></div>
+                                @*<div class="customize"><input type="text" placeholder="Custom Note" /></div>*@
 
                             }
 
