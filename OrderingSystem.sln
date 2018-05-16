@@ -5,11 +5,6 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebInterface", "WebInterface\WebInterface.csproj", "{ABDCE7AB-A843-4D92-8E1C-45BE8F10D3C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserCustimizationMenu", "UserCustimizationMenu\UserCustimizationMenu.csproj", "{BDB06F2B-E52A-4E8C-AEA5-E9D4ADEE5554}"
-	ProjectSection(ProjectDependencies) = postProject
-		{ABDCE7AB-A843-4D92-8E1C-45BE8F10D3C0} = {ABDCE7AB-A843-4D92-8E1C-45BE8F10D3C0}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,10 +15,6 @@ Global
 		{ABDCE7AB-A843-4D92-8E1C-45BE8F10D3C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABDCE7AB-A843-4D92-8E1C-45BE8F10D3C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABDCE7AB-A843-4D92-8E1C-45BE8F10D3C0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BDB06F2B-E52A-4E8C-AEA5-E9D4ADEE5554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BDB06F2B-E52A-4E8C-AEA5-E9D4ADEE5554}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BDB06F2B-E52A-4E8C-AEA5-E9D4ADEE5554}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BDB06F2B-E52A-4E8C-AEA5-E9D4ADEE5554}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
