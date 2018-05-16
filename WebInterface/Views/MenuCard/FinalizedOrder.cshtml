@@ -62,24 +62,24 @@
 <div class="OrderOverview">
 
     @{
-        var drinks = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.DRINK);
-        var uniqueDrinks = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.DRINK).GroupBy(x => x.Course.Name).Select(x => x.LastOrDefault());
-        var starters = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.STARTER);
-        var uniqueStarters = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.STARTER).GroupBy(x => x.Course.Name).Select(x => x.LastOrDefault());
-        var mains = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.MAINCOURSE);
-        var uniqueMains = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.MAINCOURSE).GroupBy(x => x.Course.Name).Select(x => x.LastOrDefault());
-        var desserts = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.DESSERT);
-        var uniqueDesserts = Model.Model.orderDishes.Where(x => x.Course.Course == CourseType.DESSERT).GroupBy(x => x.Course.Name).Select(x => x.LastOrDefault());
+        var drinks = Model.Model.OrderDishes.Where(x => x.Course.Course == CourseType.DRINK);
+        var uniqueDrinks = Model.Model.OrderDishes.Where(x => x.Course.Course == CourseType.DRINK).GroupBy(x => x.Course.Name).Select(x => x.LastOrDefault());
+        var starters = Model.Model.OrderDishes.Where(x => x.Course.Course == CourseType.STARTER);
+        var uniqueStarters = Model.Model.OrderDishes.Where(x => x.Course.Course == CourseType.STARTER).GroupBy(x => x.Course.Name).Select(x => x.LastOrDefault());
+        var mains = Model.Model.OrderDishes.Where(x => x.Course.Course == CourseType.MAINCOURSE);
+        var uniqueMains = Model.Model.OrderDishes.Where(x => x.Course.Course == CourseType.MAINCOURSE).GroupBy(x => x.Course.Name).Select(x => x.LastOrDefault());
+        var desserts = Model.Model.OrderDishes.Where(x => x.Course.Course == CourseType.DESSERT);
+        var uniqueDesserts = Model.Model.OrderDishes.Where(x => x.Course.Course == CourseType.DESSERT).GroupBy(x => x.Course.Name).Select(x => x.LastOrDefault());
 
         double totalPrice = 0;
     }
 
-    @if (Model.Model.orderDishes.Count <= 0)
+    @if (Model.Model.OrderDishes.Count <= 0)
     {
         <div>No Finalized orders to display</div>
     }
 
-    else if (Model.Model.orderDishes.Count > 0)
+    else if (Model.Model.OrderDishes.Count > 0)
     {
         if (drinks.Count() > 0)
         {

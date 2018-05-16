@@ -73,9 +73,9 @@
                         <div class="SubDrink">@Model.Model.DishTypes[j].Name</div>
                         <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
 
-                        if (Model.Model.quantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
+                        if (Model.Model.QuantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
                         {
-                            quantity = Model.Model.quantityDictionary[Model.Model.DishTypes[j]];
+                            quantity = Model.Model.QuantityDictionary[Model.Model.DishTypes[j]];
                         }
 
                         <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input class="submitOnChange" type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
@@ -102,9 +102,9 @@
                                 <div class="SubDrink">@Model.Model.DishTypes[j].Name</div>
 
                                 <div class="Price">&euro; @Model.Model.DishTypes[j].Price</div>
-                                if (Model.Model.quantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
+                                if (Model.Model.QuantityDictionary.ContainsKey(Model.Model.DishTypes[j]))
                                 {
-                                    quantity = Model.Model.quantityDictionary[Model.Model.DishTypes[j]];
+                                    quantity = Model.Model.QuantityDictionary[Model.Model.DishTypes[j]];
                                 }
 
                                 <div class="Quantity" id="@Model.Model.DishTypes[j].Name"><input class="submitOnChange" type="number" min="0" value="@quantity" name="@Model.Model.DishTypes[j].Name"></div>
