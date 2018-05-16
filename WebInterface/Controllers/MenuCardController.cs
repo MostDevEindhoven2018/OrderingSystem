@@ -205,7 +205,18 @@ namespace WebInterface.Controllers
 
             foreach (var selectedDrinks in drinks)
             {
-                int quantity = Convert.ToInt32(col[selectedDrinks.Name]);
+                int quantity = 0;
+
+                if (col[selectedDrinks.Name]=="")
+                {
+                    quantity = 0;
+                }
+
+                else
+                {
+                    quantity = Convert.ToInt32(col[selectedDrinks.Name]);
+                }
+
 
                 //if (quantity > 99)
                 //{
@@ -410,7 +421,18 @@ namespace WebInterface.Controllers
 
             foreach (var selectedStarters in starters)
             {
-                int quantity = Convert.ToInt32(col[selectedStarters.Name]);
+                int quantity = 0;
+
+                if (col[selectedStarters.Name] == "")
+                {
+                    quantity = 0;
+                }
+
+                else
+                {
+                    quantity = Convert.ToInt32(col[selectedStarters.Name]);
+                }
+
                 if (quantity > output[selectedStarters])
                 {
                     if (uniqueOrderList == null)
@@ -615,7 +637,18 @@ namespace WebInterface.Controllers
 
             foreach (var selectedMains in mains)
             {
-                int quantity = Convert.ToInt32(col[selectedMains.Name]);
+                int quantity = 0;
+
+                if (col[selectedMains.Name] == "")
+                {
+                    quantity = 0;
+                }
+
+                else
+                {
+                    quantity = Convert.ToInt32(col[selectedMains.Name]);
+                }
+
                 if (quantity > output[selectedMains])
                 {
                     if (uniqueOrderList == null)
@@ -815,7 +848,18 @@ namespace WebInterface.Controllers
 
             foreach (var selectedDesserts in desserts)
             {
-                int quantity = Convert.ToInt32(col[selectedDesserts.Name]);
+                int quantity = 0;
+
+                if (col[selectedDesserts.Name] == "")
+                {
+                    quantity = 0;
+                }
+
+                else
+                {
+                    quantity = Convert.ToInt32(col[selectedDesserts.Name]);
+                }
+
                 if (quantity > output[selectedDesserts])
                 {
                     if (uniqueOrderList == null)

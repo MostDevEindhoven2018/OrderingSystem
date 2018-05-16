@@ -4,85 +4,128 @@
 @{
     ViewData["Title"] = "Bar";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+    int finalizedCount = 0;
+
 }
 
 
 
 <style>
+
     hr {
         border: 1px solid #000;
     }
 </style>
 
-<h2>Bar Orders</h2>
+<div>
+    <h2>All Bar Orders </h2>
+</div>
 
-<hr />
 
 <div id="finalizedOrders">
-    @if (Model.Count == 0)
+
+    @foreach (var item in Model)
+    {
+        @if (@item.Finalized.Count() > 0)
+        {
+            finalizedCount++;
+        }
+    }
+
+    @if (finalizedCount == 0)
     {
         <div> No Finalized orders to Display</div>
     }
+    else if (finalizedCount > 0)
+    {
+        <button onclick="printPDF('finalizedOrders')">Print all Orders</button>
+        <hr />
 
-    else
+    }
+
+    @if (finalizedCount > 0)
     {
 
         @foreach (Order item in Model)
         {
+
             var allDrinks = item.Finalized.Where(x => x.Course.Course == CourseType.DRINK);
+
 
 
             @if (item.Finalized != null)
             {
-                @foreach (var a in item.Finalized)
+
+                @if (item.Finalized.Count() > 0)
                 {
-                    if (a.Course.Course == CourseType.DRINK)
-                    {
-                        <h2>Order no: @item.OrderID</h2>
-                        break;
-                    }
+                    <button onclick="printPDF(@item.OrderID.ToString())">Print Order @item.OrderID.ToString()</button>
                 }
 
-                @if (allDrinks.Count() > 0)
-                {
-                    <h3>Drinks</h3>
 
-                    Dictionary<Dish, int> output = new Dictionary<Dish, int>();
+                <div id=@item.OrderID.ToString()>
 
-
-                    var uniqueDrinks = allDrinks.GroupBy(x => x.Course.Name).Select(y => new { type = y.FirstOrDefault(), quantity = y.Count() });
-
-                    @foreach (var items in uniqueDrinks)
+                    @foreach (var a in item.Finalized)
                     {
-                        output[items.type] = items.quantity;
-                    }
-
-                    @foreach (var dic in output)
-                    {
-                        <div>@dic.Key.Course.Name --> @dic.Value</div>
-
+                        if (a.Course.Course == CourseType.DRINK)
+                        {
+                            <h2>Order no: @item.OrderID</h2>
+                            break;
+                        }
                     }
 
 
-                }
-
-                @foreach (var a in item.Finalized)
-                {
-                    if (a.Course.Course == CourseType.DRINK)
+                    @if (allDrinks.Count() > 0)
                     {
-                        <hr />
-                        break;
+                        <h3>Drinks</h3>
+
+                        Dictionary<Dish, int> output = new Dictionary<Dish, int>();
+
+
+                        var uniqueDrinks = allDrinks.GroupBy(x => x.Course.Name).Select(y => new { type = y.FirstOrDefault(), quantity = y.Count() });
+
+                        @foreach (var items in uniqueDrinks)
+                        {
+                            output[items.type] = items.quantity;
+                        }
+
+                        @foreach (var dic in output)
+                        {
+                            <div>@dic.Key.Course.Name --> @dic.Value</div>
+
+                        }
+
+
                     }
-                }
+                    
+
+
+                    @foreach (var a in item.Finalized)
+                    {
+                        if (a.Course.Course != CourseType.DRINK)
+                        {
+                            <hr />
+                            break;
+                        }
+                    }
+                </div>
             }
+
         }
+
     }
+
+    @if (finalizedCount != 0)
+    {
+        <button onclick="printPDF('finalizedOrders')">Print all Orders</button>
+
+    }
+
 </div>
 
+<br />
 
-
-
-<a class="btn btn-default" asp-action="Index">Back to Index</a>
+<a asp-action="Index">Back to Index</a>
 
 
 
@@ -91,9 +134,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 
     <script>
+
+    </script>
+
+    <script>
         function printPDF(elem) {
             var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-
 
             mywindow.document.write(document.getElementById(elem).innerHTML);
 
@@ -108,3 +154,4 @@
         }
     </script>
 }
+

@@ -6,6 +6,22 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 
     int finalizedCount = 0;
+
+    int p = 0;
+
+    @foreach (var item in Model)
+    {
+
+        var allStarters = item.Finalized.Where(x => x.Course.Course == CourseType.STARTER);
+        var allMains = item.Finalized.Where(x => x.Course.Course == CourseType.MAINCOURSE);
+        var allDesserts = item.Finalized.Where(x => x.Course.Course == CourseType.DESSERT);
+
+        var kitchenCount = allStarters.Count() + allMains.Count() + allDesserts.Count();
+
+        p = p + kitchenCount;
+    }
+
+
 }
 
 
@@ -35,7 +51,8 @@
     {
         <div> No Finalized orders to Display</div>
     }
-    else if (finalizedCount > 0)
+
+    else if (p > 0)
     {
         <button onclick="printPDF('finalizedOrders')">Print all Orders</button>
         <hr />
@@ -47,17 +64,19 @@
 
         @foreach (Order item in Model)
         {
-
             var allStarters = item.Finalized.Where(x => x.Course.Course == CourseType.STARTER);
             var allMains = item.Finalized.Where(x => x.Course.Course == CourseType.MAINCOURSE);
             var allDesserts = item.Finalized.Where(x => x.Course.Course == CourseType.DESSERT);
+
+            var kitchenCount = allStarters.Count() + allMains.Count() + allDesserts.Count();
+
 
 
 
             @if (item.Finalized != null)
             {
 
-                @if (item.Finalized.Count() > 0)
+                @if (kitchenCount>0)
                 {
                     <button onclick="printPDF(@item.OrderID.ToString())">Print Order @item.OrderID.ToString()</button>
                 }
@@ -158,7 +177,7 @@
 
     }
 
-    @if (finalizedCount != 0)
+    @if (p != 0)
     {
         <button onclick="printPDF('finalizedOrders')">Print all Orders</button>
 
