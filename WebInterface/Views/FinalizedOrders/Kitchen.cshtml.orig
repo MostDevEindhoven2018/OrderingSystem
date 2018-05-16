@@ -14,12 +14,16 @@
     }
 </style>
 
+<<<<<<< HEAD
+<h2>All Kitchen Orders</h2>
+=======
 <div>
     <h2>All Kitchen Orders </h2>
     <button onclick="printPDF('finalizedOrders')">Print all Orders</button>
 </div>
 
 
+>>>>>>> Print button to each order
 
 
 <hr />
