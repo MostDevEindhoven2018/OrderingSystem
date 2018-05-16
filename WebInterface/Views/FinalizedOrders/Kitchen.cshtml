@@ -4,6 +4,8 @@
 @{
     ViewData["Title"] = "Kitchen";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+    int finalizedCount = 0;
 }
 
 
@@ -16,34 +18,31 @@
 
 <div>
     <h2>All Kitchen Orders </h2>
-    <button onclick="printPDF('finalizedOrders')">Print all Orders</button>
 </div>
-
-
-<hr />
 
 
 <div id="finalizedOrders">
 
-    @{ 
-        int b = 0;
-    }
-
     @foreach (var item in Model)
-    {     
-         @if (item.orderDish != null)
-         {
-             b++;
-         }
+    {
+        @if (@item.Finalized.Count() > 0)
+        {
+            finalizedCount++;
+        }
     }
 
-
-    @if (b == 0 )
+    @if (finalizedCount == 0)
     {
         <div> No Finalized orders to Display</div>
     }
+    else if (finalizedCount > 0)
+    {
+        <button onclick="printPDF('finalizedOrders')">Print all Orders</button>
+        <hr />
 
-    @if(Model.Count()>0)
+    }
+
+    @if (finalizedCount > 0)
     {
 
         @foreach (Order item in Model)
@@ -57,16 +56,14 @@
 
             @if (item.Finalized != null)
             {
+
+                @if (item.Finalized.Count() > 0)
+                {
+                    <button onclick="printPDF(@item.OrderID.ToString())">Print Order @item.OrderID.ToString()</button>
+                }
+
+
                 <div id=@item.OrderID.ToString()>
-
-                    @if (item.orderDish != null)
-                    {
-                        <button onclick="printPDF(@item.OrderID.ToString())">Print Order @item.OrderID.ToString()</button>
-
-
-                    }
-
-
 
                     @foreach (var a in item.Finalized)
                     {
@@ -160,16 +157,19 @@
         }
 
     }
+
+    @if (finalizedCount != 0)
+    {
+        <button onclick="printPDF('finalizedOrders')">Print all Orders</button>
+
+
+    }
+
 </div>
 
 <br />
-<button onclick="printPDF('finalizedOrders')">Print all Orders</button>
 
-
-<br />
-<br />
-
-<a class="btn btn-default" asp-action="Index">Back to Index</a>
+<a asp-action="Index">Back to Index</a>
 
 
 
