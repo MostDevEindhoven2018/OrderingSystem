@@ -112,7 +112,7 @@ namespace WebInterface.Controllers
             {
                 DishTypes = await drinks.ToListAsync(),
                 SubDishTypes = uniqueSubDrinks,
-                quantityDictionary = output
+                QuantityDictionary = output
             };
 
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
@@ -169,7 +169,7 @@ namespace WebInterface.Controllers
                 try
                 {
                     quantity = Convert.ToInt32(col[dishTypeName]);
-                } catch (Exception e)
+                } catch (Exception)
                 {
                     //Invalid user input
                     continue;
@@ -267,7 +267,7 @@ namespace WebInterface.Controllers
             {
                 DishTypes = starters,
                 SubDishTypes = uniqueSubStarters,
-                quantityDictionary = output
+                QuantityDictionary = output
             };
 
 
@@ -323,7 +323,7 @@ namespace WebInterface.Controllers
             {
                 DishTypes = mains,
                 SubDishTypes = uniqueSubMains,
-                quantityDictionary = output
+                QuantityDictionary = output
             };
 
             return View(new GuestCodeWithModel<DishTypeViewModel>(dishTypeViewModel, guestCode));
@@ -376,7 +376,7 @@ namespace WebInterface.Controllers
             {
                 DishTypes = desserts,
                 SubDishTypes = uniqueDesserts,
-                quantityDictionary = output
+                QuantityDictionary = output
             };
 
             //var desserts = ctx.DishTypes.ToList();           
@@ -452,7 +452,7 @@ namespace WebInterface.Controllers
 
             OrderDishTypeViewModel orderDishTypeViewModel = new OrderDishTypeViewModel
             {
-                orderDishes = selectedOrderItems
+                OrderDishes = selectedOrderItems
             };
 
             return View(new GuestCodeWithModel<OrderDishTypeViewModel>(orderDishTypeViewModel, guestCode));
@@ -496,7 +496,7 @@ namespace WebInterface.Controllers
 
             OrderDishTypeViewModel viewModel = new OrderDishTypeViewModel()
             {
-                orderDishes = order.Finalized.ToList(),
+                OrderDishes = order.Finalized.ToList(),
             };
 
             return View(new GuestCodeWithModel<OrderDishTypeViewModel>(viewModel, guestCode));

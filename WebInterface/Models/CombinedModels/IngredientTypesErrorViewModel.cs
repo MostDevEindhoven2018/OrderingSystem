@@ -8,8 +8,8 @@ namespace WebInterface.ViewModel
 {
     public class IngredientTypesErrorViewModel
     {
-        public IngredientType ingredientType { get; set; }
+        public IngredientType IngredientType { get; set; }
 
-        public string error { get; set; }
+        public string Error { get; set; }
     }
 }

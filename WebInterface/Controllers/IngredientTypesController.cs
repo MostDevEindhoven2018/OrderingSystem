@@ -133,8 +133,8 @@ namespace WebInterface.Controllers
             }
 
             IngredientTypesErrorViewModel ingredientTypesErrorViewModel = new IngredientTypesErrorViewModel();
-            ingredientTypesErrorViewModel.error = error;
-            ingredientTypesErrorViewModel.ingredientType = ingredientType;
+            ingredientTypesErrorViewModel.Error = error;
+            ingredientTypesErrorViewModel.IngredientType = ingredientType;
 
             return View(ingredientTypesErrorViewModel);
         }

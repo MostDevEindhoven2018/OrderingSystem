@@ -132,13 +132,15 @@ namespace WebInterface.Controllers
             {
                 return NotFound();
             }
-            
-			SubDishTypesErrorViewModel subDishTypesErrorViewModel = new SubDishTypesErrorViewModel();
-            subDishTypesErrorViewModel.error = error;
-            subDishTypesErrorViewModel.subDishType = subDishType;
-            
 
-			return View(subDishTypesErrorViewModel);
+            SubDishTypesErrorViewModel subDishTypesErrorViewModel = new SubDishTypesErrorViewModel
+            {
+                Error = error,
+                SubDishType = subDishType
+            };
+
+
+            return View(subDishTypesErrorViewModel);
         }
 
         // POST: SubDishTypes/Delete/5

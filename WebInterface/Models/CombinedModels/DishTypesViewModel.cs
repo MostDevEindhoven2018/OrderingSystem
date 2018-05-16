@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebInterface.ViewModel
 {
+    /// <summary>
+    /// ViewModel used by the DishTypesController
+    /// </summary>
     public class DishTypesViewModel 
     {
-        //internal readonly string Name;
-
         public DishType Dish { get; set; }
 
         public List<IngredientType> Ingredients { get; set; }

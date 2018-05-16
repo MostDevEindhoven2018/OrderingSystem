@@ -12,7 +12,7 @@ namespace WebInterface.Models
         
         public int OrderID { get; set; }
 
-        public DishType orderDish { get; set; }
+        public DishType OrderDish { get; set; }
         /// <summary>
         /// Dishes added to the Order, but not send to the kitchen
         /// </summary>
@@ -29,7 +29,7 @@ namespace WebInterface.Models
 
         //public int quantity {get;set;}
 
-        public string customeNote { get; set; }
+        public string CustomeNote { get; set; }
 
         public virtual ICollection<Dish> Selected { get; set; }
 

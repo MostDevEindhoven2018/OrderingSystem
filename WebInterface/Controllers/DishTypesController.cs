@@ -66,8 +66,10 @@ namespace WebInterface.Controllers
 
             await repo.GetIngredients();
 
-            Ingredient ingredient = new Ingredient();
-            ingredient.Type = type;
+            Ingredient ingredient = new Ingredient
+            {
+                Type = type
+            };
 
             if (dishType.DefaultIngredients == null)
             {

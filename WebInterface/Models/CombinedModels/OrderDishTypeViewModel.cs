@@ -7,8 +7,8 @@ namespace WebInterface.Models.CombinedModels
 {
     public class OrderDishTypeViewModel
     {
-        public List<Dish> orderDishes { get; set; }     
-        public List<SubDishType> orderSubDishType { get; set; }
-        public List<Order> orders { get; set; }
+        public List<Dish> OrderDishes { get; set; }     
+        public List<SubDishType> OrderSubDishType { get; set; }
+        public List<Order> Orders { get; set; }
     }
 }
