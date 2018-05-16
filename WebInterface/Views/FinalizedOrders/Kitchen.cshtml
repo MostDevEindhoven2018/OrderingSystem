@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Kitchen";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
 
@@ -14,12 +15,14 @@
 
 </style>
 
-<h2>All Kitchen Orders <button onclick="printPDF('finalizedOrders')">Print all Orders</button></h2>
+<h2>All Kitchen Orders</h2>
 
 
 <hr />
 
 
+<button onclick="printPDF('finalizedOrders')">Print all Orders</button>
+<br />
 
 <div id="finalizedOrders">
 
@@ -133,7 +136,7 @@
     }
 </div>
 
-
+<br />
 <button onclick="printPDF('finalizedOrders')">Print all Orders</button>
 
 
