@@ -12,35 +12,36 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Name):
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.Price):
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Price)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Course)
+            @Html.DisplayNameFor(model => model.Course) type:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Course)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.SubDishType.SubType)
+            @*@Html.DisplayNameFor(model => model.SubDishType.SubType)*@
+            Subcategory:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.SubDishType.SubType)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Recipe)
+            @Html.DisplayNameFor(model => model.Recipe):
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Recipe)
@@ -50,6 +51,6 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="DishTypeID" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Go Back to Dishes OverviewS</a>
+        <a asp-action="Index">Go Back to Dishes Overview</a>
     </form>
 </div>

@@ -9,7 +9,7 @@
 
 
 
-<h2>Table Management</h2>
+<h2>Tables Overview</h2>
 
 
 
@@ -21,11 +21,12 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.TableID)
+                    @*@Html.DisplayNameFor(model => model.TableID)*@
+                    Table ID
 
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Capacity)
+                   @Html.DisplayNameFor(model => model.Capacity)
                 </th>
                 <th></th>
             </tr>
@@ -51,7 +52,13 @@
             }
         </tbody>
     </table>
+
+
 </div>
+
+<body>
+    <a asp-controller="User" asp-action="Index">Go back to Management Index</a>
+</body>
 
 
 @section Scripts {

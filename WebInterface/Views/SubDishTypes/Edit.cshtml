@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<h2>Edit Category</h2>
+<h2>Edit @Model.SubType</h2>
 
 <hr />
 <div class="row">
@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="SubDishTypeID" />
             <div class="form-group">
-                <label asp-for="SubType" class="control-label">Category</label>
+                <label asp-for="SubType" class="control-label">Subcategory</label>
                 <input asp-for="SubType" class="form-control" />
                 <span asp-validation-for="SubType" class="text-danger"></span>
             </div>
@@ -26,7 +26,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Go Back to Categories Overview</a>
+    <a asp-action="Index">Go Back to Subcategories Overview</a>
 </div>
 
 @section Scripts {
