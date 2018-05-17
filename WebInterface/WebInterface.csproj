@@ -11,18 +11,44 @@
   <ItemGroup>
     <Compile Remove="Controllers\NewFolder1\**" />
     <Compile Remove="Controllers\NewFolder\**" />
+    <Compile Remove="Extensions\**" />
+    <Compile Remove="Models\AccountViewModels\**" />
+    <Compile Remove="Models\ManageViewModels\**" />
+    <Compile Remove="Views\Account\**" />
+    <Compile Remove="Views\Manage\**" />
     <Content Remove="Controllers\NewFolder1\**" />
     <Content Remove="Controllers\NewFolder\**" />
+    <Content Remove="Extensions\**" />
+    <Content Remove="Models\AccountViewModels\**" />
+    <Content Remove="Models\ManageViewModels\**" />
+    <Content Remove="Views\Account\**" />
+    <Content Remove="Views\Manage\**" />
     <EmbeddedResource Remove="Controllers\NewFolder1\**" />
     <EmbeddedResource Remove="Controllers\NewFolder\**" />
+    <EmbeddedResource Remove="Extensions\**" />
+    <EmbeddedResource Remove="Models\AccountViewModels\**" />
+    <EmbeddedResource Remove="Models\ManageViewModels\**" />
+    <EmbeddedResource Remove="Views\Account\**" />
+    <EmbeddedResource Remove="Views\Manage\**" />
     <None Remove="Controllers\NewFolder1\**" />
     <None Remove="Controllers\NewFolder\**" />
+    <None Remove="Extensions\**" />
+    <None Remove="Models\AccountViewModels\**" />
+    <None Remove="Models\ManageViewModels\**" />
+    <None Remove="Views\Account\**" />
+    <None Remove="Views\Manage\**" />
+    <Compile Remove="Controllers\AccountController.cs" />
+    <Compile Remove="Controllers\ManageController.cs" />
     <Compile Remove="ViewModel\EmptyClass.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Migrations\20180509120105_init.cs" />
     <Compile Remove="Migrations\20180509120105_init.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
